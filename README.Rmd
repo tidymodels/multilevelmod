@@ -1,0 +1,68 @@
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# multilevelmod
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/multilevelmod)](https://CRAN.R-project.org/package=multilevelmod)
+<!-- badges: end -->
+
+multilevelmod enables the use of multi-level models (such as mixed-effects models or Bayesian hierarchical models) with the parsnip package.  
+
+## Installation
+
+You can install the released version of multilevelmod from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+# not yet
+install.packages("multilevelmod")
+```
+
+For the development version: 
+
+``` r
+devtools::install_github("tidymodels/multilevelmod")
+```
+
+## Example
+
+Loading mixedlevelmod will trigger it to add a few modeling _engines_ to the parsnip model database. For Bayesian models, there are now `stan-glmer` engines for `linear_reg()`, `logistic_reg()`, and `poisson_reg()`. 
+
+To use these, the function `parsnip::fit()` function should be used instead of `parsnip::fit_xy()` so that the model terms can be specified using the `lme`/`lme4` syntax. 
+
+The `sleepstudy` data is used as an example: 
+
+```{r sleep-lme}
+library(multilevelmod)
+data(sleepstudy, package = "lme4")
+
+mixed_model_spec <- linear_reg() %>% set_engine("lme4")
+
+mixed_model_fit <- 
+  mixed_model_spec %>% 
+  fit(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+
+mixed_model_fit
+```
+
+For a Bayesian model: 
+
+
+```{r sleep-stan}
+hier_model_spec <- linear_reg() %>% set_engine("stan-glmer")
+
+hier_model_fit <- 
+  hier_model_spec %>% 
+  fit(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+
+hier_model_fit
+```
+
+
