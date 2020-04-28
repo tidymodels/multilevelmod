@@ -1,4 +1,4 @@
-context("stan mixed-level model")
+context("stan mixed-level linear regression model")
 
 data("riesby")
 library(rlang)

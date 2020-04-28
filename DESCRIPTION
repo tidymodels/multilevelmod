@@ -19,7 +19,9 @@ RoxygenNote: 7.1.0.9000
 Suggests: 
     spelling,
     testthat,
-    covr
+    covr,
+    rstanarm,
+    lme4
 Language: en-US
 Depends: 
     parsnip,

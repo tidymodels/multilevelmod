@@ -1,4 +1,4 @@
-context("lme4 mixed-level model")
+context("lme4 mixed-level linear regression model")
 
 data("riesby")
 library(rlang)
