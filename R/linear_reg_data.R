@@ -45,43 +45,6 @@ make_stan_linear_reg <- function() {
     model = "linear_reg",
     eng = "stan-glmer",
     mode = "regression",
-    type = "conf_int",
-    value = list(
-      pre = NULL,
-      post = function(results, object) {
-        res <-
-          tibble::tibble(
-            .pred_lower =
-              parsnip::convert_stan_interval(
-                results,
-                level = object$spec$method$pred$conf_int$extras$level
-              ),
-            .pred_upper =
-              parsnip::convert_stan_interval(
-                results,
-                level = object$spec$method$pred$conf_int$extras$level,
-                lower = FALSE
-              ),
-          )
-        if (object$spec$method$pred$conf_int$extras$std_error)
-          res$.std_error <- apply(results, 2, sd, na.rm = TRUE)
-        res
-      },
-      func = c(pkg = "rstanarm", fun = "posterior_linpred"),
-      args =
-        list(
-          object = rlang::expr(object$fit),
-          newdata = rlang::expr(new_data),
-          transform = TRUE,
-          seed = rlang::expr(sample.int(10^5, 1))
-        )
-    )
-  )
-
-  parsnip::set_pred(
-    model = "linear_reg",
-    eng = "stan-glmer",
-    mode = "regression",
     type = "pred_int",
     value = list(
       pre = NULL,
@@ -133,12 +96,12 @@ make_stan_linear_reg <- function() {
 
 make_lme4_linear_reg <- function() {
 
-  parsnip::set_model_engine("linear_reg", "regression", "lme4")
-  parsnip::set_dependency("linear_reg", "lme4", "lme4")
+  parsnip::set_model_engine("linear_reg", "regression", "lmer")
+  parsnip::set_dependency("linear_reg", "lmer", "lme4")
 
   parsnip::set_fit(
     model = "linear_reg",
-    eng = "lme4",
+    eng = "lmer",
     mode = "regression",
     value = list(
       interface = "formula",
@@ -150,7 +113,7 @@ make_lme4_linear_reg <- function() {
 
   parsnip::set_pred(
     model = "linear_reg",
-    eng = "lme4",
+    eng = "lmer",
     mode = "regression",
     type = "numeric",
     value = list(
@@ -169,7 +132,7 @@ make_lme4_linear_reg <- function() {
 
   parsnip::set_pred(
     model = "linear_reg",
-    eng = "lme4",
+    eng = "lmer",
     mode = "regression",
     type = "raw",
     value = list(
