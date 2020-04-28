@@ -5,6 +5,8 @@
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/multilevelmod)](https://CRAN.R-project.org/package=multilevelmod)
+[![Codecov test coverage](https://codecov.io/gh/topepo/multilevelmod/branch/master/graph/badge.svg)](https://codecov.io/gh/topepo/multilevelmod?branch=master)
+[![R build status](https://github.com/topepo/multilevelmod/workflows/R-CMD-check/badge.svg)](https://github.com/topepo/multilevelmod/actions)
 <!-- badges: end -->
 
 multilevelmod enables the use of multi-level models (such as mixed-effects models or Bayesian hierarchical models) with the parsnip package.  
@@ -35,11 +37,9 @@ The `sleepstudy` data is used as an example:
 
 ```r
 library(multilevelmod)
-#> Loading required package: parsnip
-#> Warning: package 'parsnip' was built under R version 3.6.2
 data(sleepstudy, package = "lme4")
 
-mixed_model_spec <- linear_reg() %>% set_engine("lme4")
+mixed_model_spec <- linear_reg() %>% set_engine("lmer")
 
 mixed_model_fit <- 
   mixed_model_spec %>% 
@@ -48,7 +48,7 @@ mixed_model_fit <-
 mixed_model_fit
 #> parsnip model object
 #> 
-#> Fit time:  40ms 
+#> Fit time:  15ms 
 #> Linear mixed model fit by REML ['lmerMod']
 #> Formula: Reaction ~ Days + (Days | Subject)
 #>    Data: data
@@ -78,24 +78,24 @@ hier_model_fit <-
 hier_model_fit
 #> parsnip model object
 #> 
-#> Fit time:  38.9s 
+#> Fit time:  42s 
 #> stan_glmer
 #>  family:       gaussian [identity]
 #>  formula:      Reaction ~ Days + (Days | Subject)
 #>  observations: 180
 #> ------
 #>             Median MAD_SD
-#> (Intercept) 251.4    6.5 
-#> Days         10.4    1.6 
+#> (Intercept) 251.4    6.2 
+#> Days         10.5    1.7 
 #> 
 #> Auxiliary parameter(s):
 #>       Median MAD_SD
-#> sigma 26.0    1.6  
+#> sigma 25.9    1.6  
 #> 
 #> Error terms:
 #>  Groups   Name        Std.Dev. Corr
-#>  Subject  (Intercept) 24.0         
-#>           Days         6.9     0.07
+#>  Subject  (Intercept) 24.1         
+#>           Days         6.9     0.09
 #>  Residual             26.0         
 #> Num. levels: Subject 18 
 #> 

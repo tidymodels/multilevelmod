@@ -12,6 +12,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/multilevelmod)](https://CRAN.R-project.org/package=multilevelmod)
+[![Codecov test coverage](https://codecov.io/gh/topepo/multilevelmod/branch/master/graph/badge.svg)](https://codecov.io/gh/topepo/multilevelmod?branch=master)
+[![R build status](https://github.com/topepo/multilevelmod/workflows/R-CMD-check/badge.svg)](https://github.com/topepo/multilevelmod/actions)
 <!-- badges: end -->
 
 multilevelmod enables the use of multi-level models (such as mixed-effects models or Bayesian hierarchical models) with the parsnip package.  
@@ -43,7 +45,7 @@ The `sleepstudy` data is used as an example:
 library(multilevelmod)
 data(sleepstudy, package = "lme4")
 
-mixed_model_spec <- linear_reg() %>% set_engine("lme4")
+mixed_model_spec <- linear_reg() %>% set_engine("lmer")
 
 mixed_model_fit <- 
   mixed_model_spec %>% 

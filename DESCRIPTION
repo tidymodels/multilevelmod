@@ -18,9 +18,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0.9000
 Suggests: 
     spelling,
-    rstanarm,
-    lme4,
-    testthat
+    testthat,
+    covr
 Language: en-US
 Depends: 
     parsnip,
