@@ -90,14 +90,14 @@ hier_model_fit <-
 hier_model_fit
 #> parsnip model object
 #> 
-#> Fit time:  42.4s 
+#> Fit time:  48.3s 
 #> stan_glmer
 #>  family:       gaussian [identity]
 #>  formula:      Reaction ~ Days + (Days | Subject)
 #>  observations: 180
 #> ------
 #>             Median MAD_SD
-#> (Intercept) 251.4    6.3 
+#> (Intercept) 251.6    6.6 
 #> Days         10.4    1.7 
 #> 
 #> Auxiliary parameter(s):
@@ -106,7 +106,7 @@ hier_model_fit
 #> 
 #> Error terms:
 #>  Groups   Name        Std.Dev. Corr
-#>  Subject  (Intercept) 23.9         
+#>  Subject  (Intercept) 24.3         
 #>           Days         6.9     0.08
 #>  Residual             26.0         
 #> Num. levels: Subject 18 
@@ -123,7 +123,7 @@ Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
   - For questions and discussions about tidymodels packages, modeling,
-    and machine learning, [join us on RStudio
+    and machine learning, please [post on RStudio
     Community](https://rstd.io/tidymodels-community).
 
   - If you think you have encountered a bug, please [submit an
