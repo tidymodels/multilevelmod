@@ -70,77 +70,97 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the released version of multilevelmod from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># not yet</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"multilevelmod"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># not yet</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"multilevelmod"</span>)
+</pre></div>
 <p>For the development version:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"tidymodels/multilevelmod"</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">devtools</span>::<span class="fu">install_github</span>(<span class="st">"tidymodels/multilevelmod"</span>)
+</pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>Loading mixedlevelmod will trigger it to add a few modeling <em>engines</em> to the parsnip model database. For Bayesian models, there are now <code>stan-glmer</code> engines for <code>linear_reg()</code>, <code>logistic_reg()</code>, and <code>poisson_reg()</code>.</p>
-<p>To use these, the function <code><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">parsnip::fit()</a></code> function should be used instead of <code><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">parsnip::fit_xy()</a></code> so that the model terms can be specified using the <code>lme</code>/<code>lme4</code> syntax.</p>
+<p>To use these, the function <code><a href="https://rdrr.io/pkg/generics/man/fit.html">parsnip::fit()</a></code> function should be used instead of <code><a href="https://rdrr.io/pkg/generics/man/fit_xy.html">parsnip::fit_xy()</a></code> so that the model terms can be specified using the <code>lme</code>/<code>lme4</code> syntax.</p>
 <p>The <code>sleepstudy</code> data is used as an example:</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">multilevelmod</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">sleepstudy</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"lme4"</span>)
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">multilevelmod</span>)
+<span class="co">#&gt; Loading required package: parsnip</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">sleepstudy</span>, package = <span class="st">"lme4"</span>)
 
-<span class="no">mixed_model_spec</span> <span class="kw">&lt;-</span> <span class="fu">linear_reg</span>() <span class="kw">%&gt;%</span> <span class="fu">set_engine</span>(<span class="st">"lmer"</span>)
+<span class="kw">mixed_model_spec</span> <span class="op">&lt;-</span> <span class="fu">linear_reg</span>() <span class="op">%&gt;%</span> <span class="fu">set_engine</span>(<span class="st">"lmer"</span>)
 
-<span class="no">mixed_model_fit</span> <span class="kw">&lt;-</span>
-  <span class="no">mixed_model_spec</span> <span class="kw">%&gt;%</span>
-  <span class="fu">fit</span>(<span class="no">Reaction</span> ~ <span class="no">Days</span> + (<span class="no">Days</span> <span class="kw">|</span> <span class="no">Subject</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">sleepstudy</span>)
+<span class="kw">mixed_model_fit</span> <span class="op">&lt;-</span> 
+  <span class="kw">mixed_model_spec</span> <span class="op">%&gt;%</span> 
+  <span class="fu">fit</span>(<span class="kw">Reaction</span> <span class="op">~</span> <span class="kw">Days</span> <span class="op">+</span> (<span class="kw">Days</span> <span class="op">|</span> <span class="kw">Subject</span>), data = <span class="kw">sleepstudy</span>)
 
-<span class="no">mixed_model_fit</span>
+<span class="kw">mixed_model_fit</span>
 <span class="co">#&gt; parsnip model object</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Fit time:  15ms </span>
+<span class="co">#&gt; Fit time:  57ms </span>
 <span class="co">#&gt; Linear mixed model fit by REML ['lmerMod']</span>
 <span class="co">#&gt; Formula: Reaction ~ Days + (Days | Subject)</span>
 <span class="co">#&gt;    Data: data</span>
 <span class="co">#&gt; REML criterion at convergence: 1743.628</span>
 <span class="co">#&gt; Random effects:</span>
 <span class="co">#&gt;  Groups   Name        Std.Dev. Corr</span>
-<span class="co">#&gt;  Subject  (Intercept) 24.737       </span>
-<span class="co">#&gt;           Days         5.923   0.07</span>
+<span class="co">#&gt;  Subject  (Intercept) 24.741       </span>
+<span class="co">#&gt;           Days         5.922   0.07</span>
 <span class="co">#&gt;  Residual             25.592       </span>
 <span class="co">#&gt; Number of obs: 180, groups:  Subject, 18</span>
 <span class="co">#&gt; Fixed Effects:</span>
 <span class="co">#&gt; (Intercept)         Days  </span>
-<span class="co">#&gt;      251.41        10.47</span></pre></div>
+<span class="co">#&gt;      251.41        10.47</span>
+</pre></div>
 <p>For a Bayesian model:</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="no">hier_model_spec</span> <span class="kw">&lt;-</span> <span class="fu">linear_reg</span>() <span class="kw">%&gt;%</span> <span class="fu">set_engine</span>(<span class="st">"stan-glmer"</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="kw">hier_model_spec</span> <span class="op">&lt;-</span> <span class="fu">linear_reg</span>() <span class="op">%&gt;%</span> <span class="fu">set_engine</span>(<span class="st">"stan-glmer"</span>)
 
-<span class="no">hier_model_fit</span> <span class="kw">&lt;-</span>
-  <span class="no">hier_model_spec</span> <span class="kw">%&gt;%</span>
-  <span class="fu">fit</span>(<span class="no">Reaction</span> ~ <span class="no">Days</span> + (<span class="no">Days</span> <span class="kw">|</span> <span class="no">Subject</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">sleepstudy</span>)
+<span class="kw">hier_model_fit</span> <span class="op">&lt;-</span> 
+  <span class="kw">hier_model_spec</span> <span class="op">%&gt;%</span> 
+  <span class="fu">fit</span>(<span class="kw">Reaction</span> <span class="op">~</span> <span class="kw">Days</span> <span class="op">+</span> (<span class="kw">Days</span> <span class="op">|</span> <span class="kw">Subject</span>), data = <span class="kw">sleepstudy</span>)
 
-<span class="no">hier_model_fit</span>
+<span class="kw">hier_model_fit</span>
 <span class="co">#&gt; parsnip model object</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Fit time:  42s </span>
+<span class="co">#&gt; Fit time:  48.3s </span>
 <span class="co">#&gt; stan_glmer</span>
 <span class="co">#&gt;  family:       gaussian [identity]</span>
 <span class="co">#&gt;  formula:      Reaction ~ Days + (Days | Subject)</span>
 <span class="co">#&gt;  observations: 180</span>
 <span class="co">#&gt; ------</span>
 <span class="co">#&gt;             Median MAD_SD</span>
-<span class="co">#&gt; (Intercept) 251.4    6.2 </span>
-<span class="co">#&gt; Days         10.5    1.7 </span>
+<span class="co">#&gt; (Intercept) 251.6    6.6 </span>
+<span class="co">#&gt; Days         10.4    1.7 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Auxiliary parameter(s):</span>
 <span class="co">#&gt;       Median MAD_SD</span>
-<span class="co">#&gt; sigma 25.9    1.6  </span>
+<span class="co">#&gt; sigma 25.9    1.5  </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Error terms:</span>
 <span class="co">#&gt;  Groups   Name        Std.Dev. Corr</span>
-<span class="co">#&gt;  Subject  (Intercept) 24.1         </span>
-<span class="co">#&gt;           Days         6.9     0.09</span>
+<span class="co">#&gt;  Subject  (Intercept) 24.3         </span>
+<span class="co">#&gt;           Days         6.9     0.08</span>
 <span class="co">#&gt;  Residual             26.0         </span>
 <span class="co">#&gt; Num. levels: Subject 18 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ------</span>
 <span class="co">#&gt; * For help interpreting the printed output see ?print.stanreg</span>
-<span class="co">#&gt; * For info on the priors used see ?prior_summary.stanreg</span></pre></div>
+<span class="co">#&gt; * For info on the priors used see ?prior_summary.stanreg</span>
+</pre></div>
+</div>
+<div id="contributing" class="section level2">
+<h2 class="hasAnchor">
+<a href="#contributing" class="anchor"></a>Contributing</h2>
+<p>This project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<ul>
+<li><p>For questions and discussions about tidymodels packages, modeling, and machine learning, please <a href="https://rstd.io/tidymodels-community">post on RStudio Community</a>.</p></li>
+<li><p>If you think you have encountered a bug, please <a href="https://github.com/tidymodels/multilevelmod/issues">submit an issue</a>.</p></li>
+<li><p>Either way, learn how to create and share a <a href="https://rstd.io/reprex">reprex</a> (a minimal, reproducible example), to clearly communicate about your code.</p></li>
+<li><p>Check out further details on <a href="https://www.tidymodels.org/contribute/">contributing guidelines for tidymodels packages</a> and <a href="https://www.tidymodels.org/help/">how to get help</a>.</p></li>
+</ul>
 </div>
 </div>
   </div>
