@@ -5,3 +5,4 @@
 ^cran-comments\.md$
 ^\.github$
 ^codecov\.yml$
+^CODE_OF_CONDUCT\.md$
