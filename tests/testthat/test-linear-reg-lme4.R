@@ -14,19 +14,15 @@ test_that('lme4 execution', {
                    data = expr(riesby))
 
   set.seed(2452)
-  expect_warning(lme4_mod <- eval_tidy(lme4_cl), "failed to converge")
+  lme4_mod <- eval_tidy(lme4_cl)
 
-  expect_warning({
-    set.seed(2452)
-    expect_error(
-      ps_mod <-
-        linear_reg() %>%
-        set_engine("lmer") %>%
-        fit(depr_score ~ week + (week | subject), data = riesby),
-      regex = NA
-    )
-  },
-  "failed to converge"
+  set.seed(2452)
+  expect_error(
+    ps_mod <-
+      linear_reg() %>%
+      set_engine("lmer") %>%
+      fit(depr_score ~ week + (week | subject), data = riesby),
+    regex = NA
   )
 
   expect_equal(

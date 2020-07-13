@@ -22,7 +22,7 @@ Suggests:
     covr
 Language: en-US
 Depends: 
-    parsnip,
+    parsnip (>= 0.1.2),
     R (>= 2.10)
 Imports: 
     tibble,

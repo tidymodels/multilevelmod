@@ -10,6 +10,17 @@ make_stan_linear_reg <- function() {
   parsnip::set_model_engine("linear_reg", "regression", "stan-glmer")
   parsnip::set_dependency("linear_reg", "stan-glmer", "rstanarm")
 
+  set_encoding(
+    model = "linear_reg",
+    eng = "stan-glmer",
+    mode = "regression",
+    options = list(
+      predictor_indicators = "none",
+      compute_intercept = FALSE,
+      remove_intercept = FALSE
+    )
+  )
+
   parsnip::set_fit(
     model = "linear_reg",
     eng = "stan-glmer",
@@ -85,7 +96,7 @@ make_stan_linear_reg <- function() {
     value = list(
       pre = NULL,
       post = NULL,
-      func = c(fun = "predict"),
+      func = c(fun = "posterior_predict"),
       args = list(object = rlang::expr(object$fit), newdata = rlang::expr(new_data))
     )
   )
@@ -98,6 +109,17 @@ make_lme4_linear_reg <- function() {
 
   parsnip::set_model_engine("linear_reg", "regression", "lmer")
   parsnip::set_dependency("linear_reg", "lmer", "lme4")
+
+  set_encoding(
+    model = "linear_reg",
+    eng = "lmer",
+    mode = "regression",
+    options = list(
+      predictor_indicators = "none",
+      compute_intercept = FALSE,
+      remove_intercept = FALSE
+    )
+  )
 
   parsnip::set_fit(
     model = "linear_reg",
