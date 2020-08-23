@@ -9,6 +9,7 @@ make_stan_linear_reg <- function() {
 
   parsnip::set_model_engine("linear_reg", "regression", "stan-glmer")
   parsnip::set_dependency("linear_reg", "stan-glmer", "rstanarm")
+  parsnip::set_dependency("linear_reg", "stan-glmer", "multilevelmod")
 
   set_encoding(
     model = "linear_reg",
@@ -109,6 +110,7 @@ make_lme4_linear_reg <- function() {
 
   parsnip::set_model_engine("linear_reg", "regression", "lmer")
   parsnip::set_dependency("linear_reg", "lmer", "lme4")
+  parsnip::set_dependency("linear_reg", "lmer", "multilevelmod")
 
   set_encoding(
     model = "linear_reg",
