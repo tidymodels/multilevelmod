@@ -18,7 +18,8 @@ make_stan_linear_reg <- function() {
     options = list(
       predictor_indicators = "none",
       compute_intercept = FALSE,
-      remove_intercept = FALSE
+      remove_intercept = FALSE,
+      allow_sparse_x = FALSE
     )
   )
 
@@ -119,7 +120,8 @@ make_lme4_linear_reg <- function() {
     options = list(
       predictor_indicators = "none",
       compute_intercept = FALSE,
-      remove_intercept = FALSE
+      remove_intercept = FALSE,
+      allow_sparse_x = FALSE
     )
   )
 
