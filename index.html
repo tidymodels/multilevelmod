@@ -39,12 +39,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
       </ul>
@@ -72,12 +66,10 @@
 <p>You can install the released version of multilevelmod from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co"># not yet</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"multilevelmod"</span>)
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"multilevelmod"</span><span class="op">)</span></pre></div>
 <p>For the development version:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">devtools</span>::<span class="fu">install_github</span>(<span class="st">"tidymodels/multilevelmod"</span>)
-</pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"tidymodels/multilevelmod"</span><span class="op">)</span></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
@@ -86,17 +78,17 @@
 <p>To use these, the function <code><a href="https://rdrr.io/pkg/generics/man/fit.html">parsnip::fit()</a></code> function should be used instead of <code><a href="https://rdrr.io/pkg/generics/man/fit_xy.html">parsnip::fit_xy()</a></code> so that the model terms can be specified using the <code>lme</code>/<code>lme4</code> syntax.</p>
 <p>The <code>sleepstudy</code> data is used as an example:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">multilevelmod</span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">multilevelmod</span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: parsnip</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">sleepstudy</span>, package = <span class="st">"lme4"</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">sleepstudy</span>, package <span class="op">=</span> <span class="st">"lme4"</span><span class="op">)</span>
 
-<span class="kw">mixed_model_spec</span> <span class="op">&lt;-</span> <span class="fu">linear_reg</span>() <span class="op">%&gt;%</span> <span class="fu">set_engine</span>(<span class="st">"lmer"</span>)
+<span class="va">mixed_model_spec</span> <span class="op">&lt;-</span> <span class="fu">linear_reg</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">set_engine</span><span class="op">(</span><span class="st">"lmer"</span><span class="op">)</span>
 
-<span class="kw">mixed_model_fit</span> <span class="op">&lt;-</span> 
-  <span class="kw">mixed_model_spec</span> <span class="op">%&gt;%</span> 
-  <span class="fu">fit</span>(<span class="kw">Reaction</span> <span class="op">~</span> <span class="kw">Days</span> <span class="op">+</span> (<span class="kw">Days</span> <span class="op">|</span> <span class="kw">Subject</span>), data = <span class="kw">sleepstudy</span>)
+<span class="va">mixed_model_fit</span> <span class="op">&lt;-</span> 
+  <span class="va">mixed_model_spec</span> <span class="op">%&gt;%</span> 
+  <span class="fu">fit</span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">Days</span> <span class="op">+</span> <span class="op">(</span><span class="va">Days</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">sleepstudy</span><span class="op">)</span>
 
-<span class="kw">mixed_model_fit</span>
+<span class="va">mixed_model_fit</span>
 <span class="co">#&gt; parsnip model object</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Fit time:  57ms </span>
@@ -112,17 +104,16 @@
 <span class="co">#&gt; Number of obs: 180, groups:  Subject, 18</span>
 <span class="co">#&gt; Fixed Effects:</span>
 <span class="co">#&gt; (Intercept)         Days  </span>
-<span class="co">#&gt;      251.41        10.47</span>
-</pre></div>
+<span class="co">#&gt;      251.41        10.47</span></pre></div>
 <p>For a Bayesian model:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">hier_model_spec</span> <span class="op">&lt;-</span> <span class="fu">linear_reg</span>() <span class="op">%&gt;%</span> <span class="fu">set_engine</span>(<span class="st">"stan-glmer"</span>)
+<span class="va">hier_model_spec</span> <span class="op">&lt;-</span> <span class="fu">linear_reg</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">set_engine</span><span class="op">(</span><span class="st">"stan-glmer"</span><span class="op">)</span>
 
-<span class="kw">hier_model_fit</span> <span class="op">&lt;-</span> 
-  <span class="kw">hier_model_spec</span> <span class="op">%&gt;%</span> 
-  <span class="fu">fit</span>(<span class="kw">Reaction</span> <span class="op">~</span> <span class="kw">Days</span> <span class="op">+</span> (<span class="kw">Days</span> <span class="op">|</span> <span class="kw">Subject</span>), data = <span class="kw">sleepstudy</span>)
+<span class="va">hier_model_fit</span> <span class="op">&lt;-</span> 
+  <span class="va">hier_model_spec</span> <span class="op">%&gt;%</span> 
+  <span class="fu">fit</span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">Days</span> <span class="op">+</span> <span class="op">(</span><span class="va">Days</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">sleepstudy</span><span class="op">)</span>
 
-<span class="kw">hier_model_fit</span>
+<span class="va">hier_model_fit</span>
 <span class="co">#&gt; parsnip model object</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Fit time:  48.3s </span>
@@ -148,8 +139,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ------</span>
 <span class="co">#&gt; * For help interpreting the printed output see ?print.stanreg</span>
-<span class="co">#&gt; * For info on the priors used see ?prior_summary.stanreg</span>
-</pre></div>
+<span class="co">#&gt; * For info on the priors used see ?prior_summary.stanreg</span></pre></div>
 </div>
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">
@@ -206,7 +196,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
