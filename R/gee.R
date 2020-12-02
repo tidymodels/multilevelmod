@@ -1,4 +1,4 @@
-# gee::gee specifies the id/cluster variable using an argument 'id' that
+# Both `gee:gee(a)` and `gee:geepack()` specifies the id/cluster variable using an argument 'id' that
 # requires a vector. parsnip doesn't work that way so we enable this model to
 # be fit using a artificial function called `id_var()` to be used in the
 # formula. So, in the original package, the call would look like:
@@ -12,7 +12,7 @@
 #
 # gee_formula() parses this formula, pulls out the id variable and fixes
 # the formula (= no id term). gee_fit() uses this to fit the model.
-#
+
 
 gee_formula <- function(f) {
   cl <- match.call()
