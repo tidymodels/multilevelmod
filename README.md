@@ -10,9 +10,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![CRAN
 status](https://www.r-pkg.org/badges/version/multilevelmod)](https://CRAN.R-project.org/package=multilevelmod)
 [![Codecov test
-coverage](https://codecov.io/gh/topepo/multilevelmod/branch/master/graph/badge.svg)](https://codecov.io/gh/topepo/multilevelmod?branch=master)
-[![R build
-status](https://github.com/topepo/multilevelmod/workflows/R-CMD-check/badge.svg)](https://github.com/topepo/multilevelmod/actions)
+coverage](https://codecov.io/gh/tidymodels/multilevelmod/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/multilevelmod?branch=master)
+[![R-CMD-check](https://github.com/tidymodels/multilevelmod/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/multilevelmod/actions)
 <!-- badges: end -->
 
 multilevelmod enables the use of multi-level models (such as

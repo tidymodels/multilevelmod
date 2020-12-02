@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/multilevelmod)](https://CRAN.R-project.org/package=multilevelmod)
 [![Codecov test coverage](https://codecov.io/gh/topepo/multilevelmod/branch/master/graph/badge.svg)](https://codecov.io/gh/topepo/multilevelmod?branch=master)
-[![R build status](https://github.com/topepo/multilevelmod/workflows/R-CMD-check/badge.svg)](https://github.com/topepo/multilevelmod/actions)
+[![R-CMD-check](https://github.com/tidymodels/multilevelmod/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/multilevelmod/actions)
 <!-- badges: end -->
 
 multilevelmod enables the use of multi-level models (such as mixed-effects models or Bayesian hierarchical models) with the parsnip package.  
