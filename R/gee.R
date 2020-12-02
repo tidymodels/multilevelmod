@@ -19,14 +19,19 @@ gee_formula <- function(f) {
   trms <- terms(f, specials = "id_var")
   form_terms <- attr(trms, "variables")
   id_ind <- attr(trms,"specials")$id_var + 1
-
+  # check length
+  if (length(id_ind) != 1) {
+    rlang::abort(
+      paste(
+        "There should be a single 'id' column specified using the `id_vars()`",
+        "function (e.g. `y ~ x + id_vars(id_col)`"
+        )
+    )
+  }
   # find column with id variable
   id_expr <- form_terms[[id_ind]]
   id_var <- all.vars(id_expr)
-  # check length
-  if (length(id_var) != 1) {
-    rlang::abort("There should be a single 'id' column specified using the `id_vars()` function.")
-  }
+
 
   # repair formula: get predictors and remake
   rhs <- form_terms[-c(1:2, id_ind)]
