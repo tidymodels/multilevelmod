@@ -27,5 +27,6 @@ Depends:
 Imports: 
     tibble,
     rlang,
-    dplyr
+    dplyr,
+    purrr
 Remotes: tidymodels/parsnip

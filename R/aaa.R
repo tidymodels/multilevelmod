@@ -7,6 +7,7 @@
   # This defines model functions in the parsnip model database
   make_stan_linear_reg()
   make_lme4_linear_reg()
+  make_gee_linear_reg()
 }
 
 
