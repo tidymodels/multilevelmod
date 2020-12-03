@@ -176,7 +176,6 @@ make_lme4_linear_reg <- function() {
 
 # ------------------------------------------------------------------------------
 
-
 make_gee_linear_reg <- function() {
 
   parsnip::set_model_engine("linear_reg", "regression", "gee")
@@ -243,5 +242,3 @@ make_gee_linear_reg <- function() {
 }
 
 # nocov end
-
-
