@@ -1,34 +1,37 @@
-context("Generalized estimating equation models, linear")
+context("Generalized estimating equation models, logistic")
 
-data("riesby")
 library(rlang)
+data(riesby)
+riesby$sad[riesby$depr_score < -10] <- 0
+riesby$sad[riesby$depr_score >= -10] <- 1
+riesby$sad <- factor(riesby$sad)
 
 # ------------------------------------------------------------------------------
 
-test_that('linear gee execution', {
+test_that('logistic gee execution', {
   skip_if_not_installed("gee")
   skip_on_cran()
 
   # Create function
   gee_cl <- call2(
     "gee", .ns = "gee",
-    depr_score ~ week, id = expr(subject), family = quasi, data = expr(riesby)
+    sad ~ week + imipramine, id = expr(subject), family = binomial, data = expr(riesby)
   )
 
   # Run both regular and GEE model
   set.seed(1234)
   gee_mod <- eval_tidy(gee_cl)
   ps_mod <-
-    linear_reg() %>%
+    logistic_reg() %>%
     set_engine("gee") %>%
-    fit(depr_score ~ week + id_var(subject), data = riesby)
+    fit(factor(sad) ~ week + imipramine + id_var(subject), data = riesby)
 
   # Check for error
   expect_error(
     ps_mod <-
-      linear_reg() %>%
+      logistic_reg() %>%
       set_engine("gee") %>%
-      fit(depr_score ~ week + id_var(subject), data = riesby),
+      fit(factor(sad) ~ week + imipramine + id_var(subject), data = riesby),
     regex = NA
   )
 

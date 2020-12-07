@@ -14,6 +14,8 @@
 # the formula (= no id term). gee_fit() uses this to fit the model.
 
 
+#' @description Function to add single clustering variable for GEE
+#' @noRd
 gee_formula <- function(f) {
   cl <- match.call()
   trms <- terms(f, specials = "id_var")
@@ -46,6 +48,19 @@ gee_formula <- function(f) {
   list(formula = f, id = id_var)
 }
 
+#' @title GEE fitting function
+#' @description Custom fitting function to add GEE model with cluster
+#'   variable to parsnip GEE function call.
+#' @param formula Normal formula but uses the `gee_formula()` internal function for the `id_var()` specification for clustering
+#' @param data Modeling data
+#' @param family a family object: a list of functions and expressions for
+#'   defining link and variance functions. Families supported in gee are
+#'   gaussian, binomial, poisson, Gamma, and quasi; see the glm and family
+#'   documentation. Some links are not currently available: 1/mu^2 and sqrt have
+#'   not been hard-coded in the cgee engine at present. The inverse gaussian
+#'   variance function is not available. All combinations of remaining functions
+#'   can be obtained either by family selection or by the use of quasi.
+#' @param ... For additional parameters
 #' @export
 gee_fit <- function(formula, data, family = gaussian, ...) {
   f <- gee_formula(formula)

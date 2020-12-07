@@ -6,6 +6,8 @@
 #' @importFrom parsnip check_final_param model_printer show_call
 #' @importFrom utils globalVariables
 #' @importFrom stats sd na.exclude
+#' @importFrom stats binomial gaussian poisson terms
+
 
 # ------------------------------------------------------------------------------
 
