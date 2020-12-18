@@ -143,13 +143,14 @@ make_lme4_linear_reg <- function() {
     mode = "regression",
     type = "numeric",
     value = list(
-      pre = NULL,
+      pre = reformat_lme_pred_data,
       post =  NULL,
       func = c(fun = "predict"),
       args = list(
         object = rlang::expr(object$fit),
         newdata = rlang::expr(new_data),
         allow.new.levels = TRUE,
+        re.form = NA,
         na.action = rlang::expr(na.exclude),
         type = "response"
       )
