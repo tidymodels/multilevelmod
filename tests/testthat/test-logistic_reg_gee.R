@@ -1,10 +1,17 @@
 context("Generalized estimating equation models, logistic")
 
 library(rlang)
+
 data(riesby)
-riesby$sad[riesby$depr_score < -10] <- 0
-riesby$sad[riesby$depr_score >= -10] <- 1
+riesby$sad <- ifelse(riesby$depr_score < -10, "low", "high")
 riesby$sad <- factor(riesby$sad)
+riesby$binary <- ifelse(riesby$depr_score < -10, 1, 0)
+riesby_tr <- riesby[-(1:8), ]
+riesby_te <- riesby[ (1:8), c("week", "imipramine")]
+
+
+data(two_class_dat, package = "modeldata")
+two_class_dat$id <- rep(1:20, each = 40)[1:nrow(two_class_dat)]
 
 # ------------------------------------------------------------------------------
 
@@ -12,28 +19,31 @@ test_that('logistic gee execution', {
   skip_if_not_installed("gee")
   skip_on_cran()
 
-  # Create function
-  gee_cl <- call2(
-    "gee", .ns = "gee",
-    sad ~ week + imipramine, id = expr(subject), family = binomial, data = expr(riesby)
-  )
+  # ----------------------------------------------------------------------------
 
   # Run both regular and GEE model
   set.seed(1234)
-  gee_mod <- eval_tidy(gee_cl)
-  ps_mod <-
-    logistic_reg() %>%
-    set_engine("gee") %>%
-    fit(factor(sad) ~ week + imipramine + id_var(subject), data = riesby)
+  gee_mod <- gee::gee(binary ~ week + imipramine, id = riesby_tr$subject,
+                      family = binomial, data = riesby_tr)
+  # gee doesn't have all of the elements that are needed from prediction. Get
+  # them from glm
+  glm_mod <- glm(binary ~ week,  data = riesby_tr, family = binomial)
+  gee_mod$rank <- glm_mod$rank
+  gee_mod$qr <- glm_mod$qr
+  class(gee_mod) <- c(class(gee_mod), "lm")
+
+  # ----------------------------------------------------------------------------
 
   # Check for error
   expect_error(
     ps_mod <-
       logistic_reg() %>%
       set_engine("gee") %>%
-      fit(factor(sad) ~ week + imipramine + id_var(subject), data = riesby),
+      fit(factor(sad) ~ week + imipramine + id_var(subject), data = riesby_tr),
     regex = NA
   )
+
+  # ----------------------------------------------------------------------------
 
   # See if coefficients for both model runs are the same
   expect_equal(
@@ -41,6 +51,9 @@ test_that('logistic gee execution', {
     coef(gee_mod)[2]
   )
 
-  # Check predictions (not working for either model)
+  # ----------------------------------------------------------------------------
+
+  gee_prob <- unname(predict(gee_mod, riesby_te, type = "response"))
 
 })
+

@@ -30,5 +30,6 @@ Imports:
     rlang,
     dplyr,
     purrr,
-    lme4
+    lme4,
+    withr
 Remotes: tidymodels/parsnip

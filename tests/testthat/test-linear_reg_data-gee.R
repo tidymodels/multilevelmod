@@ -9,26 +9,30 @@ test_that('linear gee execution', {
   skip_if_not_installed("gee")
   skip_on_cran()
 
-  # Create function
-  gee_cl <- call2(
-    "gee", .ns = "gee",
-    depr_score ~ week, id = expr(subject), family = quasi, data = expr(riesby)
-  )
+  riesby_tr <- riesby[-(1:8), ]
+  riesby_te <- riesby[ (1:8), "week", drop = FALSE]
+
+  # ----------------------------------------------------------------------------
 
   # Run both regular and GEE model
   set.seed(1234)
-  gee_mod <- eval_tidy(gee_cl)
-  ps_mod <-
-    linear_reg() %>%
-    set_engine("gee") %>%
-    fit(depr_score ~ week + id_var(subject), data = riesby)
+  gee_mod <- gee::gee(depr_score ~ week, id = riesby_tr$subject,
+                      family = quasi, data = riesby_tr)
+  # gee doesn't have all of the elements that are needed from prediction. Get
+  # them from glm
+  glm_mod <- glm(depr_score ~ week,  data = riesby_tr)
+  gee_mod$rank <- glm_mod$rank
+  gee_mod$qr <- glm_mod$qr
+  class(gee_mod) <- c(class(gee_mod), "lm")
+
+  # ----------------------------------------------------------------------------
 
   # Check for error
   expect_error(
     ps_mod <-
       linear_reg() %>%
-      set_engine("gee") %>%
-      fit(depr_score ~ week + id_var(subject), data = riesby),
+      set_engine("gee", family = quasi) %>%
+      fit(depr_score ~ week + id_var(subject), data = riesby_tr),
     regex = NA
   )
 
@@ -38,6 +42,9 @@ test_that('linear gee execution', {
     coef(gee_mod)[2]
   )
 
-  # Check predictions (not working for either model)
-
+  # Check predictions
+  expect_equal(
+    unname(predict(gee_mod, riesby_te)),
+    predict(ps_mod, riesby_te)$.pred
+  )
 })
