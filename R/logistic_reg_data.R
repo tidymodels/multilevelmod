@@ -80,7 +80,7 @@ make_gee_logistic_reg <- function() {
     )
   )
 
-  parsnip::parsnip::set_pred(
+  parsnip::set_pred(
     model = "logistic_reg",
     eng = "gee",
     mode = "classification",
