@@ -19,6 +19,7 @@ RoxygenNote: 7.1.1.9000
 Suggests: 
     spelling,
     testthat,
+    gee,
     covr
 Language: en-US
 Depends: 
@@ -29,5 +30,6 @@ Imports:
     rlang,
     dplyr,
     purrr,
-    lme4
+    lme4,
+    withr
 Remotes: tidymodels/parsnip

@@ -5,7 +5,9 @@
 #' @importFrom parsnip new_model_spec null_value update_main_parameters
 #' @importFrom parsnip check_final_param model_printer show_call
 #' @importFrom utils globalVariables
-#' @importFrom stats sd na.exclude
+#' @importFrom stats sd na.exclude glm as.formula
+#' @importFrom stats binomial gaussian poisson terms
+
 
 # ------------------------------------------------------------------------------
 

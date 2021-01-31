@@ -3,7 +3,7 @@
 # they are already in the parsnip model database. We'll exclude them from
 # coverage stats for this reason.
 
-# nocov
+# nocov start
 
 make_stan_linear_reg <- function() {
 
@@ -160,6 +160,73 @@ make_lme4_linear_reg <- function() {
   parsnip::set_pred(
     model = "linear_reg",
     eng = "lmer",
+    mode = "regression",
+    type = "raw",
+    value = list(
+      pre = NULL,
+      post = NULL,
+      func = c(fun = "predict"),
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data)
+      )
+    )
+  )
+
+}
+
+# ------------------------------------------------------------------------------
+
+make_gee_linear_reg <- function() {
+
+  parsnip::set_model_engine("linear_reg", "regression", "gee")
+  parsnip::set_dependency("linear_reg", "gee", "gee")
+  parsnip::set_dependency("linear_reg", "gee", "multilevelmod")
+
+  parsnip::set_encoding(
+    model = "linear_reg",
+    eng = "gee",
+    mode = "regression",
+    options = list(
+      predictor_indicators = "none",
+      compute_intercept = FALSE,
+      remove_intercept = FALSE,
+      allow_sparse_x = FALSE
+    )
+  )
+
+  parsnip::set_fit(
+    model = "linear_reg",
+    eng = "gee",
+    mode = "regression",
+    value = list(
+      interface = "formula",
+      protect = c("formula", "data"),
+      func = c(pkg = "multilevelmod", fun = "gee_fit"),
+      defaults = list(family = rlang::expr(gaussian))
+    )
+  )
+
+  parsnip::set_pred(
+    model = "linear_reg",
+    eng = "gee",
+    mode = "regression",
+    type = "numeric",
+    value = list(
+      pre = NULL,
+      post =  NULL,
+      func = c(fun = "predict"),
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data),
+        type = "response"
+      )
+    )
+  )
+
+  parsnip::set_pred(
+    model = "linear_reg",
+    eng = "gee",
     mode = "regression",
     type = "raw",
     value = list(
