@@ -38,8 +38,8 @@ test_that('linear gee execution', {
 
   # See if coefficients for both model runs are the same
   expect_equal(
-    coef(ps_mod$fit)[2],
-    coef(gee_mod)[2]
+    coef(ps_mod$fit),
+    coef(gee_mod)
   )
 
   # Check predictions

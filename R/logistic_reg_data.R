@@ -41,16 +41,42 @@ make_gee_logistic_reg <- function() {
     model = "logistic_reg",
     eng = "gee",
     mode = "classification",
-    type = "numeric",
+    type = "class",
     value = list(
       pre = NULL,
-      post =  NULL,
+      post = function(x, object) {
+        x <- ifelse(x >= 0.5, object$lvl[2], object$lvl[1])
+        unname(x)
+      },
       func = c(fun = "predict"),
-      args = list(
-        object = rlang::expr(object$fit),
-        newdata = rlang::expr(new_data),
-        type = "response"
-      )
+      args =
+        list(
+          object = quote(object$fit),
+          newdata = quote(new_data),
+          type = "response"
+        )
+    )
+  )
+
+  set_pred(
+    model = "logistic_reg",
+    eng = "gee",
+    mode = "classification",
+    type = "prob",
+    value = list(
+      pre = NULL,
+      post = function(x, object) {
+        x <- tibble::tibble(v1 = 1 - x, v2 = x)
+        colnames(x) <- object$lvl
+        x
+      },
+      func = c(fun = "predict"),
+      args =
+        list(
+          object = quote(object$fit),
+          newdata = quote(new_data),
+          type = "response"
+        )
     )
   )
 

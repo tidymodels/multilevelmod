@@ -9,10 +9,6 @@ riesby$binary <- ifelse(riesby$depr_score < -10, 1, 0)
 riesby_tr <- riesby[-(1:8), ]
 riesby_te <- riesby[ (1:8), c("week", "imipramine")]
 
-
-data(two_class_dat, package = "modeldata")
-two_class_dat$id <- rep(1:20, each = 40)[1:nrow(two_class_dat)]
-
 # ------------------------------------------------------------------------------
 
 test_that('logistic gee execution', {
@@ -27,7 +23,7 @@ test_that('logistic gee execution', {
                       family = binomial, data = riesby_tr)
   # gee doesn't have all of the elements that are needed from prediction. Get
   # them from glm
-  glm_mod <- glm(binary ~ week,  data = riesby_tr, family = binomial)
+  glm_mod <- glm(binary ~ week + imipramine,  data = riesby_tr, family = binomial)
   gee_mod$rank <- glm_mod$rank
   gee_mod$qr <- glm_mod$qr
   class(gee_mod) <- c(class(gee_mod), "lm")
@@ -39,7 +35,7 @@ test_that('logistic gee execution', {
     ps_mod <-
       logistic_reg() %>%
       set_engine("gee") %>%
-      fit(factor(sad) ~ week + imipramine + id_var(subject), data = riesby_tr),
+      fit(sad ~ week + imipramine + id_var(subject), data = riesby_tr),
     regex = NA
   )
 
@@ -47,13 +43,26 @@ test_that('logistic gee execution', {
 
   # See if coefficients for both model runs are the same
   expect_equal(
-    coef(ps_mod$fit)[2],
-    coef(gee_mod)[2]
+    coef(ps_mod$fit),
+    coef(gee_mod)
   )
 
   # ----------------------------------------------------------------------------
 
   gee_prob <- unname(predict(gee_mod, riesby_te, type = "response"))
+  pa_prob <- predict(ps_mod, riesby_te, type = "prob")
+  expect_equal(
+    gee_prob,
+    pa_prob$.pred_low
+  )
+
+  gee_cls <- ifelse(gee_prob > 0.5, "low", "high")
+  gee_cls <- factor(gee_cls, levels = levels(riesby_tr$sad))
+  pa_cls <- predict(ps_mod, riesby_te, type = "class")
+  expect_equal(
+    gee_cls,
+    pa_cls$.pred_class
+  )
 
 })
 
