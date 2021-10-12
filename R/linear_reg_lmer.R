@@ -3,8 +3,8 @@
 #' The `lmer` engine estimates fixed and random effect regression parameters
 #' using maximum likelihood (or restricted maximum likelihood) estimation.
 #'
-#' @includeRmd man/rmd/linear-reg-lmer.Rmd details
+#' @includeRmd man/rmd/linear_reg_lmer.Rmd details
 #'
-#' @name details-linear-reg-lmer
+#' @name details_linear_reg_lmer
 #' @keywords internal
 NULL

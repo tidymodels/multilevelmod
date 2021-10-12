@@ -71,3 +71,5 @@ For prediction, the `stan-glmer` engine can compute posterior  intervals analogo
 ## References
 
  - McElreath, R. 2020 _Statistical Rethinking_. CRC Press.
+
+ - Sorensen, T, Vasishth, S. 2016. Bayesian linear mixed models using Stan: A tutorial for psychologists, linguists, and cognitive scientists, 	arXiv:1506.06201.
