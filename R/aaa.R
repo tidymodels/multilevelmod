@@ -9,6 +9,8 @@
   make_lme4_linear_reg()
   make_gee_linear_reg()
   make_gee_logistic_reg()
+  make_lme4_logistic_reg()
+  make_stan_logistic_reg()
 }
 
 
