@@ -46,6 +46,7 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v1
 
       - uses: r-lib/actions/setup-r@v1
+        id: install-r
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
@@ -66,5 +67,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@main
         with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          name: ${{ matrix.config.os }}-r${{ matrix.config.r }}-results
           path: check
