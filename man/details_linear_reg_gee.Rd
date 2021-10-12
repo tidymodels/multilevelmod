@@ -46,7 +46,7 @@ next section.
 The model cannot accept case weights.
 
 Both \code{gee:gee(a)} and \code{gee:geepack()} specifies the id/cluster variable
-using an argument ‘id’ that requires a vector. parsnip doesn’t work that
+using an argument \code{id} that requires a vector. parsnip doesn’t work that
 way so we enable this model to be fit using a artificial function called
 \code{id_var()} to be used in the formula. So, in the original package, the
 call would look like:\if{html}{\out{<div class="sourceCode r">}}\preformatted{gee(breaks ~ tension, id = wool, data = warpbreaks, corstr = "exchangeable")
