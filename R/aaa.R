@@ -11,6 +11,9 @@
   make_gee_logistic_reg()
   make_lme4_logistic_reg()
   make_stan_logistic_reg()
+  make_gee_poisson_reg()
+  make_lme4_poisson_reg()
+  make_stan_poisson_reg()
 }
 
 

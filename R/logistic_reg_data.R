@@ -80,7 +80,7 @@ make_stan_logistic_reg <- function() {
     )
   )
 
-  set_pred(
+  parsnip::set_pred(
     model = "logistic_reg",
     eng = "stan-glmer",
     mode = "classification",
@@ -91,12 +91,12 @@ make_stan_logistic_reg <- function() {
         res_2 <-
           tibble::tibble(
             lo =
-              convert_stan_interval(
+              parsnip::convert_stan_interval(
                 results,
                 level = object$spec$method$pred$conf_int$extras$level
               ),
             hi =
-              convert_stan_interval(
+              parsnip::convert_stan_interval(
                 results,
                 level = object$spec$method$pred$conf_int$extras$level,
                 lower = FALSE
@@ -134,7 +134,7 @@ make_stan_logistic_reg <- function() {
       pre = NULL,
       post = function(results, object) {
         res_2 <-
-          tibble(
+          tibble::tibble(
             lo =
               parsnip::convert_stan_interval(
                 results,
@@ -154,7 +154,7 @@ make_stan_logistic_reg <- function() {
         hi_nms <- paste0(".pred_upper_", object$lvl)
         colnames(res_1) <- c(lo_nms[1], hi_nms[1])
         colnames(res_2) <- c(lo_nms[2], hi_nms[2])
-        res <- bind_cols(res_1, res_2)
+        res <- dplyr::bind_cols(res_1, res_2)
 
         if (object$spec$method$pred$pred_int$extras$std_error)
           res$.std_error <- apply(results, 2, sd, na.rm = TRUE)
@@ -248,7 +248,7 @@ make_lme4_logistic_reg <- function() {
     value = list(
       pre = reformat_lme_pred_data,
       post = function(x, object) {
-        x <- tibble(v1 = 1 - x, v2 = x)
+        x <- tibble::tibble(v1 = 1 - x, v2 = x)
         colnames(x) <- object$lvl
         x
       },
