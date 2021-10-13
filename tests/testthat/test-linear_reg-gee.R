@@ -1,16 +1,7 @@
-context("Generalized estimating equation models, linear")
-
-data("riesby")
-library(rlang)
-
-# ------------------------------------------------------------------------------
 
 test_that('linear gee execution', {
   skip_if_not_installed("gee")
   skip_on_cran()
-
-  riesby_tr <- riesby[-(1:8), ]
-  riesby_te <- riesby[ (1:8), "week", drop = FALSE]
 
   # ----------------------------------------------------------------------------
 

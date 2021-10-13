@@ -1,9 +1,3 @@
-context("stan mixed-level model")
-
-data("riesby")
-library(rlang)
-
-# ------------------------------------------------------------------------------
 
 test_that('stan_glm execution', {
   skip_if_not_installed("rstanarm")
