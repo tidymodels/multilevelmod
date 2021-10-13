@@ -33,3 +33,4 @@ Imports:
     lme4,
     withr
 Remotes: tidymodels/parsnip
+Config/Needs/website: tidyverse/tidytemplate
