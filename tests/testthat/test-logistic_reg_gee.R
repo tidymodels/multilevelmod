@@ -1,15 +1,9 @@
 context("Generalized estimating equation models, logistic")
 
 library(rlang)
+source(test_path("helper-logistic.R"))
 
-data(riesby)
-riesby$sad <- ifelse(riesby$depr_score < -10, "low", "high")
-riesby$sad <- factor(riesby$sad)
-riesby$binary <- ifelse(riesby$depr_score < -10, 1, 0)
-riesby_tr <- riesby[-(1:8), ]
-riesby_te <- riesby[ (1:8), c("week", "imipramine")]
-
-# ------------------------------------------------------------------------------
+  q# ------------------------------------------------------------------------------
 
 test_that('logistic gee execution', {
   skip_if_not_installed("gee")
@@ -35,7 +29,7 @@ test_that('logistic gee execution', {
     ps_mod <-
       logistic_reg() %>%
       set_engine("gee") %>%
-      fit(sad ~ week + imipramine + id_var(subject), data = riesby_tr),
+      fit(depressed ~ week + imipramine + id_var(subject), data = riesby_tr),
     regex = NA
   )
 
@@ -57,7 +51,7 @@ test_that('logistic gee execution', {
   )
 
   gee_cls <- ifelse(gee_prob > 0.5, "low", "high")
-  gee_cls <- factor(gee_cls, levels = levels(riesby_tr$sad))
+  gee_cls <- factor(gee_cls, levels = levels(riesby_tr$depressed))
   pa_cls <- predict(ps_mod, riesby_te, type = "class")
   expect_equal(
     gee_cls,
