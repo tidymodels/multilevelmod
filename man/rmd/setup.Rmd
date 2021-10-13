@@ -1,5 +1,6 @@
 ```{r, include = FALSE}
 library(dials)
+library(multilevelmod)
 convert_args <- function(model_name) {
   envir <- get_model_env()
 
