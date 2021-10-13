@@ -9,13 +9,13 @@
 
 make_stan_logistic_reg <- function() {
 
-  parsnip::set_model_engine("logistic_reg", "classification", "stan-glmer")
-  parsnip::set_dependency("logistic_reg", "stan-glmer", "rstanarm")
-  parsnip::set_dependency("logistic_reg", "stan-glmer", "multilevelmod")
+  parsnip::set_model_engine("logistic_reg", "classification", "stan_glmer")
+  parsnip::set_dependency("logistic_reg", "stan_glmer", "rstanarm")
+  parsnip::set_dependency("logistic_reg", "stan_glmer", "multilevelmod")
 
   parsnip::set_encoding(
     model = "logistic_reg",
-    eng = "stan-glmer",
+    eng = "stan_glmer",
     mode = "classification",
     options = list(
       predictor_indicators = "none",
@@ -27,7 +27,7 @@ make_stan_logistic_reg <- function() {
 
   parsnip::set_fit(
     model = "logistic_reg",
-    eng = "stan-glmer",
+    eng = "stan_glmer",
     mode = "classification",
     value = list(
       interface = "formula",
@@ -39,7 +39,7 @@ make_stan_logistic_reg <- function() {
 
   parsnip::set_pred(
     model = "logistic_reg",
-    eng = "stan-glmer",
+    eng = "stan_glmer",
     mode = "classification",
     type = "class",
     value = list(
@@ -60,7 +60,7 @@ make_stan_logistic_reg <- function() {
 
   parsnip::set_pred(
     model = "logistic_reg",
-    eng = "stan-glmer",
+    eng = "stan_glmer",
     mode = "classification",
     type = "prob",
     value = list(
@@ -82,7 +82,7 @@ make_stan_logistic_reg <- function() {
 
   parsnip::set_pred(
     model = "logistic_reg",
-    eng = "stan-glmer",
+    eng = "stan_glmer",
     mode = "classification",
     type = "conf_int",
     value = list(
@@ -127,7 +127,7 @@ make_stan_logistic_reg <- function() {
 
   parsnip::set_pred(
     model = "logistic_reg",
-    eng = "stan-glmer",
+    eng = "stan_glmer",
     mode = "classification",
     type = "pred_int",
     value = list(
@@ -172,7 +172,7 @@ make_stan_logistic_reg <- function() {
 
   parsnip::set_pred(
     model = "logistic_reg",
-    eng = "stan-glmer",
+    eng = "stan_glmer",
     mode = "classification",
     type = "raw",
     value = list(

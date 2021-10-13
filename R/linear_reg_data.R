@@ -7,13 +7,13 @@
 
 make_stan_linear_reg <- function() {
 
-  parsnip::set_model_engine("linear_reg", "regression", "stan-glmer")
-  parsnip::set_dependency("linear_reg", "stan-glmer", "rstanarm")
-  parsnip::set_dependency("linear_reg", "stan-glmer", "multilevelmod")
+  parsnip::set_model_engine("linear_reg", "regression", "stan_glmer")
+  parsnip::set_dependency("linear_reg", "stan_glmer", "rstanarm")
+  parsnip::set_dependency("linear_reg", "stan_glmer", "multilevelmod")
 
   parsnip::set_encoding(
     model = "linear_reg",
-    eng = "stan-glmer",
+    eng = "stan_glmer",
     mode = "regression",
     options = list(
       predictor_indicators = "none",
@@ -25,7 +25,7 @@ make_stan_linear_reg <- function() {
 
   parsnip::set_fit(
     model = "linear_reg",
-    eng = "stan-glmer",
+    eng = "stan_glmer",
     mode = "regression",
     value = list(
       interface = "formula",
@@ -37,7 +37,7 @@ make_stan_linear_reg <- function() {
 
   parsnip::set_pred(
     model = "linear_reg",
-    eng = "stan-glmer",
+    eng = "stan_glmer",
     mode = "regression",
     type = "numeric",
     value = list(
@@ -56,7 +56,7 @@ make_stan_linear_reg <- function() {
 
   parsnip::set_pred(
     model = "linear_reg",
-    eng = "stan-glmer",
+    eng = "stan_glmer",
     mode = "regression",
     type = "pred_int",
     value = list(
@@ -92,7 +92,7 @@ make_stan_linear_reg <- function() {
 
   parsnip::set_pred(
     model = "linear_reg",
-    eng = "stan-glmer",
+    eng = "stan_glmer",
     mode = "regression",
     type = "raw",
     value = list(

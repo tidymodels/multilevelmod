@@ -1,7 +1,7 @@
 ```{r, child = "setup.Rmd", include = FALSE}
 ```
 
-`r descr_models("poisson_reg", "stan-glmer")`
+`r descr_models("poisson_reg", "stan_glmer")`
 
 ## Tuning Parameters
 
@@ -22,9 +22,9 @@ See `?rstanarm::stan_glmer` and `?rstan::sampling` for more information.
 
 ## Translation from parsnip to the original package
 
-```{r stan-glmer-cls}
-poisson_reg(engine = "stan-glmer") %>% 
-  set_engine("stan-glmer") %>% 
+```{r stan_glmer-cls}
+poisson_reg(engine = "stan_glmer") %>% 
+  set_engine("stan_glmer") %>% 
   translate()
 ```
 
@@ -42,7 +42,7 @@ With `parsnip`, we suggest using the formula method when fitting:
 library(tidymodels)
 
 poisson_reg() %>% 
-  set_engine("stan-glmer") %>% 
+  set_engine("stan_glmer") %>% 
   fit(y ~ time + x + (1 | subject), data = longitudinal_counts)
 ```
 
@@ -53,7 +53,7 @@ library(tidymodels)
 
 glmer_spec <- 
   poisson_reg() %>% 
-  set_engine("stan-glmer")
+  set_engine("stan_glmer")
 
 glmer_wflow <- 
   workflow() %>% 
@@ -64,7 +64,7 @@ glmer_wflow <-
 fit(glmer_wflow, data = longitudinal_counts)
 ```
 
-For prediction, the `stan-glmer` engine can compute posterior  intervals analogous to confidence and prediction intervals. In  these instances, the units are the original outcome and when  `std_error = TRUE`, the standard deviation of the posterior  distribution (or posterior predictive distribution as  appropriate) is returned.
+For prediction, the `stan_glmer` engine can compute posterior  intervals analogous to confidence and prediction intervals. In  these instances, the units are the original outcome and when  `std_error = TRUE`, the standard deviation of the posterior  distribution (or posterior predictive distribution as  appropriate) is returned.
 
 ## References
 

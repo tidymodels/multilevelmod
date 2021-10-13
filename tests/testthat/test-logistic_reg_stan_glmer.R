@@ -18,7 +18,7 @@ test_that('logistic stan_glmer execution', {
     set.seed(1)
     ps_mod <-
       logistic_reg() %>%
-      set_engine("stan-glmer", seed = 9284, iter = 500, refresh = 0) %>%
+      set_engine("stan_glmer", seed = 9284, iter = 500, refresh = 0) %>%
       fit(f_bin, data = riesby_bin_tr)
   },
   regex = NA
