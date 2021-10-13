@@ -2,7 +2,6 @@
 test_that('poisson gee execution', {
   skip_if_not_installed("gee")
   skip_on_cran()
-  skip("not yet working")
 
   # ----------------------------------------------------------------------------
 
@@ -15,7 +14,7 @@ test_that('poisson gee execution', {
   glm_mod <- glm(y ~ time + x,  data = counts_tr, family = poisson)
   gee_mod$rank <- glm_mod$rank
   gee_mod$qr <- glm_mod$qr
-  class(gee_mod) <- c(class(gee_mod), "glm")
+  class(gee_mod) <- c(class(gee_mod), "lm")
 
   # ----------------------------------------------------------------------------
 
@@ -36,7 +35,7 @@ test_that('poisson gee execution', {
 
   # Check predictions
   expect_equal(
-    unname(predict(gee_mod, counts_te)),
+    unname(predict(gee_mod, counts_te, type = "response")),
     predict(ps_mod, counts_te)$.pred
   )
 })
