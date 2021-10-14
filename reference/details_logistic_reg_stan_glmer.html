@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Linear regression via mixed models — details_linear_reg_lmer • multilevelmod</title>
+<title>Logistic regression via hierarchical Bayesian methods — details_logistic_reg_stan_glmer • multilevelmod</title>
 
 
 <!-- jquery -->
@@ -42,9 +42,9 @@
 
 
 
-<meta property="og:title" content="Linear regression via mixed models — details_linear_reg_lmer" />
-<meta property="og:description" content="The lmer engine estimates fixed and random effect regression parameters
-using maximum likelihood (or restricted maximum likelihood) estimation." />
+<meta property="og:title" content="Logistic regression via hierarchical Bayesian methods — details_logistic_reg_stan_glmer" />
+<meta property="og:description" content="The stan_glmer engine estimates hierarchical regression parameters using
+Bayesian estimation." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,36 +117,55 @@ using maximum likelihood (or restricted maximum likelihood) estimation." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Linear regression via mixed models</h1>
+    <h1>Logistic regression via hierarchical Bayesian methods</h1>
     
-    <div class="hidden name"><code>details_linear_reg_lmer.Rd</code></div>
+    <div class="hidden name"><code>details_logistic_reg_stan_glmer.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>lmer</code> engine estimates fixed and random effect regression parameters
-using maximum likelihood (or restricted maximum likelihood) estimation.</p>
+    <p>The <code>stan_glmer</code> engine estimates hierarchical regression parameters using
+Bayesian estimation.</p>
     </div>
 
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For this engine, there is a single mode: regression</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Tuning Parameters</h3>
+    <p>For this engine, there is a single mode: classification</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Tuning Parameters</h3>
 
 
 <p>This model has no tuning parameters.</p>
 
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Important engine-specific options</h3>
+
+
+<p>Some relevant arguments that can be passed to <code>set_engine()</code>:</p><ul>
+<li><p><code>chains</code>: A positive integer specifying the number of Markov chains.
+The default is 4.</p></li>
+<li><p><code>iter</code>: A positive integer specifying the number of iterations for
+each chain (including warmup). The default is 2000.</p></li>
+<li><p><code>seed</code>: The seed for random number generation.</p></li>
+<li><p><code>cores</code>: Number of cores to use when executing the chains in
+parallel.</p></li>
+<li><p><code>prior</code>: The prior distribution for the (non-hierarchical)
+regression coefficients.</p></li>
+<li><p><code>prior_intercept</code>: The prior distribution for the intercept (after
+centering all predictors).</p></li>
+</ul>
+
+<p>See <code>?rstanarm::stan_glmer</code> and <code>?rstan::sampling</code> for more information.</p>
+
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Translation from parsnip to the original package</h3>
-<p><div class="sourceCode r"></p><pre><span class='fu'>linear_reg</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"lmer"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"regression"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+<p><div class="sourceCode r"></p><pre><span class='fu'>logistic_reg</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"stan_glmer"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
   <span class='fu'>translate</span><span class='op'>(</span><span class='op'>)</span>
-</pre><p></div></p><pre><span class='co'>## Linear Regression Model Specification (regression)</span>
+</pre><p></div></p><pre><span class='co'>## Logistic Regression Model Specification (classification)</span>
 <span class='co'>## </span>
-<span class='co'>## Computational engine: lmer </span>
+<span class='co'>## Computational engine: stan_glmer </span>
 <span class='co'>## </span>
 <span class='co'>## Model fit template:</span>
-<span class='co'>## lme4::lmer(formula = missing_arg(), data = missing_arg())</span>
+<span class='co'>## rstanarm::stan_glmer(formula = missing_arg(), data = missing_arg(), </span>
+<span class='co'>##     weights = missing_arg(), family = stats::binomial, refresh = 0)</span>
 </pre>
 
 
@@ -186,46 +205,41 @@ next section.</p>
 
 <p>The model can accept case weights.</p>
 <p>With <code>parsnip</code>, we suggest using the formula method when fitting:<div class="sourceCode r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>tidymodels</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"riesby"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"toenail"</span>, package <span class='op'>=</span> <span class='st'>"HSAUR3"</span><span class='op'>)</span>
 
-<span class='fu'>linear_reg</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"lmer"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>fit</span><span class='op'>(</span><span class='va'>depr_score</span> <span class='op'>~</span> <span class='va'>week</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>subject</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>riesby</span><span class='op'>)</span>
+<span class='fu'>logistic_reg</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"stan_glmer"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>fit</span><span class='op'>(</span><span class='va'>outcome</span> <span class='op'>~</span> <span class='va'>treatment</span> <span class='op'>*</span> <span class='va'>visit</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>patientID</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>toenail</span><span class='op'>)</span>
 </pre><p></div></p>
 <p>When using the general tidymodels infrastructure, it may be better to
 use a workflow. In this case, you can add the appropriate columns using
 <code>add_variables()</code> then supply the typical formula when adding the model:<div class="sourceCode r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>tidymodels</span><span class='op'>)</span>
 
-<span class='va'>lmer_spec</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>linear_reg</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"lmer"</span><span class='op'>)</span>
+<span class='va'>glmer_spec</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>logistic_reg</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"stan_glmer"</span><span class='op'>)</span>
 
-<span class='va'>lmer_wflow</span> <span class='op'>&lt;-</span> 
+<span class='va'>glmer_wflow</span> <span class='op'>&lt;-</span> 
   <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
   <span class='co'># The data are included as-is using:</span>
-  <span class='fu'>add_variables</span><span class='op'>(</span>outcomes <span class='op'>=</span> <span class='va'>depr_score</span>, predictors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>week</span>, <span class='va'>subject</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>lmer_spec</span>, formula <span class='op'>=</span> <span class='va'>depr_score</span> <span class='op'>~</span> <span class='va'>week</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>subject</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'>add_variables</span><span class='op'>(</span>outcomes <span class='op'>=</span> <span class='va'>outcome</span>, predictors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>treatment</span>, <span class='va'>visit</span>, <span class='va'>patientID</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>glmer_spec</span>, formula <span class='op'>=</span> <span class='va'>outcome</span> <span class='op'>~</span> <span class='va'>treatment</span> <span class='op'>*</span> <span class='va'>visit</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>patientID</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>fit</span><span class='op'>(</span><span class='va'>lmer_wflow</span>, data <span class='op'>=</span> <span class='va'>riesby</span><span class='op'>)</span>
+<span class='fu'>fit</span><span class='op'>(</span><span class='va'>glmer_wflow</span>, data <span class='op'>=</span> <span class='va'>toenail</span><span class='op'>)</span>
 </pre><p></div></p>
+<p>For prediction, the <code>stan_glmer</code> engine can compute posterior intervals
+analogous to confidence and prediction intervals. In these instances,
+the units are the original outcome and when <code>std_error = TRUE</code>, the
+standard deviation of the posterior distribution (or posterior
+predictive distribution as appropriate) is returned.</p>
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>References</h3>
 
 <ul>
-<li><p>J Pinheiro, and D Bates. 2000. <em>Mixed-effects models in S and
-S-PLUS</em>. Springer, New York, NY</p></li>
-<li><p>West, K, Band Welch, and A Galecki. 2014. <em>Linear Mixed Models: A
-Practical Guide Using Statistical Software</em>. CRC Press.</p></li>
-<li><p>Thorson, J, Minto, C. 2015, Mixed effects: a unifying framework for
-statistical modelling in fisheries biology. <em>ICES Journal of Marine
-Science</em>, Volume 72, Issue 5, Pages 1245–1256.</p></li>
-<li><p>Harrison, XA, Donaldson, L, Correa-Cano, ME, Evans, J, Fisher, DN,
-Goodwin, CED, Robinson, BS, Hodgson, DJ, Inger, R. 2018. <em>A brief
-introduction to mixed effects modelling and multi-model inference in
-ecology</em>. PeerJ 6:e4794.</p></li>
-<li><p>DeBruine LM, Barr DJ. Understanding Mixed-Effects Models Through
-Data Simulation. 2021. <em>Advances in Methods and Practices in
-Psychological Science</em>.</p></li>
+<li><p>McElreath, R. 2020 <em>Statistical Rethinking</em>. CRC Press.</p></li>
+<li><p>Sorensen, T, Vasishth, S. 2016. Bayesian linear mixed models using
+Stan: A tutorial for psychologists, linguists, and cognitive
+scientists, arXiv:1506.06201.</p></li>
 </ul>
 
 
