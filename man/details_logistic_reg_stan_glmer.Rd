@@ -47,6 +47,35 @@ See \code{?rstanarm::stan_glmer} and \code{?rstan::sampling} for more informatio
 }
 }
 
+\subsection{Predicting new samples}{
+
+This model can use subject-specific coefficient estimates to make
+predictions (i.e. partial pooling). For example, this equation shows the
+linear predictor (\emph{η}) for a random intercept:
+
+\emph{η}\if{html}{\out{<sub>}}\emph{i}\if{html}{\out{</sub>}} = (\emph{β}\if{html}{\out{<sub>}}0\if{html}{\out{</sub>}} + \emph{b}\if{html}{\out{<sub>}}0\emph{i}\if{html}{\out{</sub>}}) + \emph{β}\if{html}{\out{<sub>}}1\if{html}{\out{</sub>}}\emph{x}\if{html}{\out{<sub>}}\emph{i}1\if{html}{\out{</sub>}}
+
+where \emph{i} denotes the \code{i}th independent experimental unit
+(e.g. subject). When the model has seen subject \code{i}, it can use that
+subject’s data to adjust the \emph{population} intercept to be more specific
+to that subjects results.
+
+What happens when data are being predicted for a subject that was not
+used in the model fit? In that case, this package uses \emph{only} the
+population parameter estimates for prediction:
+
+\emph{η̂}\if{html}{\out{<sub>}}\emph{i}′\if{html}{\out{</sub>}} = \emph{β̂}\if{html}{\out{<sub>}}0\if{html}{\out{</sub>}} + \emph{β̂**x}\if{html}{\out{<sub>}}\emph{i}′1\if{html}{\out{</sub>}}
+
+Depending on what covariates are in the model, this might have the
+effect of making the same prediction for all new samples. The population
+parameters are the “best estimate” for a subject that was not included
+in the model fit.
+
+The tidymodels framework deliberately constrains predictions for new
+data to not use the training set or other data (to prevent information
+leakage).
+}
+
 \subsection{Preprocessing requirements}{
 
 There are no specific preprocessing needs. However, it is helpful to

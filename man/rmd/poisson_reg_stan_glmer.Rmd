@@ -28,6 +28,9 @@ poisson_reg(engine = "stan_glmer") %>%
   translate()
 ```
 
+```{r child = "no-pooling.Rmd"}
+```
+
 ## Preprocessing requirements
 
 There are no specific preprocessing needs. However, it is helpful to keep the clustering/subject identifier column as factor or character (instead of making them into dummy variables). See the examples in the next section. 
