@@ -5,14 +5,14 @@
 
 # nocov start
 
-make_stan_linear_reg <- function() {
+make_stan_poisson_reg <- function() {
 
-  parsnip::set_model_engine("linear_reg", "regression", "stan_glmer")
-  parsnip::set_dependency("linear_reg", "stan_glmer", "rstanarm")
-  parsnip::set_dependency("linear_reg", "stan_glmer", "multilevelmod")
+  parsnip::set_model_engine("poisson_reg", "regression", "stan_glmer")
+  parsnip::set_dependency("poisson_reg", "stan_glmer", "rstanarm")
+  parsnip::set_dependency("poisson_reg", "stan_glmer", "multilevelmod")
 
   parsnip::set_encoding(
-    model = "linear_reg",
+    model = "poisson_reg",
     eng = "stan_glmer",
     mode = "regression",
     options = list(
@@ -24,19 +24,19 @@ make_stan_linear_reg <- function() {
   )
 
   parsnip::set_fit(
-    model = "linear_reg",
+    model = "poisson_reg",
     eng = "stan_glmer",
     mode = "regression",
     value = list(
       interface = "formula",
       protect = c("formula", "data", "weights"),
       func = c(pkg = "rstanarm", fun = "stan_glmer"),
-      defaults = list(family = rlang::expr(stats::gaussian), refresh = 0)
+      defaults = list(family = rlang::expr(stats::poisson), refresh = 0)
     )
   )
 
   parsnip::set_pred(
-    model = "linear_reg",
+    model = "poisson_reg",
     eng = "stan_glmer",
     mode = "regression",
     type = "numeric",
@@ -55,7 +55,7 @@ make_stan_linear_reg <- function() {
   )
 
   parsnip::set_pred(
-    model = "linear_reg",
+    model = "poisson_reg",
     eng = "stan_glmer",
     mode = "regression",
     type = "pred_int",
@@ -91,7 +91,7 @@ make_stan_linear_reg <- function() {
   )
 
   parsnip::set_pred(
-    model = "linear_reg",
+    model = "poisson_reg",
     eng = "stan_glmer",
     mode = "regression",
     type = "raw",
@@ -107,15 +107,15 @@ make_stan_linear_reg <- function() {
 
 # ------------------------------------------------------------------------------
 
-make_lme4_linear_reg <- function() {
+make_lme4_poisson_reg <- function() {
 
-  parsnip::set_model_engine("linear_reg", "regression", "lmer")
-  parsnip::set_dependency("linear_reg", "lmer", "lme4")
-  parsnip::set_dependency("linear_reg", "lmer", "multilevelmod")
+  parsnip::set_model_engine("poisson_reg", "regression", "glmer")
+  parsnip::set_dependency("poisson_reg", "glmer", "lme4")
+  parsnip::set_dependency("poisson_reg", "glmer", "multilevelmod")
 
   parsnip::set_encoding(
-    model = "linear_reg",
-    eng = "lmer",
+    model = "poisson_reg",
+    eng = "glmer",
     mode = "regression",
     options = list(
       predictor_indicators = "none",
@@ -126,20 +126,20 @@ make_lme4_linear_reg <- function() {
   )
 
   parsnip::set_fit(
-    model = "linear_reg",
-    eng = "lmer",
+    model = "poisson_reg",
+    eng = "glmer",
     mode = "regression",
     value = list(
       interface = "formula",
       protect = c("formula", "data"),
-      func = c(pkg = "lme4", fun = "lmer"),
-      defaults = list()
+      func = c(pkg = "lme4", fun = "glmer"),
+      defaults = list(family = rlang::expr(stats::poisson))
     )
   )
 
   parsnip::set_pred(
-    model = "linear_reg",
-    eng = "lmer",
+    model = "poisson_reg",
+    eng = "glmer",
     mode = "regression",
     type = "numeric",
     value = list(
@@ -158,8 +158,8 @@ make_lme4_linear_reg <- function() {
   )
 
   parsnip::set_pred(
-    model = "linear_reg",
-    eng = "lmer",
+    model = "poisson_reg",
+    eng = "glmer",
     mode = "regression",
     type = "raw",
     value = list(
@@ -177,14 +177,14 @@ make_lme4_linear_reg <- function() {
 
 # ------------------------------------------------------------------------------
 
-make_gee_linear_reg <- function() {
+make_gee_poisson_reg <- function() {
 
-  parsnip::set_model_engine("linear_reg", "regression", "gee")
-  parsnip::set_dependency("linear_reg", "gee", "gee")
-  parsnip::set_dependency("linear_reg", "gee", "multilevelmod")
+  parsnip::set_model_engine("poisson_reg", "regression", "gee")
+  parsnip::set_dependency("poisson_reg", "gee", "gee")
+  parsnip::set_dependency("poisson_reg", "gee", "multilevelmod")
 
   parsnip::set_encoding(
-    model = "linear_reg",
+    model = "poisson_reg",
     eng = "gee",
     mode = "regression",
     options = list(
@@ -196,19 +196,19 @@ make_gee_linear_reg <- function() {
   )
 
   parsnip::set_fit(
-    model = "linear_reg",
+    model = "poisson_reg",
     eng = "gee",
     mode = "regression",
     value = list(
       interface = "formula",
       protect = c("formula", "data"),
       func = c(pkg = "multilevelmod", fun = "gee_fit"),
-      defaults = list(family = rlang::expr(gaussian))
+      defaults = list(family = rlang::expr(stats::poisson))
     )
   )
 
   parsnip::set_pred(
-    model = "linear_reg",
+    model = "poisson_reg",
     eng = "gee",
     mode = "regression",
     type = "numeric",
@@ -225,7 +225,7 @@ make_gee_linear_reg <- function() {
   )
 
   parsnip::set_pred(
-    model = "linear_reg",
+    model = "poisson_reg",
     eng = "gee",
     mode = "regression",
     type = "raw",

@@ -1,7 +1,7 @@
 ```{r, child = "setup.Rmd", include = FALSE}
 ```
 
-`r descr_models("linear_reg", "lmer")`
+`r descr_models("poisson_reg", "glmer")`
 
 ## Tuning Parameters
 
@@ -10,9 +10,8 @@ This model has no tuning parameters.
 ## Translation from parsnip to the original package
 
 ```{r lmer-csl}
-linear_reg() %>% 
-  set_engine("lmer") %>% 
-  set_mode("regression") %>% 
+poisson_reg(engine = "glmer") %>% 
+  set_engine("glmer") %>% 
   translate()
 ```
 
@@ -31,11 +30,10 @@ With `parsnip`, we suggest using the formula method when fitting:
 
 ```r
 library(tidymodels)
-data("riesby")
 
-linear_reg() %>% 
-  set_engine("lmer") %>% 
-  fit(depr_score ~ week + (1|subject), data = riesby)
+poisson_reg() %>% 
+  set_engine("glmer") %>% 
+  fit(y ~ time + x + (1 | subject), data = longitudinal_counts)
 ```
 
 When using the general tidymodels infrastructure, it may be better to use a workflow. In this case, you can add the appropriate columns using `add_variables()` then supply the typical formula when adding the model: 
@@ -43,17 +41,17 @@ When using the general tidymodels infrastructure, it may be better to use a work
 ```r
 library(tidymodels)
 
-lmer_spec <- 
-  linear_reg() %>% 
-  set_engine("lmer")
+glmer_spec <- 
+  poisson_reg() %>% 
+  set_engine("glmer")
 
-lmer_wflow <- 
+glmer_wflow <- 
   workflow() %>% 
   # The data are included as-is using:
-  add_variables(outcomes = depr_score, predictors = c(week, subject)) %>% 
-  add_model(lmer_spec, formula = depr_score ~ week + (1|subject))
+  add_variables(outcomes = y, predictors = c(time, x, subject)) %>% 
+  add_model(glmer_spec, formula = y ~ time + x + (1 | subject))
 
-fit(lmer_wflow, data = riesby)
+fit(glmer_wflow, data = longitudinal_counts)
 ```
 
 ## References

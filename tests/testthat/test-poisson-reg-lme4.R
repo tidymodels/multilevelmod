@@ -3,7 +3,9 @@ test_that('lme4 execution', {
   skip_if_not_installed("rstanarm")
   skip_on_cran()
 
-  lme4_cl <- call2("lmer", .ns = "lme4", f, data = expr(riesby_tr))
+  lme4_cl <- call2("lmer", .ns = "lme4",
+                   f_counts,
+                   data = expr(counts_tr))
 
   set.seed(2452)
   lme4_mod <- eval_tidy(lme4_cl)
@@ -13,7 +15,7 @@ test_that('lme4 execution', {
     ps_mod <-
       linear_reg() %>%
       set_engine("lmer") %>%
-      fit(f, data = riesby_tr),
+      fit(f_counts, data = counts_tr),
     regex = NA
   )
 
@@ -22,9 +24,9 @@ test_that('lme4 execution', {
     coef(lme4_mod)$subject
   )
 
-  lme4_pred <- predict(lme4_mod, riesby_te, allow.new.levels = TRUE)
+  lme4_pred <- predict(lme4_mod, counts_te, allow.new.levels = TRUE)
 
-  ps_pred <- predict(ps_mod, riesby_te)
+  ps_pred <- predict(ps_mod, counts_te)
 
   expect_equal(unname(lme4_pred), ps_pred$.pred)
 

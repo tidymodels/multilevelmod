@@ -38,3 +38,21 @@ NULL
 #' data(riesby)
 #' str(riesby)
 NULL
+
+#' Simulated longitudinal Poisson counts
+#'
+#' @details These are simulated data of 100 subjects each with 10 time points
+#' and an additional numeric covariate. The linear predictor has a random
+#' standard normal intercept per subject, a time coefficient of 1.50, and a
+#' covariate coefficient of 0.25.
+#'
+#' @name longitudinal_counts
+#' @aliases longitudinal_counts
+#' @docType data
+#' @return \item{longitudinal_counts}{a tibble}
+#'
+#' @keywords datasets
+#' @examples
+#' data(longitudinal_counts)
+#' str(longitudinal_counts)
+NULL

@@ -1,7 +1,7 @@
 ```{r, child = "setup.Rmd", include = FALSE}
 ```
 
-`r descr_models("linear_reg", "gee")`
+`r descr_models("logistic_reg", "gee")`
 
 ## Tuning Parameters
 
@@ -10,9 +10,8 @@ This model has no formal tuning parameters. It might be beneficial to determine 
 ## Translation from parsnip to the original package
 
 ```{r gee-csl}
-linear_reg() %>% 
+logistic_reg() %>% 
   set_engine("gee") %>% 
-  set_mode("regression") %>% 
   translate()
 ```
 
@@ -37,10 +36,11 @@ With `parsnip`, we suggest using the formula method when fitting:
 
 ```r
 library(tidymodels)
+data("toenail", package = "HSAUR3")
 
-linear_reg() %>% 
+logistic_reg() %>% 
   set_engine("gee", corstr = "exchangeable") %>% 
-  fit(breaks ~ tension + id_var(wool), data = warpbreaks)
+  fit(outcome ~ treatment * visit + id_var(patientID), data = toenail)
 ```
 
 When using the general tidymodels infrastructure, it may be better to use a workflow. In this case, you can add the appropriate columns using `add_variables()` then supply the GEE formula when adding the model: 
@@ -49,16 +49,16 @@ When using the general tidymodels infrastructure, it may be better to use a work
 library(tidymodels)
 
 gee_spec <- 
-  linear_reg() %>% 
+  logistic_reg() %>% 
   set_engine("gee", corstr = "exchangeable")
 
 gee_wflow <- 
   workflow() %>% 
   # The data are included as-is using:
-  add_variables(outcomes = breaks, predictors = c(tension, wool)) %>% 
-  add_model(gee_spec, formula = breaks ~ tension + id_var(wool))
+  add_variables(outcomes = outcome, predictors = c(treatment, visit, patientID)) %>% 
+  add_model(gee_spec, formula = outcome ~ treatment * visit + id_var(patientID))
 
-fit(gee_wflow, data = warpbreaks)
+fit(gee_wflow, data = toenail)
 ```
 
 `gee()` always prints out warnings and output even when `silent = TRUE`. When using the `gee` engine, it will never produce output, even if `silent = FALSE`.

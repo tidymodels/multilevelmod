@@ -1,9 +1,3 @@
-context("stan mixed-level model")
-
-data("riesby")
-library(rlang)
-
-# ------------------------------------------------------------------------------
 
 test_that('stan_glm execution', {
   skip_if_not_installed("rstanarm")
@@ -21,7 +15,7 @@ test_that('stan_glm execution', {
     expect_error(
       ps_mod <-
         linear_reg() %>%
-        set_engine("stan-glmer", seed = 9284, refresh = 0, iter = 500) %>%
+        set_engine("stan_glmer", seed = 9284, refresh = 0, iter = 500) %>%
         fit(depr_score ~ week + (week | subject), data = riesby),
       regex = NA
     )
