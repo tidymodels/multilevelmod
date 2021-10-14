@@ -5,6 +5,11 @@ test_that('linear gee execution', {
 
   # ----------------------------------------------------------------------------
 
+  # Adds elements to the global environment
+  make_gaussian_data()
+
+  # ----------------------------------------------------------------------------
+
   # Run both regular and GEE model
   set.seed(1234)
   gee_mod <- gee::gee(depr_score ~ week, id = riesby_tr$subject,

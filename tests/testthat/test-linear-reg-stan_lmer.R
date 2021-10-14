@@ -3,6 +3,13 @@ test_that('stan_glm execution', {
   skip_if_not_installed("rstanarm")
   skip_on_cran()
 
+  # ----------------------------------------------------------------------------
+
+  # Adds elements to the global environment
+  make_gaussian_data()
+
+  # ----------------------------------------------------------------------------
+
   stan_cl <- call2("stan_glmer", .ns = "rstanarm",
                    depr_score ~ week + (week | subject),
                    data = expr(riesby), seed = 9284, iter = 500, refresh = 0)

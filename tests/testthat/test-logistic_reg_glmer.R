@@ -5,9 +5,13 @@ test_that('logistic glmer execution', {
 
   # ----------------------------------------------------------------------------
 
+  dat <- make_binary_data()
+
+  # ----------------------------------------------------------------------------
+
   # Run both regular and glmer model
   set.seed(1234)
-  glmer_mod <- lme4::glmer(f_bin, family = binomial, data = riesby_bin_tr)
+  glmer_mod <- lme4::glmer(dat$f, family = binomial, data = dat$train)
 
   # ----------------------------------------------------------------------------
 
@@ -16,7 +20,7 @@ test_that('logistic glmer execution', {
     ps_mod <-
       logistic_reg() %>%
       set_engine("glmer") %>%
-      fit(f_bin, data = riesby_bin_tr),
+      fit(dat$f, data = dat$train),
     regex = NA
   )
 
@@ -30,17 +34,17 @@ test_that('logistic glmer execution', {
 
   # ----------------------------------------------------------------------------
 
-  glmer_prob <- unname(predict(glmer_mod, riesby_bin_te, type = "response",
+  glmer_prob <- unname(predict(glmer_mod, dat$test, type = "response",
                                allow.new.levels = TRUE))
-  pa_prob <- predict(ps_mod, riesby_bin_te, type = "prob")
+  pa_prob <- predict(ps_mod, dat$test, type = "prob")
   expect_equal(
     glmer_prob,
     pa_prob$.pred_low
   )
 
   glmer_cls <- ifelse(glmer_prob > 0.5, "low", "high")
-  glmer_cls <- factor(glmer_cls, levels = levels(riesby_bin_tr$depressed))
-  pa_cls <- predict(ps_mod, riesby_bin_te, type = "class")
+  glmer_cls <- factor(glmer_cls, levels = levels(dat$train$depressed))
+  pa_cls <- predict(ps_mod, dat$test, type = "class")
   expect_equal(
     glmer_cls,
     pa_cls$.pred_class

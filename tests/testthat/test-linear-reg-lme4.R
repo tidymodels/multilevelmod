@@ -3,6 +3,13 @@ test_that('lme4 execution', {
   skip_if_not_installed("rstanarm")
   skip_on_cran()
 
+  # ----------------------------------------------------------------------------
+
+  # Adds elements to the global environment
+  make_gaussian_data()
+
+  # ----------------------------------------------------------------------------
+
   lme4_cl <- call2("lmer", .ns = "lme4", f, data = expr(riesby_tr))
 
   set.seed(2452)
