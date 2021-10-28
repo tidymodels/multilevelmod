@@ -10,7 +10,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![CRAN
 status](https://www.r-pkg.org/badges/version/multilevelmod)](https://CRAN.R-project.org/package=multilevelmod)
 [![Codecov test
-coverage](https://codecov.io/gh/tidymodels/multilevelmod/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/multilevelmod?branch=master)
+coverage](https://codecov.io/gh/tidymodels/multilevelmod/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/multilevelmod?branch=main)
 [![R-CMD-check](https://github.com/tidymodels/multilevelmod/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/multilevelmod/actions)
 <!-- badges: end -->
 

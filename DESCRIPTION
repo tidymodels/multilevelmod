@@ -1,36 +1,35 @@
 Package: multilevelmod
 Title: Model Wrappers for Multi-Level Models
 Version: 0.0.0.9000
-Authors@R: 
-    c(person(given = "Max",
-             family = "Kuhn",
-             role = c("aut", "cre"),
-             email = "max@rstudio.com",
-             comment = c(ORCID = "0000-0003-2402-136X")),
-      person(given = "RStudio",
-             role = "cph"))
-Description: Bindings for hierarchical regression models for use
-    with the 'parsnip' package.
+Authors@R: c(
+    person("Max", "Kuhn", , "max@rstudio.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-2402-136X")),
+    person("RStudio", role = "cph")
+  )
+Description: Bindings for hierarchical regression models for use with the
+    'parsnip' package.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
-Suggests: 
-    spelling,
-    testthat,
-    gee,
-    covr
-Language: en-US
 Depends: 
     parsnip (>= 0.1.4),
     R (>= 2.10)
 Imports: 
-    tibble,
-    rlang,
     dplyr,
-    purrr,
     lme4,
+    purrr,
+    rlang,
+    tibble,
     withr
-Remotes: tidymodels/parsnip
-Config/Needs/website: tidyverse/tidytemplate
+Suggests: 
+    covr,
+    gee,
+    spelling,
+    testthat
+Remotes: 
+    tidymodels/parsnip
+Config/Needs/website: 
+    tidyverse/tidytemplate
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
