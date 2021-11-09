@@ -141,13 +141,14 @@ standard normal intercept per subject, a time coefficient of 1.50, and a
 covariate coefficient of 0.25.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>longitudinal_counts</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>longitudinal_counts</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; tibble [1,000 × 4] (S3: tbl_df/tbl/data.frame)
-#&gt;  $ subject: Factor w/ 100 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 1 1 ...
-#&gt;  $ time   : num [1:1000] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 ...
-#&gt;  $ x      : num [1:1000] 2.56 2.69 2.68 2.49 2.29 ...
-#&gt;  $ y      : int [1:1000] 0 0 3 2 0 1 0 2 3 0 ...</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>longitudinal_counts</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>longitudinal_counts</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> tibble [1,000 × 4] (S3: tbl_df/tbl/data.frame)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ subject: Factor w/ 100 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ time   : num [1:1000] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ x      : num [1:1000] 2.56 2.69 2.68 2.49 2.29 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ y      : int [1:1000] 0 0 3 2 0 1 0 2 3 0 ...</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

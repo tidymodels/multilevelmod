@@ -139,7 +139,7 @@ Bayesian estimation.</p>
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Important engine-specific options</h3>
 
 
-<p>Some relevant arguments that can be passed to <code>set_engine()</code>:</p><ul>
+<p>Some relevant arguments that can be passed to <code><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine()</a></code>:</p><ul>
 <li><p><code>chains</code>: A positive integer specifying the number of Markov chains.
 The default is 4.</p></li>
 <li><p><code>iter</code>: A positive integer specifying the number of iterations for
@@ -156,10 +156,10 @@ centering all predictors).</p></li>
 <p>See <code>?rstanarm::stan_glmer</code> and <code>?rstan::sampling</code> for more information.</p>
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Translation from parsnip to the original package</h3>
-<p><div class="sourceCode r"></p><pre><span class='fu'>linear_reg</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"stan_glmer"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"regression"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>translate</span><span class='op'>(</span><span class='op'>)</span>
+<p><div class="sourceCode r"></p><pre><span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"stan_glmer"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span><span class='op'>(</span><span class='st'>"regression"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/translate.html'>translate</a></span><span class='op'>(</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>## Linear Regression Model Specification (regression)</span>
 <span class='co'>## </span>
 <span class='co'>## Computational engine: stan_glmer </span>
@@ -205,28 +205,28 @@ next section.</p>
 
 
 <p>The model can accept case weights.</p>
-<p>With <code>parsnip</code>, we suggest using the formula method when fitting:<div class="sourceCode r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>tidymodels</span><span class='op'>)</span>
+<p>With <code>parsnip</code>, we suggest using the formula method when fitting:<div class="sourceCode r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidymodels.tidymodels.org'>tidymodels</a></span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"riesby"</span><span class='op'>)</span>
 
-<span class='fu'>linear_reg</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"stan_glmer"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>fit</span><span class='op'>(</span><span class='va'>depr_score</span> <span class='op'>~</span> <span class='va'>week</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>subject</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>riesby</span><span class='op'>)</span>
+<span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"stan_glmer"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>depr_score</span> <span class='op'>~</span> <span class='va'>week</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>subject</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>riesby</span><span class='op'>)</span>
 </pre><p></div></p>
 <p>When using the general tidymodels infrastructure, it may be better to
 use a workflow. In this case, you can add the appropriate columns using
-<code>add_variables()</code> then supply the typical formula when adding the model:<div class="sourceCode r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>tidymodels</span><span class='op'>)</span>
+<code>add_variables()</code> then supply the typical formula when adding the model:<div class="sourceCode r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidymodels.tidymodels.org'>tidymodels</a></span><span class='op'>)</span>
 
 <span class='va'>glmer_spec</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>linear_reg</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"stan_glmer"</span><span class='op'>)</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"stan_glmer"</span><span class='op'>)</span>
 
 <span class='va'>glmer_wflow</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
   <span class='co'># The data are included as-is using:</span>
-  <span class='fu'>add_variables</span><span class='op'>(</span>outcomes <span class='op'>=</span> <span class='va'>depr_score</span>, predictors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>week</span>, <span class='va'>subject</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>add_variables</span><span class='op'>(</span>outcomes <span class='op'>=</span> <span class='va'>depr_score</span>, predictors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>week</span>, <span class='va'>subject</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
   <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>glmer_spec</span>, formula <span class='op'>=</span> <span class='va'>depr_score</span> <span class='op'>~</span> <span class='va'>week</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>subject</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>fit</span><span class='op'>(</span><span class='va'>glmer_wflow</span>, data <span class='op'>=</span> <span class='va'>riesby</span><span class='op'>)</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>glmer_wflow</span>, data <span class='op'>=</span> <span class='va'>riesby</span><span class='op'>)</span>
 </pre><p></div></p>
 <p>For prediction, the <code>stan_glmer</code> engine can compute posterior intervals
 analogous to confidence and prediction intervals. In these instances,

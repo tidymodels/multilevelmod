@@ -137,9 +137,9 @@ package relies on the formula method to specify the random effects.</p>
 subjects were measured over time points. The outcome was the number of
 counts and the predictors are the time point as well as an additional
 numeric covariate.</p>
-<p>We can fit the model using <code><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>lme4::glmer()</a></code>:<div class="sourceCode r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>tidymodels</span><span class='op'>)</span>
+<p>We can fit the model using <code><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>lme4::glmer()</a></code>:<div class="sourceCode r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidymodels.tidymodels.org'>tidymodels</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>multilevelmod</span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>poissonreg</span><span class='op'>)</span> <span class='co'># current required for poisson_reg()</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/poissonreg'>poissonreg</a></span><span class='op'>)</span> <span class='co'># current required for poisson_reg()</span>
 
 <span class='co'># The lme4 package is required for this model.</span>
 
@@ -147,18 +147,18 @@ numeric covariate.</p>
 
 <span class='co'># Split out two subjects to show how prediction works</span>
 <span class='va'>data_train</span> <span class='op'>&lt;-</span> 
-  <span class='va'>longitudinal_counts</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='op'>(</span><span class='va'>subject</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1"</span>, <span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>longitudinal_counts</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='op'>(</span><span class='va'>subject</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1"</span>, <span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>data_new</span> <span class='op'>&lt;-</span> 
-  <span class='va'>longitudinal_counts</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>subject</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1"</span>, <span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>longitudinal_counts</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>subject</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1"</span>, <span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># Fit the model</span>
 <span class='va'>count_mod</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>poisson_reg</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"glmer"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>fit</span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>time</span> <span class='op'>+</span> <span class='va'>x</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>subject</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>data_train</span><span class='op'>)</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/poisson_reg.html'>poisson_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"glmer"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>time</span> <span class='op'>+</span> <span class='va'>x</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>subject</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>data_train</span><span class='op'>)</span>
 </pre><p></div><div class="sourceCode r"></p><pre><span class='va'>count_mod</span>
 </pre><p></div></p><pre><span class='co'>## parsnip model object</span>
 <span class='co'>## </span>
@@ -179,7 +179,7 @@ numeric covariate.</p>
 <span class='co'>##     -0.5946       1.5145       0.2395</span>
 </pre>
 
-<p>When making predictions, the basic <code><a href='https://rdrr.io/r/stats/predict.html'>predict()</a></code> method does the trick:<div class="sourceCode r"></p><pre><span class='va'>count_mod</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>data_new</span><span class='op'>)</span>
+<p>When making predictions, the basic <code><a href='https://rdrr.io/r/stats/predict.html'>predict()</a></code> method does the trick:<div class="sourceCode r"></p><pre><span class='va'>count_mod</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>data_new</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>## # A tibble: 20 × 1</span>
 <span class='co'>##    .pred</span>
 <span class='co'>##    &lt;dbl&gt;</span>
