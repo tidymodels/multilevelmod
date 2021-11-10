@@ -10,13 +10,17 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![CRAN
 status](https://www.r-pkg.org/badges/version/multilevelmod)](https://CRAN.R-project.org/package=multilevelmod)
 [![Codecov test
-coverage](https://codecov.io/gh/tidymodels/multilevelmod/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/multilevelmod?branch=main)
+coverage](https://codecov.io/gh/topepo/multilevelmod/branch/main/graph/badge.svg)](https://codecov.io/gh/topepo/multilevelmod?branch=main)
 [![R-CMD-check](https://github.com/tidymodels/multilevelmod/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/multilevelmod/actions)
 <!-- badges: end -->
 
-multilevelmod enables the use of multi-level models (such as
-mixed-effects models or Bayesian hierarchical models) with the parsnip
-package.
+multilevelmod enables the use of multi-level models (a.k.a mixed-effects
+models, Bayesian hierarchical models, etc.) with the parsnip package.
+
+<a href="https://pbs.twimg.com/media/FD1_OIhVIAE4H5l?format=jpg&name=small"><img src="man/figures/FD1_OIhVIAE4H5l.jpeg" align="center" /></a>
+
+(meme courtesy of
+[`@ChelseaParlett`](https://twitter.com/ChelseaParlett))
 
 ## Installation
 
@@ -61,7 +65,7 @@ mixed_model_fit <-
 mixed_model_fit
 #> parsnip model object
 #> 
-#> Fit time:  57ms 
+#> Fit time:  41ms 
 #> Linear mixed model fit by REML ['lmerMod']
 #> Formula: Reaction ~ Days + (Days | Subject)
 #>    Data: data
@@ -80,7 +84,7 @@ mixed_model_fit
 For a Bayesian model:
 
 ``` r
-hier_model_spec <- linear_reg() %>% set_engine("stan-glmer")
+hier_model_spec <- linear_reg() %>% set_engine("stan_glmer")
 
 hier_model_fit <- 
   hier_model_spec %>% 
@@ -89,25 +93,25 @@ hier_model_fit <-
 hier_model_fit
 #> parsnip model object
 #> 
-#> Fit time:  48.3s 
+#> Fit time:  29.9s 
 #> stan_glmer
 #>  family:       gaussian [identity]
 #>  formula:      Reaction ~ Days + (Days | Subject)
 #>  observations: 180
 #> ------
 #>             Median MAD_SD
-#> (Intercept) 251.6    6.6 
+#> (Intercept) 251.2    6.4 
 #> Days         10.4    1.7 
 #> 
 #> Auxiliary parameter(s):
 #>       Median MAD_SD
-#> sigma 25.9    1.5  
+#> sigma 25.9    1.6  
 #> 
 #> Error terms:
 #>  Groups   Name        Std.Dev. Corr
-#>  Subject  (Intercept) 24.3         
-#>           Days         6.9     0.08
-#>  Residual             26.0         
+#>  Subject  (Intercept) 24           
+#>           Days         7       0.07
+#>  Residual             26           
 #> Num. levels: Subject 18 
 #> 
 #> ------
@@ -121,17 +125,17 @@ This project is released with a [Contributor Code of
 Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
-  - For questions and discussions about tidymodels packages, modeling,
+-   For questions and discussions about tidymodels packages, modeling,
     and machine learning, please [post on RStudio
     Community](https://rstd.io/tidymodels-community).
 
-  - If you think you have encountered a bug, please [submit an
+-   If you think you have encountered a bug, please [submit an
     issue](https://github.com/tidymodels/multilevelmod/issues).
 
-  - Either way, learn how to create and share a
+-   Either way, learn how to create and share a
     [reprex](https://rstd.io/reprex) (a minimal, reproducible example),
     to clearly communicate about your code.
 
-  - Check out further details on [contributing guidelines for tidymodels
+-   Check out further details on [contributing guidelines for tidymodels
     packages](https://www.tidymodels.org/contribute/) and [how to get
     help](https://www.tidymodels.org/help/).

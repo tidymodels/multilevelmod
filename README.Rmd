@@ -22,7 +22,11 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/tidymodels/multilevelmod/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/multilevelmod/actions)
 <!-- badges: end -->
 
-multilevelmod enables the use of multi-level models (such as mixed-effects models or Bayesian hierarchical models) with the parsnip package.  
+multilevelmod enables the use of multi-level models (a.k.a mixed-effects models, Bayesian hierarchical models, etc.) with the parsnip package.  
+
+<a href="https://pbs.twimg.com/media/FD1_OIhVIAE4H5l?format=jpg&name=small"><img src="man/figures/FD1_OIhVIAE4H5l.jpeg" align="center" /></a>
+
+(meme courtesy of [`@ChelseaParlett`](https://twitter.com/ChelseaParlett))
 
 ## Installation
 
@@ -64,7 +68,7 @@ For a Bayesian model:
 
 
 ```{r sleep-stan}
-hier_model_spec <- linear_reg() %>% set_engine("stan-glmer")
+hier_model_spec <- linear_reg() %>% set_engine("stan_glmer")
 
 hier_model_fit <- 
   hier_model_spec %>% 
