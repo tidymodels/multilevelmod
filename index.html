@@ -14,8 +14,8 @@
 <script src="pkgdown.js"></script><link href="tidyverse-2.css" rel="stylesheet">
 <!--optional theme--><link href="tidymodels.css" rel="stylesheet">
 <meta property="og:title" content="Model Wrappers for Multi-Level Models">
-<meta property="og:description" content="Bindings for hierarchical regression models for use
-    with the parsnip package.">
+<meta property="og:description" content="Bindings for hierarchical regression models for use with the
+    parsnip package.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -77,7 +77,9 @@
 <a href="#multilevelmod" class="anchor"></a>multilevelmod</h1></div>
 <!-- badges: start -->
 
-<p>multilevelmod enables the use of multi-level models (such as mixed-effects models or Bayesian hierarchical models) with the parsnip package.</p>
+<p>multilevelmod enables the use of multi-level models (a.k.a mixed-effects models, Bayesian hierarchical models, etc.) with the parsnip package.</p>
+<p><a href="https://pbs.twimg.com/media/FD1_OIhVIAE4H5l?format=jpg&amp;name=small"><img src="reference/figures/FD1_OIhVIAE4H5l.jpeg" align="center"></a></p>
+<p>(meme courtesy of <a href="https://twitter.com/ChelseaParlett"><code>@ChelseaParlett</code></a>)</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -109,7 +111,7 @@
 <span class="va">mixed_model_fit</span>
 <span class="co">#&gt; parsnip model object</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Fit time:  57ms </span>
+<span class="co">#&gt; Fit time:  41ms </span>
 <span class="co">#&gt; Linear mixed model fit by REML ['lmerMod']</span>
 <span class="co">#&gt; Formula: Reaction ~ Days + (Days | Subject)</span>
 <span class="co">#&gt;    Data: data</span>
@@ -125,7 +127,7 @@
 <span class="co">#&gt;      251.41        10.47</span></code></pre></div>
 <p>For a Bayesian model:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">hier_model_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/linear_reg.html">linear_reg</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html">set_engine</a></span><span class="op">(</span><span class="st">"stan-glmer"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">hier_model_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/linear_reg.html">linear_reg</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html">set_engine</a></span><span class="op">(</span><span class="st">"stan_glmer"</span><span class="op">)</span>
 
 <span class="va">hier_model_fit</span> <span class="op">&lt;-</span> 
   <span class="va">hier_model_spec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -134,25 +136,25 @@
 <span class="va">hier_model_fit</span>
 <span class="co">#&gt; parsnip model object</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Fit time:  48.3s </span>
+<span class="co">#&gt; Fit time:  29.9s </span>
 <span class="co">#&gt; stan_glmer</span>
 <span class="co">#&gt;  family:       gaussian [identity]</span>
 <span class="co">#&gt;  formula:      Reaction ~ Days + (Days | Subject)</span>
 <span class="co">#&gt;  observations: 180</span>
 <span class="co">#&gt; ------</span>
 <span class="co">#&gt;             Median MAD_SD</span>
-<span class="co">#&gt; (Intercept) 251.6    6.6 </span>
+<span class="co">#&gt; (Intercept) 251.2    6.4 </span>
 <span class="co">#&gt; Days         10.4    1.7 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Auxiliary parameter(s):</span>
 <span class="co">#&gt;       Median MAD_SD</span>
-<span class="co">#&gt; sigma 25.9    1.5  </span>
+<span class="co">#&gt; sigma 25.9    1.6  </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Error terms:</span>
 <span class="co">#&gt;  Groups   Name        Std.Dev. Corr</span>
-<span class="co">#&gt;  Subject  (Intercept) 24.3         </span>
-<span class="co">#&gt;           Days         6.9     0.08</span>
-<span class="co">#&gt;  Residual             26.0         </span>
+<span class="co">#&gt;  Subject  (Intercept) 24           </span>
+<span class="co">#&gt;           Days         7       0.07</span>
+<span class="co">#&gt;  Residual             26           </span>
 <span class="co">#&gt; Num. levels: Subject 18 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ------</span>
@@ -201,7 +203,7 @@
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://CRAN.R-project.org/package=multilevelmod"><img src="https://www.r-pkg.org/badges/version/multilevelmod" alt="CRAN status"></a></li>
-<li><a href="https://codecov.io/gh/tidymodels/multilevelmod?branch=master"><img src="https://codecov.io/gh/tidymodels/multilevelmod/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://codecov.io/gh/topepo/multilevelmod?branch=main"><img src="https://codecov.io/gh/topepo/multilevelmod/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://github.com/tidymodels/multilevelmod/actions"><img src="https://github.com/tidymodels/multilevelmod/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
