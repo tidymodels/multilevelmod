@@ -242,4 +242,140 @@ make_gee_linear_reg <- function() {
 
 }
 
+# ------------------------------------------------------------------------------
+
+make_lme_linear_reg <- function() {
+
+  parsnip::set_model_engine("linear_reg", "regression", "lme")
+  parsnip::set_dependency("linear_reg", "lme", "nlme")
+  parsnip::set_dependency("linear_reg", "lme", "multilevelmod")
+
+  parsnip::set_encoding(
+    model = "linear_reg",
+    eng = "lme",
+    mode = "regression",
+    options = list(
+      predictor_indicators = "none",
+      compute_intercept = FALSE,
+      remove_intercept = FALSE,
+      allow_sparse_x = FALSE
+    )
+  )
+
+  parsnip::set_fit(
+    model = "linear_reg",
+    eng = "lme",
+    mode = "regression",
+    value = list(
+      interface = "formula",
+      protect = c("fixed", "data"),
+      data = c(formula = "fixed", data = "data"),
+      func = c(pkg = "nlme", fun = "lme"),
+      defaults = list()
+    )
+  )
+
+  parsnip::set_pred(
+    model = "linear_reg",
+    eng = "lme",
+    mode = "regression",
+    type = "numeric",
+    value = list(
+      pre = NULL,
+      post =  NULL,
+      func = c(fun = "predict"),
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data),
+        level = 0
+      )
+    )
+  )
+
+  parsnip::set_pred(
+    model = "linear_reg",
+    eng = "lme",
+    mode = "regression",
+    type = "raw",
+    value = list(
+      pre = NULL,
+      post = NULL,
+      func = c(fun = "predict"),
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data)
+      )
+    )
+  )
+
+}
+
+# ------------------------------------------------------------------------------
+
+make_gls_linear_reg <- function() {
+
+  parsnip::set_model_engine("linear_reg", "regression", "gls")
+  parsnip::set_dependency("linear_reg", "gls", "nlme")
+  parsnip::set_dependency("linear_reg", "gls", "multilevelmod")
+
+  parsnip::set_encoding(
+    model = "linear_reg",
+    eng = "gls",
+    mode = "regression",
+    options = list(
+      predictor_indicators = "none",
+      compute_intercept = FALSE,
+      remove_intercept = FALSE,
+      allow_sparse_x = FALSE
+    )
+  )
+
+  parsnip::set_fit(
+    model = "linear_reg",
+    eng = "gls",
+    mode = "regression",
+    value = list(
+      interface = "formula",
+      protect = c("formula", "data"),
+      data = c(formula = "model", data = "data"),
+      func = c(pkg = "nlme", fun = "gls"),
+      defaults = list()
+    )
+  )
+
+  parsnip::set_pred(
+    model = "linear_reg",
+    eng = "gls",
+    mode = "regression",
+    type = "numeric",
+    value = list(
+      pre = NULL,
+      post =  function(result, object) as.numeric(result),
+      func = c(fun = "predict"),
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data)
+      )
+    )
+  )
+
+  parsnip::set_pred(
+    model = "linear_reg",
+    eng = "gls",
+    mode = "regression",
+    type = "raw",
+    value = list(
+      pre = NULL,
+      post = NULL,
+      func = c(fun = "predict"),
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data)
+      )
+    )
+  )
+
+}
+
+
 # nocov end
