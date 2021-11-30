@@ -282,7 +282,7 @@ make_lme_linear_reg <- function() {
     type = "numeric",
     value = list(
       pre = NULL,
-      post =  NULL,
+      post =  function(result, object) as.numeric(result),
       func = c(fun = "predict"),
       args = list(
         object = rlang::expr(object$fit),

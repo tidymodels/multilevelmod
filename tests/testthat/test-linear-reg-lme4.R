@@ -1,6 +1,6 @@
 
 test_that('lme4 execution', {
-  skip_if_not_installed("rstanarm")
+  skip_if_not_installed("lme4")
   skip_on_cran()
 
   lme4_cl <- call2("lmer", .ns = "lme4", f, data = expr(riesby_tr))
