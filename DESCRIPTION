@@ -27,7 +27,8 @@ Suggests:
     nlme,
     rmarkdown,
     spelling,
-    testthat
+    testthat,
+    tidymodels
 VignetteBuilder: 
     knitr
 Remotes: 
