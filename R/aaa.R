@@ -14,6 +14,8 @@
   make_gee_poisson_reg()
   make_lme4_poisson_reg()
   make_stan_poisson_reg()
+  make_lme_linear_reg()
+  make_gls_linear_reg()
 }
 
 

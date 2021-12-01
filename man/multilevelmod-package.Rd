@@ -41,7 +41,6 @@ count_mod <-
 }\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{count_mod
 }\if{html}{\out{</div>}}\preformatted{## parsnip model object
 ## 
-## Fit time:  166ms 
 ## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
 ##  Family: poisson  ( log )
