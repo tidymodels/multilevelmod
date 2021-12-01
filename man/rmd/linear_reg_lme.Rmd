@@ -58,13 +58,13 @@ fit(lme_wflow, data = riesby)
 
 ## References
 
- - 	J Pinheiro, and D Bates. 2000. _Mixed-effects models in S and S-PLUS_. Springer, New York, NY
+- J Pinheiro, and D Bates. 2000. _Mixed-effects models in S and S-PLUS_. Springer, New York, NY
  
- - West, K, Band Welch, and A Galecki. 2014. _Linear Mixed Models: A Practical Guide Using Statistical Software_. CRC Press.
+- West, K, Band Welch, and A Galecki. 2014. _Linear Mixed Models: A Practical Guide Using Statistical Software_. CRC Press.
  
-  - Thorson, J, Minto, C. 2015, Mixed effects: a unifying framework for statistical modelling in fisheries biology. _ICES Journal of Marine Science_, Volume 72, Issue 5, Pages 1245–1256.
+- Thorson, J, Minto, C. 2015, Mixed effects: a unifying framework for statistical modelling in fisheries biology. _ICES Journal of Marine Science_, Volume 72, Issue 5, Pages 1245–1256.
   
-  - Harrison, XA, Donaldson, L, Correa-Cano, ME, Evans, J, Fisher, DN, Goodwin, CED, Robinson, BS, Hodgson, DJ, Inger, R. 2018. _A brief introduction to mixed effects modelling and multi-model inference in ecology_. PeerJ 6:e4794. 
+- Harrison, XA, Donaldson, L, Correa-Cano, ME, Evans, J, Fisher, DN, Goodwin, CED, Robinson, BS, Hodgson, DJ, Inger, R. 2018. _A brief introduction to mixed effects modelling and multi-model inference in ecology_. PeerJ 6:e4794. 
   
-  - DeBruine LM, Barr DJ. Understanding Mixed-Effects Models Through Data Simulation. 2021. _Advances in Methods and Practices in Psychological Science_.   
+- DeBruine LM, Barr DJ. Understanding Mixed-Effects Models Through Data Simulation. 2021. _Advances in Methods and Practices in Psychological Science_.   
   

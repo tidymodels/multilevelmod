@@ -74,7 +74,7 @@ gls_fit <-
 
 lme_fit <-
   linear_reg() %>% 
-  set_engine("lme", random =  ~ 1|subject) %>% 
+  set_engine("lme", random =  ~ 1 | subject) %>% 
   fit(depr_score ~ week, data = riesby)
 ```
 
@@ -117,5 +117,5 @@ gls_fit %>% tidy()
 
 ## References
 
- - 	J Pinheiro, and D Bates. 2000. _Mixed-effects models in S and S-PLUS_. Springer, New York, NY
+- J Pinheiro, and D Bates. 2000. _Mixed-effects models in S and S-PLUS_. Springer, New York, NY
  
