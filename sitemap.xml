@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://multilevelmod.tidymodels.org/404.html</loc>
+  </url>
+  <url>
+    <loc>https://multilevelmod.tidymodels.org/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://multilevelmod.tidymodels.org/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://multilevelmod.tidymodels.org/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://multilevelmod.tidymodels.org/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://multilevelmod.tidymodels.org/SUPPORT.html</loc>
+  </url>
+  <url>
+    <loc>https://multilevelmod.tidymodels.org/authors.html</loc>
+  </url>
+  <url>
     <loc>https://multilevelmod.tidymodels.org/index.html</loc>
   </url>
   <url>
     <loc>https://multilevelmod.tidymodels.org/reference/details_linear_reg_gee.html</loc>
+  </url>
+  <url>
+    <loc>https://multilevelmod.tidymodels.org/reference/details_linear_reg_gls.html</loc>
+  </url>
+  <url>
+    <loc>https://multilevelmod.tidymodels.org/reference/details_linear_reg_lme.html</loc>
   </url>
   <url>
     <loc>https://multilevelmod.tidymodels.org/reference/details_linear_reg_lmer.html</loc>
@@ -32,6 +59,9 @@
   </url>
   <url>
     <loc>https://multilevelmod.tidymodels.org/reference/gee_fit.html</loc>
+  </url>
+  <url>
+    <loc>https://multilevelmod.tidymodels.org/reference/index.html</loc>
   </url>
   <url>
     <loc>https://multilevelmod.tidymodels.org/reference/longitudinal_counts.html</loc>

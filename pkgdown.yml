@@ -1,8 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1
+pkgdown: 2.0.0
 pkgdown_sha: ~
 articles: {}
-last_built: 2021-11-10T18:09Z
+last_built: 2021-12-01T17:48Z
 urls:
   reference: https://multilevelmod.tidymodels.org/reference
   article: https://multilevelmod.tidymodels.org/articles
