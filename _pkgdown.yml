@@ -13,8 +13,3 @@ development:
 figures:
   fig.width: 8
   fig.height: 5.75
-
-navbar:
-  left:
-  - text: Get Started
-    href: articles/Get_Started.html

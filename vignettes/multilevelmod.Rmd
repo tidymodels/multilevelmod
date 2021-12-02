@@ -201,6 +201,8 @@ lmer_wflow %>% fit(data = two_factor_incompl)
 
 If using a recipe, make sure that functions like `step_dummy()` to not convert the column for the independent experimental unit (i.e. subject) to dummy variables. The underlying model fit functions require a single column for these data. 
 
+**also mention different roles for things like subjects**
+
 ## Other Tips
 
 Finally, there are excellent helper functions in the `broom.mixed` and `tidybayes` packages. If these need the underlying model fit object, the `extract_fit_engine()` can be helpful. It can be used on `parsnip` or workflow objects: 
