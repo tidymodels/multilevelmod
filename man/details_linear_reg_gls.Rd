@@ -107,7 +107,7 @@ covariance value):\if{html}{\out{<div class="sourceCode r">}}\preformatted{gls_f
 
 lme_fit <-
   linear_reg() \%>\% 
-  set_engine("lme", random =  ~ 1|subject) \%>\% 
+  set_engine("lme", random =  ~ 1 | subject) \%>\% 
   fit(depr_score ~ week, data = riesby)
 }\if{html}{\out{</div>}}
 

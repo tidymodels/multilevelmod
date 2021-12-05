@@ -10,7 +10,7 @@ Description: Bindings for hierarchical regression models for use with the
     'parsnip' package.
 License: MIT + file LICENSE
 Depends: 
-    parsnip (>= 0.1.4),
+    parsnip (>= 0.1.7),
     R (>= 2.10)
 Imports: 
     dplyr,
@@ -20,11 +20,17 @@ Imports:
     tibble,
     withr
 Suggests: 
+    contrast,
     covr,
     gee,
+    knitr,
     nlme,
+    rmarkdown,
     spelling,
-    testthat
+    testthat,
+    tidymodels
+VignetteBuilder: 
+    knitr
 Remotes: 
     tidymodels/parsnip
 Config/Needs/website: 

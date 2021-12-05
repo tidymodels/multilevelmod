@@ -1,0 +1,227 @@
+---
+title: "Get Started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Get Started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The multilevelmod package is a [parsnip](https://parsnip.tidymodels.org/) extension package for multi-level models, which are also known as mixed-effects models, Bayesian hierarchical models, etc.
+The models wrapped by the multilevelmod package tend to have somewhat different interfaces than the average R modeling package, mostly due to how random effects and independent experimental units are specified. 
+
+This vignette is an overview of how to fit these models. For brevity, we only discuss linear models but the syntax also works for binomial, multinomial, and Poisson outcomes. 
+
+We'll use some single factor repeated measures experiment data from the contrast package, on stem cells from three donors.  
+
+```{r, include = FALSE}
+library(contrast)
+library(tidymodels)
+library(multilevelmod)
+```
+
+```{r, results = 'hide'}
+library(contrast)
+library(tidymodels)
+library(multilevelmod)
+
+tidymodels_prefer()
+theme_set(theme_bw())
+```
+
+The data are an incomplete factorial experiment. The `group` column is a combination of the day and the treatment indicator: 
+
+```{r}
+two_factor_incompl %>% count(day, config, group)
+```
+
+On Day 1, there were two treatments (A and B) that were not used on subsequent days:
+
+```{r}
+two_factor_incompl %>% 
+  ggplot(aes(x = day, y = expression, col = config)) + 
+  geom_point() + 
+  geom_line() +
+  facet_wrap(~ subject) 
+```
+
+To show how prediction works, let's create a new data frame for a hypothetical fourth stem cell donor: 
+
+```{r}
+subject_four <- tibble(group = unique(two_factor_incompl$group), subject = "four")
+```
+
+Now let's look at how the modeling engines work with multilevelmod. 
+
+## Generalized estimator equations (GEE)
+
+This engine requires the installation of the gee package.  
+
+There are no random effects in this model. It, like the generalized least squares model discussed below, deals with the within-subject correlations by estimating a correlation (or covariance) matrix that is not diagonal.  To do this, the model formula should use the `id_var()` function. This is a special syntax for creating model matrices (there is no actual `id_var()` function) that designates the column for the independent experimental unit. 
+
+The correlation structure can be passed as an engine argument: 
+
+```{r gee}
+gee_spec <- 
+  linear_reg() %>% 
+  set_engine("gee", corstr = "exchangeable")
+
+gee_fit <- 
+  gee_spec %>% 
+  fit(expression ~ group + id_var(subject), data = two_factor_incompl)
+
+gee_fit
+```
+
+Only a single column name can be given to `id_var()`. 
+
+When predicting, the `id_var` column is not required: 
+
+```{r}
+predict(gee_fit, subject_four %>% select(group)) %>% 
+  bind_cols(subject_four)
+```
+
+## Generalized least squares
+
+For this model, the syntax to specify the independent experimental unit is inside of the `corrrelation` argument for `nlme::gls()`. We'll pass that as an engine argument. Possible values can be found using `?nlme::corStruct`. 
+
+For example:
+
+```{r gls}
+library(nlme) # <- Only need to load this to get cor*() functions
+
+gls_spec <- 
+  linear_reg() %>% 
+  set_engine("gls", correlation = corCompSymm(form = ~ 1 | subject))
+
+gls_fit <- 
+  gls_spec %>% 
+  fit(expression ~ group, data = two_factor_incompl)
+
+gls_fit
+```
+
+As with the GEE model, only the regression terms are required to predict:
+
+```{r gls-pred}
+predict(gls_fit, subject_four %>% select(group)) %>% 
+  bind_cols(subject_four)
+```
+
+## Linear mixed effects via lme
+
+For models created by `nlme::lme()`, the random effects are specified in an argument called `random`. This can be passed via `set_engine()`. The formula should only include the fixed effects for the model. 
+
+This engine requires the nlme package to be installed. 
+
+To fit the basic random intercept model: 
+
+```{r lme}
+lme_spec <- 
+  linear_reg() %>% 
+  set_engine("lme", random = ~ 1 | subject)
+
+lme_fit <- 
+  lme_spec %>% 
+  fit(expression ~ group, data = two_factor_incompl)
+
+lme_fit
+```
+
+For predictions, tidymodels uses only the "population effects", i.e., no-subject specific random effects. We have designed tidymodels so that you should not know about the specific training set values when making any type of prediction. 
+
+For lme fit objects, the subject column, if given, is ignored. When the [underlying `predict()` function](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/predict.lme.html) is used, the `level = 0` argument is automatically invoked: 
+
+```{r lme-pred}
+predict(lme_fit, subject_four) %>% 
+  bind_cols(subject_four)
+
+# For this design, this is the same prediction as a training set point:
+predict(lme_fit, two_factor_incompl %>% filter(subject == "donor1"))
+```
+
+## Models using lmer, glmer, and stan_glmer
+
+The `"lmer"`, `"glmer"`, and `"stan_glmer"` engines all use the same formula syntax for fitting multilevel models. See [Section 2.1 of _Linear Mixed Models with lme4_](https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf) for details. In this section, we'll demonstrate using the `"lmer"` engine. 
+
+All of the model specification occurs in the formula; no models terms are specified via `set_engine()` (although other arguments can be passed there, as usual). To fit the same random intercept model, the syntax is: 
+
+```{r lmer}
+lmer_spec <- 
+  linear_reg() %>% 
+  set_engine("lmer")
+
+lmer_fit <- 
+  lmer_spec %>% 
+  fit(expression ~ group + (1|subject), data = two_factor_incompl)
+
+lmer_fit
+```
+
+We predict in the same way.
+
+```{r lmer-pred}
+predict(lmer_fit, subject_four) %>% 
+  bind_cols(subject_four)
+```
+
+To determine what packages are required for a model, use this function:
+
+```{r}
+req_pkgs(lmer_spec)
+```
+
+For the `"stan_glmer"` engine, some relevant arguments that can be passed to `set_engine()` are: 
+
+* `chains`: A positive integer specifying the number of Markov chains. The default is 4.
+* `iter`: A positive integer specifying the number of iterations for each chain (including warmup). The default is 2000.
+* `seed`: The seed for random number generation. 
+* `cores`: Number of cores to use when executing the chains in parallel.
+* `prior`: The prior distribution for the (non-hierarchical) regression coefficients. 
+* `prior_intercept`: The prior distribution for the intercept (after centering all predictors). 
+
+See `?rstanarm::stan_glmer` and `?rstan::sampling` for more information.
+
+## Using tidymodels workflows
+
+If you use [workflows](https://www.tmwr.org/workflows.html), we have a few suggestions. 
+
+First, instead of using `add_formula()`, we suggest using `add_variables()`. This passes the columns as-is to the model fitting function. To add the random effects formula, use the `formula` argument of `add_model()`. For example: 
+
+
+```{r wflow}
+lmer_wflow <- 
+  workflow() %>% 
+  add_variables(outcomes = expression, predictors = c(group, subject)) %>% 
+  add_model(lmer_spec, formula = expression ~ group + (1|subject))
+
+lmer_wflow %>% fit(data = two_factor_incompl)
+```
+
+If using a recipe, make sure that functions like `step_dummy()` do **not** convert the column for the independent experimental unit (i.e. subject) to dummy variables. The underlying model fit functions require a single column for these data. 
+
+Using a recipe also offers the opportunity to [set a different role](https://recipes.tidymodels.org/reference/roles.html) for the independent experiment unit, which can come in handy when more complex preprocessing is needed.
+
+```{r rec}
+rec <- 
+  recipe(expression ~ group + subject, data = two_factor_incompl) %>%
+  add_role(subject, new_role = "exp_unit") %>%
+  step_novel(all_nominal_predictors(), -has_role("exp_unit"))
+
+lmer_wflow %>%
+  remove_variables() %>%
+  add_recipe(rec) %>%
+  fit(data = two_factor_incompl)
+```
+
+
+## Other tips
+
+Finally, there are excellent helper functions in the broom.mixed and tidybayes packages. If these need the underlying model fit object, check out the `extract_fit_engine()`, which can be used on either parsnip or workflow objects: 
+
+```{r}
+lmer_wflow %>% 
+  fit(data = two_factor_incompl) %>% # <- returns a workflow
+  extract_fit_engine()               # <- returns the lmer object
+```
