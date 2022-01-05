@@ -69,7 +69,7 @@
 <p>This vignette is an overview of how to fit these models. For brevity, we only discuss linear models but the syntax also works for binomial, multinomial, and Poisson outcomes.</p>
 <p>We’ll use some single factor repeated measures experiment data from the contrast package, on stem cells from three donors.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/contrast" class="external-link">contrast</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Alanocallaghan/contrast" class="external-link">contrast</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org" class="external-link">tidymodels</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">multilevelmod</span><span class="op">)</span>
 
@@ -342,7 +342,9 @@
 <p>To determine what packages are required for a model, use this function:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://parsnip.tidymodels.org/reference/req_pkgs.html" class="external-link">req_pkgs</a></span><span class="op">(</span><span class="va">lmer_spec</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] "multilevelmod" "lme4"</span></code></pre>
+<pre><code><span class="co">## Warning: `req_pkgs()` was deprecated in parsnip 0.1.8.</span>
+<span class="co">## Please use `required_pkgs()` instead.</span></code></pre>
+<pre><code><span class="co">## [1] "lme4"          "multilevelmod"</span></code></pre>
 <p>For the <code>"stan_glmer"</code> engine, some relevant arguments that can be passed to <code><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine()</a></code> are:</p>
 <ul>
 <li>
@@ -365,7 +367,7 @@
 </h2>
 <p>If you use <a href="https://www.tmwr.org/workflows.html" class="external-link">workflows</a>, we have a few suggestions.</p>
 <p>First, instead of using <code>add_formula()</code>, we suggest using <code>add_variables()</code>. This passes the columns as-is to the model fitting function. To add the random effects formula, use the <code>formula</code> argument of <code>add_model()</code>. For example:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lmer_wflow</span> <span class="op">&lt;-</span> 
   <span class="fu">workflow</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu">add_variables</span><span class="op">(</span>outcomes <span class="op">=</span> <span class="va">expression</span>, predictors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">group</span>, <span class="va">subject</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
@@ -397,7 +399,7 @@
 <span class="co">##    -0.01200      0.13967      0.03200</span></code></pre>
 <p>If using a recipe, make sure that functions like <code>step_dummy()</code> do <strong>not</strong> convert the column for the independent experimental unit (i.e. subject) to dummy variables. The underlying model fit functions require a single column for these data.</p>
 <p>Using a recipe also offers the opportunity to <a href="https://recipes.tidymodels.org/reference/roles.html" class="external-link">set a different role</a> for the independent experiment unit, which can come in handy when more complex preprocessing is needed.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rec</span> <span class="op">&lt;-</span> 
   <span class="fu">recipe</span><span class="op">(</span><span class="va">expression</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="va">subject</span>, data <span class="op">=</span> <span class="va">two_factor_incompl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu">add_role</span><span class="op">(</span><span class="va">subject</span>, new_role <span class="op">=</span> <span class="st">"exp_unit"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -436,7 +438,7 @@
 <h2 id="other-tips">Other tips<a class="anchor" aria-label="anchor" href="#other-tips"></a>
 </h2>
 <p>Finally, there are excellent helper functions in the broom.mixed and tidybayes packages. If these need the underlying model fit object, check out the <code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_fit_engine()</a></code>, which can be used on either parsnip or workflow objects:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lmer_wflow</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">two_factor_incompl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># &lt;- returns a workflow</span>
   <span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_fit_engine</a></span><span class="op">(</span><span class="op">)</span>               <span class="co"># &lt;- returns the lmer object</span></code></pre></div>

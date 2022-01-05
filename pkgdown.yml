@@ -3,7 +3,7 @@ pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
   multilevelmod: multilevelmod.html
-last_built: 2021-12-05T02:50Z
+last_built: 2022-01-05T17:25Z
 urls:
   reference: https://multilevelmod.tidymodels.org/reference
   article: https://multilevelmod.tidymodels.org/articles
