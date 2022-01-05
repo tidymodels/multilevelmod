@@ -30,3 +30,19 @@ test_that('lme4 execution', {
 
 })
 
+
+test_that('mode specific package dependencies', {
+  expect_identical(
+    get_from_env(paste0("linear_reg", "_pkgs")) %>%
+      dplyr::filter(engine == "lmer", mode == "classification") %>%
+      dplyr::pull(pkg),
+    list()
+  )
+
+  expect_identical(
+    get_from_env(paste0("linear_reg", "_pkgs")) %>%
+      dplyr::filter(engine == "lmer", mode == "regression") %>%
+      dplyr::pull(pkg),
+    list(c("lme4", "multilevelmod"))
+  )
+})

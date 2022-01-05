@@ -45,6 +45,20 @@ test_that('logistic glmer execution', {
     glmer_cls,
     pa_cls$.pred_class
   )
-
 })
 
+test_that('mode specific package dependencies', {
+  expect_identical(
+    get_from_env(paste0("logistic_reg", "_pkgs")) %>%
+      dplyr::filter(engine == "glmer", mode == "classification") %>%
+      dplyr::pull(pkg),
+    list(c("lme4", "multilevelmod"))
+  )
+
+  expect_identical(
+    get_from_env(paste0("logistic_reg", "_pkgs")) %>%
+      dplyr::filter(engine == "glmer", mode == "regression") %>%
+      dplyr::pull(pkg),
+    list()
+  )
+})

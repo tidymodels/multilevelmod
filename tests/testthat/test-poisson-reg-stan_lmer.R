@@ -49,3 +49,19 @@ test_that('stan_glm execution', {
   expect_equal(stan_pi_upper, ps_pred_int$.pred_upper, tolerance = 0.1)
 
 })
+
+test_that('mode specific package dependencies', {
+  expect_identical(
+    get_from_env(paste0("poisson_reg", "_pkgs")) %>%
+      dplyr::filter(engine == "stan_glmer", mode == "classification") %>%
+      dplyr::pull(pkg),
+    list()
+  )
+
+  expect_identical(
+    get_from_env(paste0("poisson_reg", "_pkgs")) %>%
+      dplyr::filter(engine == "stan_glmer", mode == "regression") %>%
+      dplyr::pull(pkg),
+    list(c("rstanarm", "multilevelmod"))
+  )
+})
