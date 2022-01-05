@@ -8,8 +8,14 @@
 make_stan_poisson_reg <- function() {
 
   parsnip::set_model_engine("poisson_reg", "regression", "stan_glmer")
-  parsnip::set_dependency("poisson_reg", "stan_glmer", "rstanarm")
-  parsnip::set_dependency("poisson_reg", "stan_glmer", "multilevelmod")
+  parsnip::set_dependency("poisson_reg",
+                          eng = "stan_glmer",
+                          pkg = "rstanarm",
+                          mode = "regression")
+  parsnip::set_dependency("poisson_reg",
+                          eng = "stan_glmer",
+                          pkg = "multilevelmod",
+                          mode = "regression")
 
   parsnip::set_encoding(
     model = "poisson_reg",
@@ -110,8 +116,14 @@ make_stan_poisson_reg <- function() {
 make_lme4_poisson_reg <- function() {
 
   parsnip::set_model_engine("poisson_reg", "regression", "glmer")
-  parsnip::set_dependency("poisson_reg", "glmer", "lme4")
-  parsnip::set_dependency("poisson_reg", "glmer", "multilevelmod")
+  parsnip::set_dependency("poisson_reg",
+                          eng = "glmer",
+                          pkg = "lme4",
+                          mode = "regression")
+  parsnip::set_dependency("poisson_reg",
+                          eng = "glmer",
+                          pkg = "multilevelmod",
+                          mode = "regression")
 
   parsnip::set_encoding(
     model = "poisson_reg",
@@ -180,8 +192,14 @@ make_lme4_poisson_reg <- function() {
 make_gee_poisson_reg <- function() {
 
   parsnip::set_model_engine("poisson_reg", "regression", "gee")
-  parsnip::set_dependency("poisson_reg", "gee", "gee")
-  parsnip::set_dependency("poisson_reg", "gee", "multilevelmod")
+  parsnip::set_dependency("poisson_reg",
+                          eng = "gee",
+                          pkg = "gee",
+                          mode = "regression")
+  parsnip::set_dependency("poisson_reg",
+                          eng = "gee",
+                          pkg = "multilevelmod",
+                          mode = "regression")
 
   parsnip::set_encoding(
     model = "poisson_reg",

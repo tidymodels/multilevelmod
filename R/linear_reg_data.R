@@ -8,8 +8,14 @@
 make_stan_linear_reg <- function() {
 
   parsnip::set_model_engine("linear_reg", "regression", "stan_glmer")
-  parsnip::set_dependency("linear_reg", "stan_glmer", "rstanarm")
-  parsnip::set_dependency("linear_reg", "stan_glmer", "multilevelmod")
+  parsnip::set_dependency("linear_reg",
+                          eng = "stan_glmer",
+                          pkg = "rstanarm",
+                          mode = "regression")
+  parsnip::set_dependency("linear_reg",
+                          eng = "stan_glmer",
+                          pkg = "multilevelmod",
+                          mode = "regression")
 
   parsnip::set_encoding(
     model = "linear_reg",
@@ -110,8 +116,8 @@ make_stan_linear_reg <- function() {
 make_lme4_linear_reg <- function() {
 
   parsnip::set_model_engine("linear_reg", "regression", "lmer")
-  parsnip::set_dependency("linear_reg", "lmer", "lme4")
-  parsnip::set_dependency("linear_reg", "lmer", "multilevelmod")
+  parsnip::set_dependency("linear_reg", "lmer", "lme4", "regression")
+  parsnip::set_dependency("linear_reg", "lmer", "multilevelmod", "regression")
 
   parsnip::set_encoding(
     model = "linear_reg",
@@ -180,8 +186,8 @@ make_lme4_linear_reg <- function() {
 make_gee_linear_reg <- function() {
 
   parsnip::set_model_engine("linear_reg", "regression", "gee")
-  parsnip::set_dependency("linear_reg", "gee", "gee")
-  parsnip::set_dependency("linear_reg", "gee", "multilevelmod")
+  parsnip::set_dependency("linear_reg", "gee", "gee", "regression")
+  parsnip::set_dependency("linear_reg", "gee", "multilevelmod", "regression")
 
   parsnip::set_encoding(
     model = "linear_reg",
@@ -247,8 +253,8 @@ make_gee_linear_reg <- function() {
 make_lme_linear_reg <- function() {
 
   parsnip::set_model_engine("linear_reg", "regression", "lme")
-  parsnip::set_dependency("linear_reg", "lme", "nlme")
-  parsnip::set_dependency("linear_reg", "lme", "multilevelmod")
+  parsnip::set_dependency("linear_reg", "lme", "nlme", "regression")
+  parsnip::set_dependency("linear_reg", "lme", "multilevelmod", "regression")
 
   parsnip::set_encoding(
     model = "linear_reg",
@@ -315,8 +321,8 @@ make_lme_linear_reg <- function() {
 make_gls_linear_reg <- function() {
 
   parsnip::set_model_engine("linear_reg", "regression", "gls")
-  parsnip::set_dependency("linear_reg", "gls", "nlme")
-  parsnip::set_dependency("linear_reg", "gls", "multilevelmod")
+  parsnip::set_dependency("linear_reg", "gls", "nlme", "regression")
+  parsnip::set_dependency("linear_reg", "gls", "multilevelmod", "regression")
 
   parsnip::set_encoding(
     model = "linear_reg",
