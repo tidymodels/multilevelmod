@@ -31,39 +31,6 @@
     <loc>https://multilevelmod.tidymodels.org/index.html</loc>
   </url>
   <url>
-    <loc>https://multilevelmod.tidymodels.org/reference/details_linear_reg_gee.html</loc>
-  </url>
-  <url>
-    <loc>https://multilevelmod.tidymodels.org/reference/details_linear_reg_gls.html</loc>
-  </url>
-  <url>
-    <loc>https://multilevelmod.tidymodels.org/reference/details_linear_reg_lme.html</loc>
-  </url>
-  <url>
-    <loc>https://multilevelmod.tidymodels.org/reference/details_linear_reg_lmer.html</loc>
-  </url>
-  <url>
-    <loc>https://multilevelmod.tidymodels.org/reference/details_linear_reg_stan_glmer.html</loc>
-  </url>
-  <url>
-    <loc>https://multilevelmod.tidymodels.org/reference/details_logistic_reg_gee.html</loc>
-  </url>
-  <url>
-    <loc>https://multilevelmod.tidymodels.org/reference/details_logistic_reg_glmer.html</loc>
-  </url>
-  <url>
-    <loc>https://multilevelmod.tidymodels.org/reference/details_logistic_reg_stan_glmer.html</loc>
-  </url>
-  <url>
-    <loc>https://multilevelmod.tidymodels.org/reference/details_poisson_reg_gee.html</loc>
-  </url>
-  <url>
-    <loc>https://multilevelmod.tidymodels.org/reference/details_poisson_reg_glmer.html</loc>
-  </url>
-  <url>
-    <loc>https://multilevelmod.tidymodels.org/reference/details_poisson_reg_stan_glmer.html</loc>
-  </url>
-  <url>
     <loc>https://multilevelmod.tidymodels.org/reference/gee_fit.html</loc>
   </url>
   <url>
