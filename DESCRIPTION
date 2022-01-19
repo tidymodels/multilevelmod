@@ -31,8 +31,8 @@ Suggests:
     tidymodels
 VignetteBuilder: 
     knitr
-Remotes: 
-    tidymodels/parsnip
+Remotes:
+    tidymodels/parsnip#631
 Config/Needs/website: 
     tidyverse/tidytemplate
 Encoding: UTF-8
