@@ -40,4 +40,5 @@ Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-URL: http://multilevelmod.tidymodels.org/
+URL: ttps://github.com/tidymodels/multilevelmod,
+    http://multilevelmod.tidymodels.org/
