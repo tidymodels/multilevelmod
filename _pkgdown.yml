@@ -1,14 +1,14 @@
-url: https://multilevelmod.tidymodels.org
+url: https://multilevelmod.tidymodels.org/
 
 template:
+  package: tidytemplate
   bootstrap: 5
   bslib:
-    danger: "#CA225E"
     primary: "#CA225E"
-  package: tidytemplate
 
-development:
-  mode: auto
+  includes:
+      in_header: |
+        <script defer data-domain="multilevelmod.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 
 figures:
   fig.width: 8
