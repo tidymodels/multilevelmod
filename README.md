@@ -38,6 +38,25 @@ For the development version:
 devtools::install_github("tidymodels/multilevelmod")
 ```
 
+## Avaliable Engines
+
+The multilevelmod package provides engines for the models in the
+following table.
+
+| model        | engine     | mode           |
+|:-------------|:-----------|:---------------|
+| linear_reg   | stan_glmer | regression     |
+| linear_reg   | lmer       | regression     |
+| linear_reg   | gee        | regression     |
+| linear_reg   | lme        | regression     |
+| linear_reg   | gls        | regression     |
+| logistic_reg | gee        | classification |
+| logistic_reg | glmer      | classification |
+| logistic_reg | stan_glmer | classification |
+| poisson_reg  | gee        | regression     |
+| poisson_reg  | glmer      | regression     |
+| poisson_reg  | stan_glmer | regression     |
+
 ## Example
 
 Loading mixedlevelmod will trigger it to add a few modeling *engines* to
@@ -53,7 +72,6 @@ The `sleepstudy` data is used as an example:
 
 ``` r
 library(multilevelmod)
-#> Loading required package: parsnip
 data(sleepstudy, package = "lme4")
 
 mixed_model_spec <- linear_reg() %>% set_engine("lmer")
@@ -65,7 +83,6 @@ mixed_model_fit <-
 mixed_model_fit
 #> parsnip model object
 #> 
-#> Fit time:  41ms 
 #> Linear mixed model fit by REML ['lmerMod']
 #> Formula: Reaction ~ Days + (Days | Subject)
 #>    Data: data
@@ -93,15 +110,14 @@ hier_model_fit <-
 hier_model_fit
 #> parsnip model object
 #> 
-#> Fit time:  29.9s 
 #> stan_glmer
 #>  family:       gaussian [identity]
 #>  formula:      Reaction ~ Days + (Days | Subject)
 #>  observations: 180
 #> ------
 #>             Median MAD_SD
-#> (Intercept) 251.2    6.4 
-#> Days         10.4    1.7 
+#> (Intercept) 251.5    6.4 
+#> Days         10.5    1.7 
 #> 
 #> Auxiliary parameter(s):
 #>       Median MAD_SD
@@ -110,7 +126,7 @@ hier_model_fit
 #> Error terms:
 #>  Groups   Name        Std.Dev. Corr
 #>  Subject  (Intercept) 24           
-#>           Days         7       0.07
+#>           Days         7       0.06
 #>  Residual             26           
 #> Num. levels: Subject 18 
 #> 
