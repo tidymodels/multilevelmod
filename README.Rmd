@@ -43,6 +43,30 @@ For the development version:
 devtools::install_github("tidymodels/multilevelmod")
 ```
 
+## Avaliable Engines
+
+The multilevelmod package provides engines for the models in the following table.
+
+```{r, echo=FALSE, message=FALSE}
+library(parsnip)
+
+parsnip_models <- get_from_env("models") %>%
+  setNames(., .) %>%
+  purrr::map_dfr(get_from_env, .id = "model")
+
+library(multilevelmod)
+
+multilevelmod_models <- get_from_env("models") %>%
+  setNames(., .) %>%
+  purrr::map_dfr(get_from_env, .id = "model")
+
+dplyr::anti_join(
+  multilevelmod_models, parsnip_models, 
+  by = c("model", "engine", "mode")
+) %>%
+  knitr::kable()
+```
+
 ## Example
 
 Loading mixedlevelmod will trigger it to add a few modeling _engines_ to the parsnip model database. For Bayesian models, there are now `stan-glmer` engines for `linear_reg()`, `logistic_reg()`, and `poisson_reg()`. 
