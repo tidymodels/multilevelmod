@@ -12,7 +12,7 @@ Description: Bindings for hierarchical regression models for use with the
     models (Pinheiro and Bates) <doi:10.1007/978-1-4419-0318-1_1>.
 License: MIT + file LICENSE
 Depends: 
-    parsnip (>= 0.1.7),
+    parsnip (>= 0.2.0),
     R (>= 2.10)
 Imports: 
     dplyr,
