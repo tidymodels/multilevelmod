@@ -70,6 +70,8 @@ gee_formula <- function(f) {
 #' Also, because of issues with the `gee()` function, a supplementary call to
 #' `glm()` is needed to get the rank and QR decomposition objects so that
 #' `predict()` can be used.
+#' @return A gee object
+#' @keywords internal
 #' @export
 gee_fit <- function(formula, data, family = gaussian, ...) {
   f <- gee_formula(formula)

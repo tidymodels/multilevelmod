@@ -23,6 +23,9 @@ functions can be obtained either by family selection or by the use of
 
 \item{...}{For additional parameters}
 }
+\value{
+A gee object
+}
 \description{
 Custom fitting function to add GEE model with cluster
 variable to parsnip GEE function call.
@@ -36,3 +39,4 @@ Also, because of issues with the \code{gee()} function, a supplementary call to
 \code{glm()} is needed to get the rank and QR decomposition objects so that
 \code{predict()} can be used.
 }
+\keyword{internal}
