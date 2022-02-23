@@ -69,6 +69,7 @@ The `sleepstudy` data is used as an example:
 
 ``` r
 library(multilevelmod)
+set.seed(1234)
 data(sleepstudy, package = "lme4")
 
 mixed_model_spec <- linear_reg() %>% set_engine("lmer")
@@ -113,8 +114,8 @@ hier_model_fit
 #>  observations: 180
 #> ------
 #>             Median MAD_SD
-#> (Intercept) 251.6    6.7 
-#> Days         10.4    1.7 
+#> (Intercept) 251.3    6.5 
+#> Days         10.5    1.7 
 #> 
 #> Auxiliary parameter(s):
 #>       Median MAD_SD
@@ -122,7 +123,7 @@ hier_model_fit
 #> 
 #> Error terms:
 #>  Groups   Name        Std.Dev. Corr
-#>  Subject  (Intercept) 24.2         
+#>  Subject  (Intercept) 24.1         
 #>           Days         6.9     0.09
 #>  Residual             26.0         
 #> Num. levels: Subject 18 

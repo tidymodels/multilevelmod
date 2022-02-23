@@ -75,6 +75,7 @@ The `sleepstudy` data is used as an example:
 
 ```{r sleep-lme}
 library(multilevelmod)
+set.seed(1234)
 data(sleepstudy, package = "lme4")
 
 mixed_model_spec <- linear_reg() %>% set_engine("lmer")
