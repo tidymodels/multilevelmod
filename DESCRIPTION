@@ -36,11 +36,12 @@ VignetteBuilder:
 Remotes:
     tidymodels/parsnip#631
 Config/Needs/website: 
+    tidymodels/tidymodels
     tidyverse/tidytemplate
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-URL: ttps://github.com/tidymodels/multilevelmod,
+URL: https://github.com/tidymodels/multilevelmod,
     http://multilevelmod.tidymodels.org/

@@ -6,11 +6,9 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/multilevelmod)](https://CRAN.R-project.org/package=multilevelmod)
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Codecov test
-coverage](https://codecov.io/gh/topepo/multilevelmod/branch/main/graph/badge.svg)](https://codecov.io/gh/topepo/multilevelmod?branch=main)
+coverage](https://codecov.io/gh/topepo/multilevelmod/branch/main/graph/badge.svg)](https://app.codecov.io/gh/topepo/multilevelmod?branch=main)
 [![R-CMD-check](https://github.com/tidymodels/multilevelmod/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/multilevelmod/actions)
 <!-- badges: end -->
 
@@ -28,7 +26,6 @@ You can install the released version of multilevelmod from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-# not yet
 install.packages("multilevelmod")
 ```
 
@@ -116,8 +113,8 @@ hier_model_fit
 #>  observations: 180
 #> ------
 #>             Median MAD_SD
-#> (Intercept) 251.5    6.4 
-#> Days         10.5    1.7 
+#> (Intercept) 251.6    6.7 
+#> Days         10.4    1.7 
 #> 
 #> Auxiliary parameter(s):
 #>       Median MAD_SD
@@ -125,9 +122,9 @@ hier_model_fit
 #> 
 #> Error terms:
 #>  Groups   Name        Std.Dev. Corr
-#>  Subject  (Intercept) 24           
-#>           Days         7       0.06
-#>  Residual             26           
+#>  Subject  (Intercept) 24.2         
+#>           Days         6.9     0.09
+#>  Residual             26.0         
 #> Num. levels: Subject 18 
 #> 
 #> ------
@@ -143,14 +140,15 @@ By contributing to this project, you agree to abide by its terms.
 
 -   For questions and discussions about tidymodels packages, modeling,
     and machine learning, please [post on RStudio
-    Community](https://rstd.io/tidymodels-community).
+    Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
 
 -   If you think you have encountered a bug, please [submit an
     issue](https://github.com/tidymodels/multilevelmod/issues).
 
 -   Either way, learn how to create and share a
-    [reprex](https://rstd.io/reprex) (a minimal, reproducible example),
-    to clearly communicate about your code.
+    [reprex](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question)
+    (a minimal, reproducible example), to clearly communicate about your
+    code.
 
 -   Check out further details on [contributing guidelines for tidymodels
     packages](https://www.tidymodels.org/contribute/) and [how to get
