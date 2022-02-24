@@ -35,7 +35,7 @@ For the development version:
 devtools::install_github("tidymodels/multilevelmod")
 ```
 
-## Avaliable Engines
+## Available Engines
 
 The multilevelmod package provides engines for the models in the
 following table.
