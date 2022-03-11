@@ -83,6 +83,14 @@ When making predictions, the basic \code{predict()} method does the trick:\if{ht
 ## 20  8.64
 }
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/tidymodels/multilevelmod}
+  \item \url{http://multilevelmod.tidymodels.org/}
+}
+
+}
 \author{
 \strong{Maintainer}: Max Kuhn \email{max@rstudio.com} (\href{https://orcid.org/0000-0003-2402-136X}{ORCID})
 
