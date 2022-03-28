@@ -223,7 +223,7 @@ make_lme4_logistic_reg <- function() {
     mode = "classification",
     value = list(
       interface = "formula",
-      protect = c("formula", "data"),
+      protect = c("formula", "data", "weights"),
       func = c(pkg = "lme4", fun = "glmer"),
       defaults = list(family = quote(binomial))
     )

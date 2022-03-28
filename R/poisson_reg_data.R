@@ -143,7 +143,7 @@ make_lme4_poisson_reg <- function() {
     mode = "regression",
     value = list(
       interface = "formula",
-      protect = c("formula", "data"),
+      protect = c("formula", "data", "weights"),
       func = c(pkg = "lme4", fun = "glmer"),
       defaults = list(family = rlang::expr(stats::poisson))
     )

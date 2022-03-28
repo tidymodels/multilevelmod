@@ -137,7 +137,7 @@ make_lme4_linear_reg <- function() {
     mode = "regression",
     value = list(
       interface = "formula",
-      protect = c("formula", "data"),
+      protect = c("formula", "data", "weights"),
       func = c(pkg = "lme4", fun = "lmer"),
       defaults = list()
     )
