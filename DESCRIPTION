@@ -34,7 +34,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 Config/Needs/website: 
-    tidymodels/tidymodels
+    tidymodels/tidymodels,
     tidyverse/tidytemplate
 Encoding: UTF-8
 Language: en-US
