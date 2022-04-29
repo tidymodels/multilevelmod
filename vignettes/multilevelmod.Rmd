@@ -48,16 +48,19 @@ two_factor_incompl %>%
 To show how prediction works, let's create a new data frame for a hypothetical fourth stem cell donor: 
 
 ```{r}
-subject_four <- tibble(group = unique(two_factor_incompl$group), subject = "four")
+subject_four <- tibble(
+  group = unique(two_factor_incompl$group), 
+  subject = "four"
+)
 ```
 
 Now let's look at how the modeling engines work with multilevelmod. 
 
 ## Generalized estimator equations (GEE)
 
-This engine requires the installation of the gee package.  
+This engine requires the gee package to be installed.
 
-There are no random effects in this model. It, like the generalized least squares model discussed below, deals with the within-subject correlations by estimating a correlation (or covariance) matrix that is not diagonal.  To do this, the model formula should use the `id_var()` function. This is a special syntax for creating model matrices (there is no actual `id_var()` function) that designates the column for the independent experimental unit. 
+There are no random effects in this model. Like the generalized least squares model discussed below, this model deals with the within-subject correlations by estimating a correlation (or covariance) matrix that is not diagonal. To do this, the model formula should use the `id_var()` function. This is a special syntax for creating model matrices (there is no actual `id_var()` function) that designates the column for the independent experimental unit. 
 
 The correlation structure can be passed as an engine argument: 
 
@@ -84,6 +87,8 @@ predict(gee_fit, subject_four %>% select(group)) %>%
 
 ## Generalized least squares
 
+This engine requires the nlme package to be installed.
+
 For this model, the syntax to specify the independent experimental unit is inside of the `corrrelation` argument for `nlme::gls()`. We'll pass that as an engine argument. Possible values can be found using `?nlme::corStruct`. 
 
 For example:
@@ -102,7 +107,7 @@ gls_fit <-
 gls_fit
 ```
 
-As with the GEE model, only the regression terms are required to predict:
+As with the GEE model, only the regression terms are required for prediction:
 
 ```{r gls-pred}
 predict(gls_fit, subject_four %>% select(group)) %>% 
@@ -111,9 +116,9 @@ predict(gls_fit, subject_four %>% select(group)) %>%
 
 ## Linear mixed effects via lme
 
-For models created by `nlme::lme()`, the random effects are specified in an argument called `random`. This can be passed via `set_engine()`. The formula should only include the fixed effects for the model. 
-
 This engine requires the nlme package to be installed. 
+
+For models created by `nlme::lme()`, the random effects are specified in an argument called `random`. This can be passed via `set_engine()`. The formula specified for `fit()` should only include the fixed effects for the model. 
 
 To fit the basic random intercept model: 
 
@@ -169,7 +174,7 @@ predict(lmer_fit, subject_four) %>%
 To determine what packages are required for a model, use this function:
 
 ```{r}
-req_pkgs(lmer_spec)
+required_pkgs(lmer_spec)
 ```
 
 For the `"stan_glmer"` engine, some relevant arguments that can be passed to `set_engine()` are: 
@@ -218,7 +223,7 @@ lmer_wflow %>%
 
 ## Other tips
 
-Finally, there are excellent helper functions in the broom.mixed and tidybayes packages. If these need the underlying model fit object, check out the `extract_fit_engine()`, which can be used on either parsnip or workflow objects: 
+Finally, there are excellent helper functions in the broom.mixed and tidybayes packages. If these need the underlying model fit object: the `extract_fit_engine()` function can be used on either parsnip or workflow objects: 
 
 ```{r}
 lmer_wflow %>% 
