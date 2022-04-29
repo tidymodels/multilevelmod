@@ -111,13 +111,16 @@
 <p><img src="multilevelmod_files/figure-html/unnamed-chunk-4-1.png" width="768"></p>
 <p>To show how prediction works, let’s create a new data frame for a hypothetical fourth stem cell donor:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">subject_four</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">two_factor_incompl</span><span class="op">$</span><span class="va">group</span><span class="op">)</span>, subject <span class="op">=</span> <span class="st">"four"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">subject_four</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
+  group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">two_factor_incompl</span><span class="op">$</span><span class="va">group</span><span class="op">)</span>, 
+  subject <span class="op">=</span> <span class="st">"four"</span>
+<span class="op">)</span></code></pre></div>
 <p>Now let’s look at how the modeling engines work with multilevelmod.</p>
 <div class="section level2">
 <h2 id="generalized-estimator-equations-gee">Generalized estimator equations (GEE)<a class="anchor" aria-label="anchor" href="#generalized-estimator-equations-gee"></a>
 </h2>
-<p>This engine requires the installation of the gee package.</p>
-<p>There are no random effects in this model. It, like the generalized least squares model discussed below, deals with the within-subject correlations by estimating a correlation (or covariance) matrix that is not diagonal. To do this, the model formula should use the <code>id_var()</code> function. This is a special syntax for creating model matrices (there is no actual <code>id_var()</code> function) that designates the column for the independent experimental unit.</p>
+<p>This engine requires the gee package to be installed.</p>
+<p>There are no random effects in this model. Like the generalized least squares model discussed below, this model deals with the within-subject correlations by estimating a correlation (or covariance) matrix that is not diagonal. To do this, the model formula should use the <code>id_var()</code> function. This is a special syntax for creating model matrices (there is no actual <code>id_var()</code> function) that designates the column for the independent experimental unit.</p>
 <p>The correlation structure can be passed as an engine argument:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gee_spec</span> <span class="op">&lt;-</span> 
@@ -192,6 +195,7 @@
 <div class="section level2">
 <h2 id="generalized-least-squares">Generalized least squares<a class="anchor" aria-label="anchor" href="#generalized-least-squares"></a>
 </h2>
+<p>This engine requires the nlme package to be installed.</p>
 <p>For this model, the syntax to specify the independent experimental unit is inside of the <code>corrrelation</code> argument for <code><a href="https://rdrr.io/pkg/nlme/man/gls.html" class="external-link">nlme::gls()</a></code>. We’ll pass that as an engine argument. Possible values can be found using <code><a href="https://rdrr.io/pkg/nlme/man/corClasses.html" class="external-link">?nlme::corStruct</a></code>.</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -226,7 +230,7 @@
 <span class="co">## 0.8820281 </span>
 <span class="co">## Degrees of freedom: 23 total; 15 residual</span>
 <span class="co">## Residual standard error: 0.1699483</span></code></pre>
-<p>As with the GEE model, only the regression terms are required to predict:</p>
+<p>As with the GEE model, only the regression terms are required for prediction:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">gls_fit</span>, <span class="va">subject_four</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select</span><span class="op">(</span><span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu">bind_cols</span><span class="op">(</span><span class="va">subject_four</span><span class="op">)</span></code></pre></div>
@@ -245,8 +249,8 @@
 <div class="section level2">
 <h2 id="linear-mixed-effects-via-lme">Linear mixed effects via lme<a class="anchor" aria-label="anchor" href="#linear-mixed-effects-via-lme"></a>
 </h2>
-<p>For models created by <code><a href="https://rdrr.io/pkg/nlme/man/lme.html" class="external-link">nlme::lme()</a></code>, the random effects are specified in an argument called <code>random</code>. This can be passed via <code><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine()</a></code>. The formula should only include the fixed effects for the model.</p>
 <p>This engine requires the nlme package to be installed.</p>
+<p>For models created by <code><a href="https://rdrr.io/pkg/nlme/man/lme.html" class="external-link">nlme::lme()</a></code>, the random effects are specified in an argument called <code>random</code>. This can be passed via <code><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine()</a></code>. The formula specified for <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> should only include the fixed effects for the model.</p>
 <p>To fit the basic random intercept model:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lme_spec</span> <span class="op">&lt;-</span> 
@@ -355,10 +359,8 @@
 <span class="co">## <span style="color: #BCBCBC;">8</span>  9.49 1:B   four</span></code></pre>
 <p>To determine what packages are required for a model, use this function:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://parsnip.tidymodels.org/reference/req_pkgs.html" class="external-link">req_pkgs</a></span><span class="op">(</span><span class="va">lmer_spec</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Warning: `req_pkgs()` was deprecated in parsnip 0.1.8.</span>
-<span class="co">## Please use `required_pkgs()` instead.</span></code></pre>
-<pre><code><span class="co">## [1] "lme4"          "multilevelmod"</span></code></pre>
+<code class="sourceCode R"><span class="fu"><a href="https://generics.r-lib.org/reference/required_pkgs.html" class="external-link">required_pkgs</a></span><span class="op">(</span><span class="va">lmer_spec</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] "parsnip"       "lme4"          "multilevelmod"</span></code></pre>
 <p>For the <code>"stan_glmer"</code> engine, some relevant arguments that can be passed to <code><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine()</a></code> are:</p>
 <ul>
 <li>
@@ -381,7 +383,7 @@
 </h2>
 <p>If you use <a href="https://www.tmwr.org/workflows.html" class="external-link">workflows</a>, we have a few suggestions.</p>
 <p>First, instead of using <code>add_formula()</code>, we suggest using <code>add_variables()</code>. This passes the columns as-is to the model fitting function. To add the random effects formula, use the <code>formula</code> argument of <code>add_model()</code>. For example:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lmer_wflow</span> <span class="op">&lt;-</span> 
   <span class="fu">workflow</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu">add_variables</span><span class="op">(</span>outcomes <span class="op">=</span> <span class="va">expression</span>, predictors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">group</span>, <span class="va">subject</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
@@ -413,7 +415,7 @@
 <span class="co">##    -0.01200      0.13967      0.03200</span></code></pre>
 <p>If using a recipe, make sure that functions like <code>step_dummy()</code> do <strong>not</strong> convert the column for the independent experimental unit (i.e. subject) to dummy variables. The underlying model fit functions require a single column for these data.</p>
 <p>Using a recipe also offers the opportunity to <a href="https://recipes.tidymodels.org/reference/roles.html" class="external-link">set a different role</a> for the independent experiment unit, which can come in handy when more complex preprocessing is needed.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rec</span> <span class="op">&lt;-</span> 
   <span class="fu">recipe</span><span class="op">(</span><span class="va">expression</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="va">subject</span>, data <span class="op">=</span> <span class="va">two_factor_incompl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu">add_role</span><span class="op">(</span><span class="va">subject</span>, new_role <span class="op">=</span> <span class="st">"exp_unit"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -451,8 +453,8 @@
 <div class="section level2">
 <h2 id="other-tips">Other tips<a class="anchor" aria-label="anchor" href="#other-tips"></a>
 </h2>
-<p>Finally, there are excellent helper functions in the broom.mixed and tidybayes packages. If these need the underlying model fit object, check out the <code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_fit_engine()</a></code>, which can be used on either parsnip or workflow objects:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<p>Finally, there are excellent helper functions in the broom.mixed and tidybayes packages. If these need the underlying model fit object: the <code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_fit_engine()</a></code> function can be used on either parsnip or workflow objects:</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lmer_wflow</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">two_factor_incompl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># &lt;- returns a workflow</span>
   <span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_fit_engine</a></span><span class="op">(</span><span class="op">)</span>               <span class="co"># &lt;- returns the lmer object</span></code></pre></div>
