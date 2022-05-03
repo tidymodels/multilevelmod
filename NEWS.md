@@ -1,4 +1,4 @@
-# multilevelmod 0.1.0.9000
+# multilevelmod 0.2.0
 
 * The vignette now uses the `sleepstudy` data.
 
