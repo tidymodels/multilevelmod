@@ -16,7 +16,9 @@ subjects were measured over time points. The outcome was the number of
 counts and the predictors are the time point as well as an additional
 numeric covariate.
 
-We can fit the model using \code{\link[lme4:glmer]{lme4::glmer()}}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(tidymodels)
+We can fit the model using \code{\link[lme4:glmer]{lme4::glmer()}}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(tidymodels)
 library(multilevelmod)
 library(poissonreg) # current required for poisson_reg()
 
@@ -38,8 +40,12 @@ count_mod <-
   poisson_reg() \%>\% 
   set_engine("glmer") \%>\% 
   fit(y ~ time + x + (1 | subject), data = data_train)
-}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{count_mod
-}\if{html}{\out{</div>}}\preformatted{## parsnip model object
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{count_mod
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## parsnip model object
 ## 
 ## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
@@ -55,10 +61,14 @@ count_mod <-
 ## Fixed Effects:
 ## (Intercept)         time            x  
 ##     -0.5946       1.5145       0.2395
-}
+}\if{html}{\out{</div>}}
 
-When making predictions, the basic \code{predict()} method does the trick:\if{html}{\out{<div class="sourceCode r">}}\preformatted{count_mod \%>\% predict(data_new)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 20 × 1
+When making predictions, the basic \code{predict()} method does the trick:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{count_mod \%>\% predict(data_new)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 20 × 1
 ##    .pred
 ##    <dbl>
 ##  1  1.19
@@ -81,7 +91,7 @@ When making predictions, the basic \code{predict()} method does the trick:\if{ht
 ## 18  6.20
 ## 19  7.55
 ## 20  8.64
-}
+}\if{html}{\out{</div>}}
 }
 \seealso{
 Useful links:
