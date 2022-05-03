@@ -65,7 +65,8 @@ package relies on the formula method to specify the random effects.</p>
 subjects were measured over time points. The outcome was the number of
 counts and the predictors are the time point as well as an additional
 numeric covariate.</p>
-<p>We can fit the model using <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">lme4::glmer()</a></code>:</p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org" class="external-link">tidymodels</a></span><span class="op">)</span>
+<p>We can fit the model using <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">lme4::glmer()</a></code>:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org" class="external-link">tidymodels</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/multilevelmod" class="external-link">multilevelmod</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/poissonreg" class="external-link">poissonreg</a></span><span class="op">)</span> <span class="co"># current required for poisson_reg()</span>
 
@@ -86,47 +87,12 @@ numeric covariate.</p>
 <span class="va">count_mod</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="https://parsnip.tidymodels.org/reference/poisson_reg.html" class="external-link">poisson_reg</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span><span class="st">"glmer"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">x</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data_train</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode r"><pre><code><span class="va">count_mod</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## parsnip model object</span>
-<span class="co">## </span>
-<span class="co">## Generalized linear mixed model fit by maximum likelihood (Laplace</span>
-<span class="co">##   Approximation) [glmerMod]</span>
-<span class="co">##  Family: poisson  ( log )</span>
-<span class="co">## Formula: y ~ time + x + (1 | subject)</span>
-<span class="co">##    Data: data</span>
-<span class="co">##       AIC       BIC    logLik  deviance  df.resid </span>
-<span class="co">##  4474.553  4494.104 -2233.277  4466.553       976 </span>
-<span class="co">## Random effects:</span>
-<span class="co">##  Groups  Name        Std.Dev.</span>
-<span class="co">##  subject (Intercept) 0.9394  </span>
-<span class="co">## Number of obs: 980, groups:  subject, 98</span>
-<span class="co">## Fixed Effects:</span>
-<span class="co">## (Intercept)         time            x  </span>
-<span class="co">##     -0.5946       1.5145       0.2395</span></code></pre></div>
-
-<p>When making predictions, the basic <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> method does the trick:</p><div class="sourceCode r"><pre><code><span class="va">count_mod</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">data_new</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 20 × 1</span>
-<span class="co">##    .pred</span>
-<span class="co">##    &lt;dbl&gt;</span>
-<span class="co">##  1  1.19</span>
-<span class="co">##  2  1.42</span>
-<span class="co">##  3  1.65</span>
-<span class="co">##  4  1.83</span>
-<span class="co">##  5  2.04</span>
-<span class="co">##  6  2.66</span>
-<span class="co">##  7  2.96</span>
-<span class="co">##  8  3.43</span>
-<span class="co">##  9  3.94</span>
-<span class="co">## 10  4.64</span>
-<span class="co">## 11  2.21</span>
-<span class="co">## 12  2.60</span>
-<span class="co">## 13  2.97</span>
-<span class="co">## 14  3.38</span>
-<span class="co">## 15  4.16</span>
-<span class="co">## 16  4.90</span>
-<span class="co">## 17  5.45</span>
-<span class="co">## 18  6.20</span>
-<span class="co">## 19  7.55</span>
-<span class="co">## 20  8.64</span></code></pre></div>
-
+  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">x</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data_train</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span class="va">count_mod</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
+<p>When making predictions, the basic <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> method does the trick:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">count_mod</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">data_new</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
