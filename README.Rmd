@@ -29,7 +29,7 @@ multilevelmod enables the use of multi-level models (a.k.a mixed-effects models,
 
 ## Installation
 
-You can install the released version of multilevelmod from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of multilevelmod from [CRAN](https://cran.r-project.org) with:
 
 ``` r
 install.packages("multilevelmod")

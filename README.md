@@ -23,7 +23,7 @@ models, Bayesian hierarchical models, etc.) with the parsnip package.
 ## Installation
 
 You can install the released version of multilevelmod from
-[CRAN](https://CRAN.R-project.org) with:
+[CRAN](https://cran.r-project.org) with:
 
 ``` r
 install.packages("multilevelmod")
