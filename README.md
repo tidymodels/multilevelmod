@@ -9,7 +9,7 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Codecov test
 coverage](https://codecov.io/gh/topepo/multilevelmod/branch/main/graph/badge.svg)](https://app.codecov.io/gh/topepo/multilevelmod?branch=main)
-[![R-CMD-check](https://github.com/tidymodels/multilevelmod/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/multilevelmod/actions)
+[![R-CMD-check](https://github.com/tidymodels/multilevelmod/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/multilevelmod/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 multilevelmod enables the use of multi-level models (a.k.a mixed-effects
@@ -23,7 +23,7 @@ models, Bayesian hierarchical models, etc.) with the parsnip package.
 ## Installation
 
 You can install the released version of multilevelmod from
-[CRAN](https://CRAN.R-project.org) with:
+[CRAN](https://cran.r-project.org) with:
 
 ``` r
 install.packages("multilevelmod")
