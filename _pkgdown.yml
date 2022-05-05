@@ -5,10 +5,13 @@ template:
   bootstrap: 5
   bslib:
     primary: "#CA225E"
-
+    danger: "#CA225E"
   includes:
       in_header: |
         <script defer data-domain="multilevelmod.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
+
+development:
+  mode: auto
 
 figures:
   fig.width: 8
