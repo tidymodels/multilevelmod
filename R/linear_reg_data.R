@@ -183,6 +183,76 @@ make_lme4_linear_reg <- function() {
 
 # ------------------------------------------------------------------------------
 
+make_glmer_linear_reg <- function() {
+
+  parsnip::set_model_engine("linear_reg", "regression", "glmer")
+  parsnip::set_dependency("linear_reg", "glmer", "lme4", "regression")
+  parsnip::set_dependency("linear_reg", "glmer", "multilevelmod", "regression")
+
+  parsnip::set_encoding(
+    model = "linear_reg",
+    eng = "glmer",
+    mode = "regression",
+    options = list(
+      predictor_indicators = "none",
+      compute_intercept = FALSE,
+      remove_intercept = FALSE,
+      allow_sparse_x = FALSE
+    )
+  )
+
+  parsnip::set_fit(
+    model = "linear_reg",
+    eng = "glmer",
+    mode = "regression",
+    value = list(
+      interface = "formula",
+      protect = c("formula", "data", "weights"),
+      func = c(pkg = "lme4", fun = "glmer"),
+      defaults = list(family = rlang::expr(stats::gaussian))
+    )
+  )
+
+  parsnip::set_pred(
+    model = "linear_reg",
+    eng = "glmer",
+    mode = "regression",
+    type = "numeric",
+    value = list(
+      pre = reformat_lme_pred_data,
+      post =  NULL,
+      func = c(fun = "predict"),
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data),
+        allow.new.levels = TRUE,
+        re.form = NA,
+        na.action = rlang::expr(na.exclude),
+        type = "response"
+      )
+    )
+  )
+
+  parsnip::set_pred(
+    model = "linear_reg",
+    eng = "glmer",
+    mode = "regression",
+    type = "raw",
+    value = list(
+      pre = NULL,
+      post = NULL,
+      func = c(fun = "predict"),
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data)
+      )
+    )
+  )
+
+}
+
+# ------------------------------------------------------------------------------
+
 make_gee_linear_reg <- function() {
 
   parsnip::set_model_engine("linear_reg", "regression", "gee")
