@@ -1,4 +1,10 @@
-# multilevelmod (development version)
+# multilevelmod 1.0.0
+
+* Maintainer change. 
+
+* Fix `lme4::lme()` for nested random effects. 
+
+* `a-difabio` added a `glmer` engine for `linear_reg()`. 
 
 # multilevelmod 0.2.0
 

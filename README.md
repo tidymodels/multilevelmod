@@ -44,6 +44,7 @@ following table.
 |:-------------|:-----------|:---------------|
 | linear_reg   | stan_glmer | regression     |
 | linear_reg   | lmer       | regression     |
+| linear_reg   | glmer      | regression     |
 | linear_reg   | gee        | regression     |
 | linear_reg   | lme        | regression     |
 | linear_reg   | gls        | regression     |
@@ -114,7 +115,7 @@ hier_model_fit
 #>  observations: 180
 #> ------
 #>             Median MAD_SD
-#> (Intercept) 251.3    6.5 
+#> (Intercept) 251.5    6.5 
 #> Days         10.5    1.7 
 #> 
 #> Auxiliary parameter(s):
@@ -123,9 +124,9 @@ hier_model_fit
 #> 
 #> Error terms:
 #>  Groups   Name        Std.Dev. Corr
-#>  Subject  (Intercept) 24.1         
-#>           Days         6.9     0.09
-#>  Residual             26.0         
+#>  Subject  (Intercept) 24           
+#>           Days         7       0.08
+#>  Residual             26           
 #> Num. levels: Subject 18 
 #> 
 #> ------
