@@ -46,3 +46,29 @@ test_that('mode specific package dependencies', {
     list(c("lme4", "multilevelmod"))
   )
 })
+
+
+test_that('random interactions and/or nesting', {
+  skip_if_not_installed("lme4")
+  skip_if_not_installed("ggplot2")
+  skip_on_cran()
+
+  data(mpg, package = "ggplot2")
+
+  fit <-
+    linear_reg() %>%
+    set_engine("lmer") %>%
+    fit(cty ~ year + (1|manufacturer/model), data = mpg)
+
+  expect_error(predict(fit, new_data = mpg), regexp = NA)
+  # Now predict with new levels for the random effect columns, esp
+  # when there is nesting/interactions
+  expect_error(
+    predict(fit, new_data = tibble::tibble(year = 2000, model = "dan", manufacturer = "max")),
+    regexp = NA
+  )
+
+
+
+})
+

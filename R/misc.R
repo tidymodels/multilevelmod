@@ -8,9 +8,15 @@
 
 reformat_lme_pred_data <- function(x, object) {
   random_effects <- names(lme4::ranef(object$fit))
-  for (i in random_effects) {
-    lvl <- levels(object$fit@frame[[i]])
-    x[[i]] <- factor(lvl[1], levels = lvl)
+  random_effects <- paste(random_effects, collapse = "+")
+  random_effects_f <- as.formula(paste("~", random_effects))
+  random_effect_cols <- all.vars(random_effects_f)
+  vals <- dplyr::select(object$fit@frame, dplyr::all_of(random_effect_cols))
+  vals <- vals[1,,drop = FALSE]
+
+  for (i in random_effect_cols) {
+    lvl <- levels(vals[[i]])
+    x[[i]] <- factor(vals[[i]][1], levels = lvl)
   }
   x
 }
