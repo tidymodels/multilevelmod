@@ -29,6 +29,7 @@ Imports:
 Suggests: 
     covr,
     gee,
+    ggplot2,
     knitr,
     nlme,
     rmarkdown,
