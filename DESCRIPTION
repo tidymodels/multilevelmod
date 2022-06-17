@@ -1,6 +1,6 @@
 Package: multilevelmod
 Title: Model Wrappers for Multi-Level Models
-Version: 0.2.0.9000
+Version: 1.0.0
 Authors@R: c(
     person("Max", "Kuhn", , "max@rstudio.com", role = c("aut"),
            comment = c(ORCID = "0000-0003-2402-136X")),
@@ -17,7 +17,7 @@ License: MIT + file LICENSE
 URL: https://github.com/tidymodels/multilevelmod,
     http://multilevelmod.tidymodels.org/
 Depends: 
-    parsnip (>= 0.2.0),
+    parsnip (>= 1.0.0),
     R (>= 2.10)
 Imports: 
     dplyr,
@@ -45,4 +45,4 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2.9000
+RoxygenNote: 7.2.0
