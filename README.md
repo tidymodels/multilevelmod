@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# multilevelmod
+# multilevelmod <a href="https://multilevelmod.tidymodels.org/"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
 <!-- badges: start -->
 
@@ -115,7 +115,7 @@ hier_model_fit
 #>  observations: 180
 #> ------
 #>             Median MAD_SD
-#> (Intercept) 251.5    6.5 
+#> (Intercept) 251.3    6.5 
 #> Days         10.5    1.7 
 #> 
 #> Auxiliary parameter(s):
@@ -124,9 +124,9 @@ hier_model_fit
 #> 
 #> Error terms:
 #>  Groups   Name        Std.Dev. Corr
-#>  Subject  (Intercept) 24           
-#>           Days         7       0.08
-#>  Residual             26           
+#>  Subject  (Intercept) 24.1         
+#>           Days         6.9     0.09
+#>  Residual             26.0         
 #> Num. levels: Subject 18 
 #> 
 #> ------
