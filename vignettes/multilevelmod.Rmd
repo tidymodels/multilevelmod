@@ -10,7 +10,7 @@ vignette: >
 The multilevelmod package is a [parsnip](https://parsnip.tidymodels.org/) extension package for multi-level models, which are also known as mixed-effects models, Bayesian hierarchical models, etc.
 The models wrapped by the multilevelmod package tend to have somewhat different interfaces than the average R modeling package, mostly due to how random effects and independent experimental units are specified. 
 
-This vignette is an overview of how to fit these models. For brevity, we only discuss linear models but the syntax also works for binomial, multinomial, and Poisson outcomes. 
+This vignette is an overview of how to fit these models. For brevity, we only discuss linear models but the syntax also works for binomial and Poisson outcomes. 
 
 ```{r, include = FALSE}
 library(tidymodels)
