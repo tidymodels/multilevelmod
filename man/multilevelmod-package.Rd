@@ -43,54 +43,50 @@ count_mod <-
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{count_mod
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## parsnip model object
-## 
-## Generalized linear mixed model fit by maximum likelihood (Laplace
-##   Approximation) [glmerMod]
-##  Family: poisson  ( log )
-## Formula: y ~ time + x + (1 | subject)
-##    Data: data
-##       AIC       BIC    logLik  deviance  df.resid 
-##  4474.553  4494.104 -2233.277  4466.553       976 
-## Random effects:
-##  Groups  Name        Std.Dev.
-##  subject (Intercept) 0.9394  
-## Number of obs: 980, groups:  subject, 98
-## Fixed Effects:
-## (Intercept)         time            x  
-##     -0.5946       1.5145       0.2395
+#> parsnip model object
+#> 
+#> Generalized linear mixed model fit by maximum likelihood (Laplace
+#>   Approximation) [glmerMod]
+#>  Family: poisson  ( log )
+#> Formula: y ~ time + x + (1 | subject)
+#>    Data: data
+#>       AIC       BIC    logLik  deviance  df.resid 
+#>  4474.553  4494.104 -2233.277  4466.553       976 
+#> Random effects:
+#>  Groups  Name        Std.Dev.
+#>  subject (Intercept) 0.9394  
+#> Number of obs: 980, groups:  subject, 98
+#> Fixed Effects:
+#> (Intercept)         time            x  
+#>     -0.5946       1.5145       0.2395
 }\if{html}{\out{</div>}}
 
 When making predictions, the basic \code{predict()} method does the trick:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{count_mod \%>\% predict(data_new)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 20 × 1
-##    .pred
-##    <dbl>
-##  1  1.19
-##  2  1.42
-##  3  1.65
-##  4  1.83
-##  5  2.04
-##  6  2.66
-##  7  2.96
-##  8  3.43
-##  9  3.94
-## 10  4.64
-## 11  2.21
-## 12  2.60
-## 13  2.97
-## 14  3.38
-## 15  4.16
-## 16  4.90
-## 17  5.45
-## 18  6.20
-## 19  7.55
-## 20  8.64
+#> # A tibble: 20 x 1
+#>    .pred
+#>    <dbl>
+#>  1  1.19
+#>  2  1.42
+#>  3  1.65
+#>  4  1.83
+#>  5  2.04
+#>  6  2.66
+#>  7  2.96
+#>  8  3.43
+#>  9  3.94
+#> 10  4.64
+#> 11  2.21
+#> 12  2.60
+#> 13  2.97
+#> 14  3.38
+#> 15  4.16
+#> 16  4.90
+#> 17  5.45
+#> 18  6.20
+#> 19  7.55
+#> 20  8.64
 }\if{html}{\out{</div>}}
 }
 \seealso{
