@@ -13,17 +13,17 @@ knitr::opts_chunk$set(
 )
 ```
 
-# multilevelmod <a href="https://multilevelmod.tidymodels.org/"><img src="man/figures/logo.png" align="right" height="138" /></a>
+# multilevelmod <a href="https://multilevelmod.tidymodels.org/"><img src="man/figures/logo.png" align="right" height="138" alt="3 nesting dolls on an orange background" /></a>
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![Codecov test coverage](https://codecov.io/gh/topepo/multilevelmod/branch/main/graph/badge.svg)](https://app.codecov.io/gh/topepo/multilevelmod?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/tidymodels/multilevelmod/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/multilevelmod?branch=main)
 [![R-CMD-check](https://github.com/tidymodels/multilevelmod/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/multilevelmod/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 multilevelmod enables the use of multi-level models (a.k.a mixed-effects models, Bayesian hierarchical models, etc.) with the parsnip package.  
 
-<a href="https://pbs.twimg.com/media/FD1_OIhVIAE4H5l?format=jpg&name=small"><img src="man/figures/FD1_OIhVIAE4H5l.jpeg" align="center" /></a>
+<a href="https://pbs.twimg.com/media/FD1_OIhVIAE4H5l?format=jpg&name=small"><img src="man/figures/FD1_OIhVIAE4H5l.jpeg" align="center" alt="A sweaty Comic character trying to decide which button to push. The buttons read: 'mixed effect model', 'hierarchical linear model', 'random effects model', 'variance component model', 'mixed model', 'random intercepts/slopes', 'regularized regression', 'multilevel model', 'nested data model', and 'random parameter model'". /></a>
 
 (meme courtesy of [`@ChelseaParlett`](https://twitter.com/ChelseaParlett))
 
@@ -38,7 +38,8 @@ install.packages("multilevelmod")
 For the development version: 
 
 ``` r
-devtools::install_github("tidymodels/multilevelmod")
+# install.packages("pak")
+pak::pak("tidymodels/multilevelmod")
 ```
 
 ## Available Engines
