@@ -8,19 +8,16 @@ test_that('stan_glm execution', {
                    refresh = 0, family = poisson)
 
   set.seed(2452)
-  expect_warning(stan_mod <- eval_tidy(stan_cl), "ESS")
+  suppressWarnings(
+    stan_mod <- eval_tidy(stan_cl)
+  )
 
-  expect_warning({
-    set.seed(2452)
-    expect_error(
-      ps_mod <-
-        poisson_reg(engine = "stan_glmer") %>%
-        set_engine("stan_glmer", seed = 9284, refresh = 0, iter = 500) %>%
-        fit(f_counts, data = counts_tr),
-      regex = NA
-    )
-  },
-  "ESS"
+  set.seed(2452)
+  suppressWarnings(
+    ps_mod <-
+      poisson_reg(engine = "stan_glmer") %>%
+      set_engine("stan_glmer", seed = 9284, refresh = 0, iter = 500) %>%
+      fit(f_counts, data = counts_tr)
   )
 
   expect_equal(

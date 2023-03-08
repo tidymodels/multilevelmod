@@ -7,17 +7,16 @@ test_that('logistic stan_glmer execution', {
                    data = expr(riesby_bin_tr), seed = 9284, iter = 500, refresh = 0,
                    family = binomial)
   set.seed(1)
-  stan_fit <- eval_tidy(stan_cl)
+  suppressWarnings(
+    stan_fit <- eval_tidy(stan_cl)
+  )
 
-  # Check for error
-  expect_error({
-    set.seed(1)
+  set.seed(1)
+  suppressWarnings(
     ps_mod <-
       logistic_reg() %>%
       set_engine("stan_glmer", seed = 9284, iter = 500, refresh = 0) %>%
       fit(f_bin, data = riesby_bin_tr)
-  },
-  regex = NA
   )
 
   expect_equal(
