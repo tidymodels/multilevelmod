@@ -8,7 +8,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Codecov test
-coverage](https://codecov.io/gh/topepo/multilevelmod/branch/main/graph/badge.svg)](https://app.codecov.io/gh/topepo/multilevelmod?branch=main)
+coverage](https://codecov.io/gh/tidymodels/multilevelmod/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/multilevelmod?branch=main)
 [![R-CMD-check](https://github.com/tidymodels/multilevelmod/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/multilevelmod/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -140,18 +140,18 @@ This project is released with a [Contributor Code of
 Conduct](https://www.contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
--   For questions and discussions about tidymodels packages, modeling,
-    and machine learning, please [post on RStudio
-    Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
+- For questions and discussions about tidymodels packages, modeling, and
+  machine learning, please [post on RStudio
+  Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
 
--   If you think you have encountered a bug, please [submit an
-    issue](https://github.com/tidymodels/multilevelmod/issues).
+- If you think you have encountered a bug, please [submit an
+  issue](https://github.com/tidymodels/multilevelmod/issues).
 
--   Either way, learn how to create and share a
-    [reprex](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question)
-    (a minimal, reproducible example), to clearly communicate about your
-    code.
+- Either way, learn how to create and share a
+  [reprex](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question)
+  (a minimal, reproducible example), to clearly communicate about your
+  code.
 
--   Check out further details on [contributing guidelines for tidymodels
-    packages](https://www.tidymodels.org/contribute/) and [how to get
-    help](https://www.tidymodels.org/help/).
+- Check out further details on [contributing guidelines for tidymodels
+  packages](https://www.tidymodels.org/contribute/) and [how to get
+  help](https://www.tidymodels.org/help/).
