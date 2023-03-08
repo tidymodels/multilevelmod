@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# multilevelmod <a href="https://multilevelmod.tidymodels.org/"><img src="man/figures/logo.png" align="right" height="138" /></a>
+# multilevelmod <a href="https://multilevelmod.tidymodels.org/"><img src="man/figures/logo.png" align="right" height="138" alt="3 nesting dolls on an orange background" /></a>
 
 <!-- badges: start -->
 
