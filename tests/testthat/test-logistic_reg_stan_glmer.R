@@ -32,8 +32,8 @@ test_that('logistic stan_glmer execution', {
   set.seed(1)
   pa_prob <- predict(ps_mod, riesby_bin_te, type = "prob")
   expect_equal(
-    unname(glmer_prob),
     pa_prob$.pred_low,
+    unname(glmer_prob),
     tolerance = .1
   )
 
@@ -41,8 +41,8 @@ test_that('logistic stan_glmer execution', {
   glmer_cls <- factor(glmer_cls, levels = levels(riesby_bin_tr$depressed))
   pa_cls <- predict(ps_mod, riesby_bin_te, type = "class")
   expect_equal(
-    unname(glmer_cls),
-    pa_cls$.pred_class
+    pa_cls$.pred_class,
+    unname(glmer_cls)
   )
 
 })
