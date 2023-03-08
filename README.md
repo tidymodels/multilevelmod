@@ -32,7 +32,8 @@ install.packages("multilevelmod")
 For the development version:
 
 ``` r
-devtools::install_github("tidymodels/multilevelmod")
+# install.packages("pak")
+pak::pak("tidymodels/multilevelmod")
 ```
 
 ## Available Engines
