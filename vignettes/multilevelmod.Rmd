@@ -27,7 +27,7 @@ theme_set(theme_bw())
 
 We'll use some single factor repeated measures experiment data from the lme4 package, on the effect of sleep deprivation on reaction time.  
 
-```{r}
+```{r, fig.alt = "18 line plots, one per subject, showing 'Days' on the x-axis and 'Reaction' on the y-axis. All lines trend upwards but vary across subjects."}
 data(sleepstudy, package = "lme4")
 
 sleepstudy %>% 

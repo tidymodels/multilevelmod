@@ -15,7 +15,13 @@ coverage](https://codecov.io/gh/tidymodels/multilevelmod/branch/main/graph/badge
 multilevelmod enables the use of multi-level models (a.k.a mixed-effects
 models, Bayesian hierarchical models, etc.) with the parsnip package.
 
-<a href="https://pbs.twimg.com/media/FD1_OIhVIAE4H5l?format=jpg&name=small"><img src="man/figures/FD1_OIhVIAE4H5l.jpeg" align="center" /></a>
+<a href="https://pbs.twimg.com/media/FD1_OIhVIAE4H5l?format=jpg&name=small">\<img
+src=“man/figures/FD1_OIhVIAE4H5l.jpeg” align=“center” alt=“A sweaty
+Comic character trying to decide which button to push. The buttons read:
+‘mixed effect model’, ‘hierarchical linear model’, ‘random effects
+model’, ‘variance component model’, ‘mixed model’, ‘random
+intercepts/slopes’, ‘regularized regression’, ‘multilevel model’,
+‘nested data model’, and ‘random parameter model’”. /\></a>
 
 (meme courtesy of
 [`@ChelseaParlett`](https://twitter.com/ChelseaParlett))
