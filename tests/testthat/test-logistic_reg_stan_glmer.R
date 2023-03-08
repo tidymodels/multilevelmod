@@ -3,15 +3,11 @@ test_that('logistic stan_glmer execution', {
   skip_if_not_installed("rstanarm")
   skip_on_cran()
 
-  # ----------------------------------------------------------------------------
-
   stan_cl <- call2("stan_glmer", .ns = "rstanarm", f_bin,
                    data = expr(riesby_bin_tr), seed = 9284, iter = 500, refresh = 0,
                    family = binomial)
   set.seed(1)
   stan_fit <- eval_tidy(stan_cl)
-
-  # ----------------------------------------------------------------------------
 
   # Check for error
   expect_error({
@@ -24,15 +20,10 @@ test_that('logistic stan_glmer execution', {
   regex = NA
   )
 
-  # ----------------------------------------------------------------------------
-
-  # See if coefficients for both model runs are the same
   expect_equal(
     coef(ps_mod$fit),
     coef(stan_fit)
   )
-
-  # ----------------------------------------------------------------------------
 
   stan_cl <- call2("posterior_predict", .ns = "rstanarm", expr(stan_fit),
                    expr(riesby_bin_te), type = "response", seed = 1)
