@@ -3,36 +3,26 @@ test_that('logistic stan_glmer execution', {
   skip_if_not_installed("rstanarm")
   skip_on_cran()
 
-  # ----------------------------------------------------------------------------
-
   stan_cl <- call2("stan_glmer", .ns = "rstanarm", f_bin,
                    data = expr(riesby_bin_tr), seed = 9284, iter = 500, refresh = 0,
                    family = binomial)
   set.seed(1)
-  stan_fit <- eval_tidy(stan_cl)
+  suppressWarnings(
+    stan_fit <- eval_tidy(stan_cl)
+  )
 
-  # ----------------------------------------------------------------------------
-
-  # Check for error
-  expect_error({
-    set.seed(1)
+  set.seed(1)
+  suppressWarnings(
     ps_mod <-
       logistic_reg() %>%
       set_engine("stan_glmer", seed = 9284, iter = 500, refresh = 0) %>%
       fit(f_bin, data = riesby_bin_tr)
-  },
-  regex = NA
   )
 
-  # ----------------------------------------------------------------------------
-
-  # See if coefficients for both model runs are the same
   expect_equal(
     coef(ps_mod$fit),
     coef(stan_fit)
   )
-
-  # ----------------------------------------------------------------------------
 
   stan_cl <- call2("posterior_predict", .ns = "rstanarm", expr(stan_fit),
                    expr(riesby_bin_te), type = "response", seed = 1)
@@ -42,8 +32,8 @@ test_that('logistic stan_glmer execution', {
   set.seed(1)
   pa_prob <- predict(ps_mod, riesby_bin_te, type = "prob")
   expect_equal(
-    unname(glmer_prob),
     pa_prob$.pred_low,
+    unname(glmer_prob),
     tolerance = .1
   )
 
@@ -51,8 +41,8 @@ test_that('logistic stan_glmer execution', {
   glmer_cls <- factor(glmer_cls, levels = levels(riesby_bin_tr$depressed))
   pa_cls <- predict(ps_mod, riesby_bin_te, type = "class")
   expect_equal(
-    unname(glmer_cls),
-    pa_cls$.pred_class
+    pa_cls$.pred_class,
+    unname(glmer_cls)
   )
 
 })

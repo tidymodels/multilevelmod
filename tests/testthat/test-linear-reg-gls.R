@@ -20,7 +20,8 @@ test_that('gls execution', {
 
   expect_equal(
     gls_mod$modelStruct,
-    ps_mod$fit$modelStruct
+    ps_mod$fit$modelStruct,
+    ignore_formula_env = TRUE
   )
   expect_equal(
     coef(ps_mod$fit),
