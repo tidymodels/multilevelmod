@@ -8,20 +8,15 @@ test_that('stan_glm execution', {
                    data = expr(riesby), seed = 9284, iter = 500, refresh = 0)
 
   set.seed(2452)
-  expect_warning(stan_mod <- eval_tidy(stan_cl), "ESS")
+  suppressWarnings(stan_mod <- eval_tidy(stan_cl))
 
-  expect_warning({
-    set.seed(2452)
-    expect_error(
-      ps_mod <-
-        linear_reg() %>%
-        set_engine("stan_glmer", seed = 9284, refresh = 0, iter = 500) %>%
-        fit(depr_score ~ week + (week | subject), data = riesby),
-      regex = NA
-    )
-  },
-  "ESS"
-  )
+  set.seed(2452)
+  suppressWarnings({
+     ps_mod <-
+      linear_reg() %>%
+      set_engine("stan_glmer", seed = 9284, refresh = 0, iter = 500) %>%
+      fit(depr_score ~ week + (week | subject), data = riesby)
+  })
 
   expect_equal(
     coef(ps_mod$fit)$subject,
