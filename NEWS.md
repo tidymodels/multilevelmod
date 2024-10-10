@@ -1,5 +1,8 @@
 # multilevelmod (development version)
 
+* Switched to cli for errors (#70).
+
+
 # multilevelmod 1.0.0
 
 * Maintainer change. 
