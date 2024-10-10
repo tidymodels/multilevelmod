@@ -2,6 +2,7 @@
 
 export(gee_fit)
 import(rlang)
+importFrom(cli,cli_abort)
 importFrom(parsnip,check_final_param)
 importFrom(parsnip,decision_tree)
 importFrom(parsnip,fit)

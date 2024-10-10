@@ -18,7 +18,7 @@
 
 ## usethis namespace: start
 #' @import rlang
-#'
+#' @importFrom cli cli_abort
 #' @importFrom parsnip set_engine fit fit_xy fit_control mars decision_tree
 #' @importFrom parsnip set_new_model multi_predict update_dot_check show_fit
 #' @importFrom parsnip new_model_spec null_value update_main_parameters
