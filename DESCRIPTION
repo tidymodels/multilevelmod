@@ -20,6 +20,7 @@ Depends:
     parsnip (>= 1.0.0),
     R (>= 3.5)
 Imports: 
+    cli,
     dplyr,
     lme4,
     purrr,

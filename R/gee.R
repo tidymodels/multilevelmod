@@ -23,11 +23,12 @@ gee_formula <- function(f) {
   id_ind <- attr(trms,"specials")$id_var + 1
   # check length
   if (length(id_ind) != 1) {
-    rlang::abort(
-      paste(
-        "There should be a single 'id' column specified using the `id_vars()`",
-        "function (e.g. `y ~ x + id_vars(id_col)`"
-        )
+    cli::cli_abort(
+      c(
+        "There should be a single {.field id} column specified using the
+     {.fn id_vars} function.",
+        "i" = "For example: {.code y ~ x + id_vars(id_col)}"
+      )
     )
   }
   # find column with id variable
@@ -105,7 +106,7 @@ gee_fit <- function(formula, data, family = gaussian, ...) {
     res$rank <- tmp_glm$rank
     res$qr <- tmp_glm$qr
   } else {
-    rlang::abort("Cannot compute the rank of the design matrix.")
+    cli::cli_abort("Cannot compute the rank of the design matrix.")
   }
   # Now to avoid a warning about "calling predict.lm(<fake-lm-object>)"
   class(res) <- c(class(res), "lm")
