@@ -12,12 +12,15 @@ The models wrapped by the multilevelmod package tend to have somewhat different 
 
 This vignette is an overview of how to fit these models. For brevity, we only discuss linear models but the syntax also works for binomial and Poisson outcomes. 
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 library(tidymodels)
 library(multilevelmod)
 ```
 
-```{r, results = 'hide'}
+```{r}
+#| results: hide
+
 library(tidymodels)
 library(multilevelmod)
 
@@ -27,7 +30,8 @@ theme_set(theme_bw())
 
 We'll use some single factor repeated measures experiment data from the lme4 package, on the effect of sleep deprivation on reaction time.  
 
-```{r, fig.alt = "18 line plots, one per subject, showing 'Days' on the x-axis and 'Reaction' on the y-axis. All lines trend upwards but vary across subjects."}
+```{r}
+#| fig-alt: "18 line plots, one per subject, showing 'Days' on the x-axis and 'Reaction' on the y-axis. All lines trend upwards but vary across subjects."
 data(sleepstudy, package = "lme4")
 
 sleepstudy %>% 
@@ -56,7 +60,8 @@ There are no random effects in this model. Like the generalized least squares mo
 
 The correlation structure can be passed as an engine argument: 
 
-```{r gee}
+```{r}
+#| label: gee
 gee_spec <- 
   linear_reg() %>% 
   set_engine("gee", corstr = "exchangeable")
@@ -85,7 +90,8 @@ For this model, the syntax to specify the independent experimental unit is insid
 
 For example:
 
-```{r gls}
+```{r}
+#| label: gls
 library(nlme) # <- Only need to load this to get cor*() functions
 
 gls_spec <- 
@@ -101,7 +107,8 @@ gls_fit
 
 As with the GEE model, only the regression terms are required for prediction:
 
-```{r gls-pred}
+```{r}
+#| label: gls-pred
 predict(gls_fit, new_subject %>% select(Days)) %>% 
   bind_cols(new_subject)
 ```
@@ -114,7 +121,8 @@ For models created by `nlme::lme()`, the random effects are specified in an argu
 
 To fit the basic random intercept model: 
 
-```{r lme}
+```{r}
+#| label: lme
 lme_spec <- 
   linear_reg() %>% 
   set_engine("lme", random = ~ 1 | Subject)
@@ -130,7 +138,8 @@ For predictions, tidymodels uses only the "population effects", i.e., no-subject
 
 For lme fit objects, the subject column, if given, is ignored. When the [underlying `predict()` function](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/predict.lme.html) is used, the `level = 0` argument is automatically invoked: 
 
-```{r lme-pred}
+```{r}
+#| label: lme-pred
 predict(lme_fit, new_subject) %>% 
   bind_cols(new_subject)
 
@@ -144,7 +153,8 @@ The `"lmer"`, `"glmer"`, and `"stan_glmer"` engines all use the same formula syn
 
 All of the model specification occurs in the formula; no models terms are specified via `set_engine()` (although other arguments can be passed there, as usual). To fit the same random intercept model, the syntax is: 
 
-```{r lmer}
+```{r}
+#| label: lmer
 lmer_spec <- 
   linear_reg() %>% 
   set_engine("lmer")
@@ -158,7 +168,8 @@ lmer_fit
 
 We predict in the same way.
 
-```{r lmer-pred}
+```{r}
+#| label: lmer-pred
 predict(lmer_fit, new_subject) %>% 
   bind_cols(new_subject)
 ```
@@ -187,7 +198,8 @@ If you use [workflows](https://www.tmwr.org/workflows.html), we have a few sugge
 First, instead of using `add_formula()`, we suggest using `add_variables()`. This passes the columns as-is to the model fitting function. To add the random effects formula, use the `formula` argument of `add_model()`. For example: 
 
 
-```{r wflow}
+```{r}
+#| label: wflow
 lmer_wflow <- 
   workflow() %>% 
   add_variables(outcomes = Reaction, predictors = c(Days, Subject)) %>% 
@@ -200,7 +212,8 @@ If using a recipe, make sure that functions like `step_dummy()` do **not** conve
 
 Using a recipe also offers the opportunity to [set a different role](https://recipes.tidymodels.org/reference/roles.html) for the independent experiment unit, which can come in handy when more complex preprocessing is needed.
 
-```{r rec}
+```{r}
+#| label: rec
 rec <- 
   recipe(Reaction ~ Days + Subject, data = sleepstudy) %>%
   add_role(Subject, new_role = "exp_unit") %>%

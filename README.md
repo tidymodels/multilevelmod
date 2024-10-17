@@ -123,7 +123,7 @@ hier_model_fit
 #> ------
 #>             Median MAD_SD
 #> (Intercept) 251.3    6.5 
-#> Days         10.5    1.7 
+#> Days         10.4    1.7 
 #> 
 #> Auxiliary parameter(s):
 #>       Median MAD_SD
@@ -132,7 +132,7 @@ hier_model_fit
 #> Error terms:
 #>  Groups   Name        Std.Dev. Corr
 #>  Subject  (Intercept) 24.1         
-#>           Days         6.9     0.09
+#>           Days         6.9     0.07
 #>  Residual             26.0         
 #> Num. levels: Subject 18 
 #> 
