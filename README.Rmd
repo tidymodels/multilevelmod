@@ -4,7 +4,8 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -46,7 +47,9 @@ pak::pak("tidymodels/multilevelmod")
 
 The multilevelmod package provides engines for the models in the following table.
 
-```{r, echo=FALSE, message=FALSE}
+```{r}
+#| echo: false
+#| message: false
 library(parsnip)
 
 parsnip_models <- get_from_env("models") %>%
@@ -74,7 +77,8 @@ To use these, the function `parsnip::fit()` function should be used instead of `
 
 The `sleepstudy` data is used as an example: 
 
-```{r sleep-lme}
+```{r}
+#| label: sleep-lme
 library(multilevelmod)
 set.seed(1234)
 data(sleepstudy, package = "lme4")
@@ -91,7 +95,8 @@ mixed_model_fit
 For a Bayesian model: 
 
 
-```{r sleep-stan}
+```{r}
+#| label: sleep-stan
 hier_model_spec <- linear_reg() %>% set_engine("stan_glmer")
 
 hier_model_fit <- 
