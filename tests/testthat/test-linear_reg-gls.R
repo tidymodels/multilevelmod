@@ -1,19 +1,20 @@
-
 test_that('gls execution', {
   skip_if_not_installed("nlme")
   skip_on_cran()
 
   set.seed(2452)
   gls_mod <-
-    nlme::gls(depr_score ~ week + imipramine,
-              data = riesby_tr,
-              correlation  = nlme::corSymm(form = ~ 1 | subject))
+    nlme::gls(
+      depr_score ~ week + imipramine,
+      data = riesby_tr,
+      correlation = nlme::corSymm(form = ~ 1 | subject)
+    )
 
   set.seed(2452)
   expect_error(
     ps_mod <-
       linear_reg() %>%
-      set_engine("gls", correlation  = nlme::corSymm(form = ~ 1 | subject)) %>%
+      set_engine("gls", correlation = nlme::corSymm(form = ~ 1 | subject)) %>%
       fit(depr_score ~ week + imipramine, data = riesby_tr),
     regex = NA
   )
@@ -33,7 +34,6 @@ test_that('gls execution', {
   ps_pred <- predict(ps_mod, riesby_te)
 
   expect_equal(as.numeric(gls_pred), ps_pred$.pred)
-
 })
 
 test_that('mode specific package dependencies', {

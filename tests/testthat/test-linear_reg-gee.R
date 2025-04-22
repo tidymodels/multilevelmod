@@ -1,4 +1,3 @@
-
 test_that('linear gee execution', {
   skip_if_not_installed("gee")
   skip_on_cran()
@@ -7,11 +6,15 @@ test_that('linear gee execution', {
 
   # Run both regular and GEE model
   set.seed(1234)
-  gee_mod <- gee::gee(depr_score ~ week, id = riesby_tr$subject,
-                      family = quasi, data = riesby_tr)
+  gee_mod <- gee::gee(
+    depr_score ~ week,
+    id = riesby_tr$subject,
+    family = quasi,
+    data = riesby_tr
+  )
   # gee doesn't have all of the elements that are needed from prediction. Get
   # them from glm
-  glm_mod <- glm(depr_score ~ week,  data = riesby_tr)
+  glm_mod <- glm(depr_score ~ week, data = riesby_tr)
   gee_mod$rank <- glm_mod$rank
   gee_mod$qr <- glm_mod$qr
   class(gee_mod) <- c(class(gee_mod), "lm")

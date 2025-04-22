@@ -1,4 +1,3 @@
-
 test_that('logistic glmer execution', {
   skip_if_not_installed("lme4")
   skip_on_cran()
@@ -30,8 +29,12 @@ test_that('logistic glmer execution', {
 
   # ----------------------------------------------------------------------------
 
-  glmer_prob <- unname(predict(glmer_mod, riesby_bin_te, type = "response",
-                               allow.new.levels = TRUE))
+  glmer_prob <- unname(predict(
+    glmer_mod,
+    riesby_bin_te,
+    type = "response",
+    allow.new.levels = TRUE
+  ))
   pa_prob <- predict(ps_mod, riesby_bin_te, type = "prob")
   expect_equal(
     glmer_prob,

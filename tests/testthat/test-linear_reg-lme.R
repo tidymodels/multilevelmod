@@ -1,13 +1,14 @@
-
 test_that('lme execution', {
   skip_if_not_installed("nlme")
   skip_on_cran()
 
   set.seed(2452)
   lme_mod <-
-    nlme::lme(depr_score ~ week + imipramine,
-              data = riesby_tr,
-              random = ~ 1 | subject)
+    nlme::lme(
+      depr_score ~ week + imipramine,
+      data = riesby_tr,
+      random = ~ 1 | subject
+    )
 
   set.seed(2452)
   expect_error(
@@ -32,7 +33,6 @@ test_that('lme execution', {
   ps_pred <- predict(ps_mod, riesby_te)
 
   expect_equal(as.numeric(lme_pred), ps_pred$.pred)
-
 })
 
 test_that('mode specific package dependencies', {

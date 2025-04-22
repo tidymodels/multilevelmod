@@ -12,7 +12,7 @@ reformat_lme_pred_data <- function(x, object) {
   random_effects_f <- as.formula(paste("~", random_effects))
   random_effect_cols <- all.vars(random_effects_f)
   vals <- dplyr::select(object$fit@frame, dplyr::all_of(random_effect_cols))
-  vals <- vals[1,,drop = FALSE]
+  vals <- vals[1, , drop = FALSE]
 
   for (i in random_effect_cols) {
     lvl <- levels(vals[[i]])
@@ -20,4 +20,3 @@ reformat_lme_pred_data <- function(x, object) {
   }
   x
 }
-

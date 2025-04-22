@@ -1,11 +1,17 @@
-
 test_that('logistic stan_glmer execution', {
   skip_if_not_installed("rstanarm")
   skip_on_cran()
 
-  stan_cl <- call2("stan_glmer", .ns = "rstanarm", f_bin,
-                   data = expr(riesby_bin_tr), seed = 9284, iter = 500, refresh = 0,
-                   family = binomial)
+  stan_cl <- call2(
+    "stan_glmer",
+    .ns = "rstanarm",
+    f_bin,
+    data = expr(riesby_bin_tr),
+    seed = 9284,
+    iter = 500,
+    refresh = 0,
+    family = binomial
+  )
   set.seed(1)
   suppressWarnings(
     stan_fit <- eval_tidy(stan_cl)
@@ -24,8 +30,14 @@ test_that('logistic stan_glmer execution', {
     coef(stan_fit)
   )
 
-  stan_cl <- call2("posterior_predict", .ns = "rstanarm", expr(stan_fit),
-                   expr(riesby_bin_te), type = "response", seed = 1)
+  stan_cl <- call2(
+    "posterior_predict",
+    .ns = "rstanarm",
+    expr(stan_fit),
+    expr(riesby_bin_te),
+    type = "response",
+    seed = 1
+  )
   set.seed(1)
   glmer_prob <- eval_tidy(stan_cl)
   glmer_prob <- apply(glmer_prob, 2, mean)
@@ -44,7 +56,6 @@ test_that('logistic stan_glmer execution', {
     pa_cls$.pred_class,
     unname(glmer_cls)
   )
-
 })
 
 test_that('mode specific package dependencies', {

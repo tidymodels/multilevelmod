@@ -13,14 +13,13 @@
 # gee_formula() parses this formula, pulls out the id variable and fixes
 # the formula (= no id term). gee_fit() uses this to fit the model.
 
-
 #' @description Function to add single clustering variable for GEE
 #' @noRd
 gee_formula <- function(f) {
   cl <- match.call()
   trms <- terms(f, specials = "id_var")
   form_terms <- attr(trms, "variables")
-  id_ind <- attr(trms,"specials")$id_var + 1
+  id_ind <- attr(trms, "specials")$id_var + 1
   # check length
   if (length(id_ind) != 1) {
     cli::cli_abort(
@@ -34,7 +33,6 @@ gee_formula <- function(f) {
   # find column with id variable
   id_expr <- form_terms[[id_ind]]
   id_var <- all.vars(id_expr)
-
 
   # repair formula: get predictors and remake
   rhs <- form_terms[-c(1:2, id_ind)]
@@ -78,9 +76,15 @@ gee_fit <- function(formula, data, family = gaussian, ...) {
   f <- gee_formula(formula)
   id_sym <- f$id
   id_sym <- rlang::expr(data[[!!id_sym]])
-  cl <- rlang::call2("gee", .ns = "gee", as.formula(f$formula), data = rlang::expr(data),
-                     id = data[[f$id]], family = rlang::expr(family),
-                     ...)
+  cl <- rlang::call2(
+    "gee",
+    .ns = "gee",
+    as.formula(f$formula),
+    data = rlang::expr(data),
+    id = data[[f$id]],
+    family = rlang::expr(family),
+    ...
+  )
 
   # While undocumented in `gee()`, binomial data should be binary
   # (unlike `glm()`).

@@ -1,9 +1,14 @@
-
 test_that('glmer execution', {
   skip_if_not_installed("lme4")
   skip_on_cran()
 
-  glmer_cl <- call2("glmer", .ns = "lme4", f, data = expr(riesby_tr), family = gaussian(make.link("identity")))
+  glmer_cl <- call2(
+    "glmer",
+    .ns = "lme4",
+    f,
+    data = expr(riesby_tr),
+    family = gaussian(make.link("identity"))
+  )
 
   set.seed(2452)
   glmer_mod <- eval_tidy(glmer_cl)
@@ -27,7 +32,6 @@ test_that('glmer execution', {
   ps_pred <- predict(ps_mod, riesby_te)
 
   expect_equal(unname(glmer_pred), ps_pred$.pred)
-
 })
 
 

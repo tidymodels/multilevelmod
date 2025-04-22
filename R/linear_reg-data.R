@@ -6,16 +6,19 @@
 # nocov start
 
 make_stan_linear_reg <- function() {
-
   parsnip::set_model_engine("linear_reg", "regression", "stan_glmer")
-  parsnip::set_dependency("linear_reg",
-                          eng = "stan_glmer",
-                          pkg = "rstanarm",
-                          mode = "regression")
-  parsnip::set_dependency("linear_reg",
-                          eng = "stan_glmer",
-                          pkg = "multilevelmod",
-                          mode = "regression")
+  parsnip::set_dependency(
+    "linear_reg",
+    eng = "stan_glmer",
+    pkg = "rstanarm",
+    mode = "regression"
+  )
+  parsnip::set_dependency(
+    "linear_reg",
+    eng = "stan_glmer",
+    pkg = "multilevelmod",
+    mode = "regression"
+  )
 
   parsnip::set_encoding(
     model = "linear_reg",
@@ -48,14 +51,14 @@ make_stan_linear_reg <- function() {
     type = "numeric",
     value = list(
       pre = NULL,
-      post =  function(results, object) {
+      post = function(results, object) {
         tibble::tibble(.pred = apply(results, 2, mean, na.rm = TRUE))
       },
       func = c(pkg = "rstanarm", fun = "posterior_predict"),
       args = list(
         object = rlang::expr(object$fit),
         newdata = rlang::expr(new_data),
-        seed = rlang::expr(sample.int(10 ^ 5, 1))
+        seed = rlang::expr(sample.int(10^5, 1))
       )
     )
   )
@@ -70,29 +73,26 @@ make_stan_linear_reg <- function() {
       post = function(results, object) {
         res <-
           tibble::tibble(
-            .pred_lower =
-              parsnip::convert_stan_interval(
-                results,
-                level = object$spec$method$pred$pred_int$extras$level
-              ),
-            .pred_upper =
-              parsnip::convert_stan_interval(
-                results,
-                level = object$spec$method$pred$pred_int$extras$level,
-                lower = FALSE
-              ),
+            .pred_lower = parsnip::convert_stan_interval(
+              results,
+              level = object$spec$method$pred$pred_int$extras$level
+            ),
+            .pred_upper = parsnip::convert_stan_interval(
+              results,
+              level = object$spec$method$pred$pred_int$extras$level,
+              lower = FALSE
+            ),
           )
         if (object$spec$method$pred$pred_int$extras$std_error)
           res$.std_error <- apply(results, 2, sd, na.rm = TRUE)
         res
       },
       func = c(pkg = "rstanarm", fun = "posterior_predict"),
-      args =
-        list(
-          object = rlang::expr(object$fit),
-          newdata = rlang::expr(new_data),
-          seed = rlang::expr(sample.int(10^5, 1))
-        )
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data),
+        seed = rlang::expr(sample.int(10^5, 1))
+      )
     )
   )
 
@@ -105,16 +105,17 @@ make_stan_linear_reg <- function() {
       pre = NULL,
       post = NULL,
       func = c(fun = "posterior_predict"),
-      args = list(object = rlang::expr(object$fit), newdata = rlang::expr(new_data))
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data)
+      )
     )
   )
-
 }
 
 # ------------------------------------------------------------------------------
 
 make_lme4_linear_reg <- function() {
-
   parsnip::set_model_engine("linear_reg", "regression", "lmer")
   parsnip::set_dependency("linear_reg", "lmer", "lme4", "regression")
   parsnip::set_dependency("linear_reg", "lmer", "multilevelmod", "regression")
@@ -150,7 +151,7 @@ make_lme4_linear_reg <- function() {
     type = "numeric",
     value = list(
       pre = reformat_lme_pred_data,
-      post =  NULL,
+      post = NULL,
       func = c(fun = "predict"),
       args = list(
         object = rlang::expr(object$fit),
@@ -178,13 +179,11 @@ make_lme4_linear_reg <- function() {
       )
     )
   )
-
 }
 
 # ------------------------------------------------------------------------------
 
 make_glmer_linear_reg <- function() {
-
   parsnip::set_model_engine("linear_reg", "regression", "glmer")
   parsnip::set_dependency("linear_reg", "glmer", "lme4", "regression")
   parsnip::set_dependency("linear_reg", "glmer", "multilevelmod", "regression")
@@ -220,7 +219,7 @@ make_glmer_linear_reg <- function() {
     type = "numeric",
     value = list(
       pre = reformat_lme_pred_data,
-      post =  NULL,
+      post = NULL,
       func = c(fun = "predict"),
       args = list(
         object = rlang::expr(object$fit),
@@ -248,13 +247,11 @@ make_glmer_linear_reg <- function() {
       )
     )
   )
-
 }
 
 # ------------------------------------------------------------------------------
 
 make_gee_linear_reg <- function() {
-
   parsnip::set_model_engine("linear_reg", "regression", "gee")
   parsnip::set_dependency("linear_reg", "gee", "gee", "regression")
   parsnip::set_dependency("linear_reg", "gee", "multilevelmod", "regression")
@@ -290,7 +287,7 @@ make_gee_linear_reg <- function() {
     type = "numeric",
     value = list(
       pre = NULL,
-      post =  NULL,
+      post = NULL,
       func = c(fun = "predict"),
       args = list(
         object = rlang::expr(object$fit),
@@ -315,13 +312,11 @@ make_gee_linear_reg <- function() {
       )
     )
   )
-
 }
 
 # ------------------------------------------------------------------------------
 
 make_lme_linear_reg <- function() {
-
   parsnip::set_model_engine("linear_reg", "regression", "lme")
   parsnip::set_dependency("linear_reg", "lme", "nlme", "regression")
   parsnip::set_dependency("linear_reg", "lme", "multilevelmod", "regression")
@@ -358,7 +353,7 @@ make_lme_linear_reg <- function() {
     type = "numeric",
     value = list(
       pre = NULL,
-      post =  function(result, object) as.numeric(result),
+      post = function(result, object) as.numeric(result),
       func = c(fun = "predict"),
       args = list(
         object = rlang::expr(object$fit),
@@ -383,13 +378,11 @@ make_lme_linear_reg <- function() {
       )
     )
   )
-
 }
 
 # ------------------------------------------------------------------------------
 
 make_gls_linear_reg <- function() {
-
   parsnip::set_model_engine("linear_reg", "regression", "gls")
   parsnip::set_dependency("linear_reg", "gls", "nlme", "regression")
   parsnip::set_dependency("linear_reg", "gls", "multilevelmod", "regression")
@@ -426,7 +419,7 @@ make_gls_linear_reg <- function() {
     type = "numeric",
     value = list(
       pre = NULL,
-      post =  function(result, object) as.numeric(result),
+      post = function(result, object) as.numeric(result),
       func = c(fun = "predict"),
       args = list(
         object = rlang::expr(object$fit),
@@ -450,8 +443,6 @@ make_gls_linear_reg <- function() {
       )
     )
   )
-
 }
-
 
 # nocov end

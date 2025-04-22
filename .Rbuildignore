@@ -10,3 +10,5 @@
 ^docs$
 ^pkgdown$
 ^CRAN-SUBMISSION$
+^[\.]?air\.toml$
+^\.vscode$

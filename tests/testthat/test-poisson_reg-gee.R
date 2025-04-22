@@ -1,4 +1,3 @@
-
 test_that('poisson gee execution', {
   skip_if_not_installed("gee")
   skip_on_cran()
@@ -7,11 +6,15 @@ test_that('poisson gee execution', {
 
   # Run both regular and GEE model
   set.seed(1234)
-  gee_mod <- gee::gee(y ~ time + x, id = counts_tr$subject,
-                      family = poisson, data = counts_tr)
+  gee_mod <- gee::gee(
+    y ~ time + x,
+    id = counts_tr$subject,
+    family = poisson,
+    data = counts_tr
+  )
   # gee doesn't have all of the elements that are needed from prediction. Get
   # them from glm
-  glm_mod <- glm(y ~ time + x,  data = counts_tr, family = poisson)
+  glm_mod <- glm(y ~ time + x, data = counts_tr, family = poisson)
   gee_mod$rank <- glm_mod$rank
   gee_mod$qr <- glm_mod$qr
   class(gee_mod) <- c(class(gee_mod), "lm")

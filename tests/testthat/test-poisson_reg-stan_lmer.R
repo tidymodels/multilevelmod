@@ -1,11 +1,17 @@
-
 test_that('stan_glm execution', {
   skip_if_not_installed("rstanarm")
   skip_on_cran()
 
-  stan_cl <- call2("stan_glmer", .ns = "rstanarm",
-                   f_counts, data = expr(counts_tr), seed = 9284, iter = 500,
-                   refresh = 0, family = poisson)
+  stan_cl <- call2(
+    "stan_glmer",
+    .ns = "rstanarm",
+    f_counts,
+    data = expr(counts_tr),
+    seed = 9284,
+    iter = 500,
+    refresh = 0,
+    family = poisson
+  )
 
   set.seed(2452)
   suppressWarnings(
@@ -25,8 +31,7 @@ test_that('stan_glm execution', {
     coef(stan_mod)$subject
   )
 
-  pred_cl <- call2("posterior_predict", .ns = "rstanarm",
-                   stan_mod, counts_te)
+  pred_cl <- call2("posterior_predict", .ns = "rstanarm", stan_mod, counts_te)
 
   set.seed(124321)
   stan_post <- eval_tidy(pred_cl)
@@ -44,7 +49,6 @@ test_that('stan_glm execution', {
 
   expect_equal(stan_pi_lower, ps_pred_int$.pred_lower, tolerance = 0.1)
   expect_equal(stan_pi_upper, ps_pred_int$.pred_upper, tolerance = 0.1)
-
 })
 
 test_that('mode specific package dependencies', {

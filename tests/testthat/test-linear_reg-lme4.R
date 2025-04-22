@@ -1,4 +1,3 @@
-
 test_that('lme4 execution', {
   skip_if_not_installed("lme4")
   skip_on_cran()
@@ -27,7 +26,6 @@ test_that('lme4 execution', {
   ps_pred <- predict(ps_mod, riesby_te)
 
   expect_equal(unname(lme4_pred), ps_pred$.pred)
-
 })
 
 
@@ -58,17 +56,20 @@ test_that('random interactions and/or nesting', {
   fit <-
     linear_reg() %>%
     set_engine("lmer") %>%
-    fit(cty ~ year + (1|manufacturer/model), data = mpg)
+    fit(cty ~ year + (1 | manufacturer / model), data = mpg)
 
   expect_error(predict(fit, new_data = mpg), regexp = NA)
   # Now predict with new levels for the random effect columns, esp
   # when there is nesting/interactions
   expect_error(
-    predict(fit, new_data = tibble::tibble(year = 2000, model = "dan", manufacturer = "max")),
+    predict(
+      fit,
+      new_data = tibble::tibble(
+        year = 2000,
+        model = "dan",
+        manufacturer = "max"
+      )
+    ),
     regexp = NA
   )
-
-
-
 })
-

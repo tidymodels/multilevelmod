@@ -6,16 +6,19 @@
 # nocov start
 
 make_stan_poisson_reg <- function() {
-
   parsnip::set_model_engine("poisson_reg", "regression", "stan_glmer")
-  parsnip::set_dependency("poisson_reg",
-                          eng = "stan_glmer",
-                          pkg = "rstanarm",
-                          mode = "regression")
-  parsnip::set_dependency("poisson_reg",
-                          eng = "stan_glmer",
-                          pkg = "multilevelmod",
-                          mode = "regression")
+  parsnip::set_dependency(
+    "poisson_reg",
+    eng = "stan_glmer",
+    pkg = "rstanarm",
+    mode = "regression"
+  )
+  parsnip::set_dependency(
+    "poisson_reg",
+    eng = "stan_glmer",
+    pkg = "multilevelmod",
+    mode = "regression"
+  )
 
   parsnip::set_encoding(
     model = "poisson_reg",
@@ -48,14 +51,14 @@ make_stan_poisson_reg <- function() {
     type = "numeric",
     value = list(
       pre = NULL,
-      post =  function(results, object) {
+      post = function(results, object) {
         tibble::tibble(.pred = apply(results, 2, mean, na.rm = TRUE))
       },
       func = c(pkg = "rstanarm", fun = "posterior_predict"),
       args = list(
         object = rlang::expr(object$fit),
         newdata = rlang::expr(new_data),
-        seed = rlang::expr(sample.int(10 ^ 5, 1))
+        seed = rlang::expr(sample.int(10^5, 1))
       )
     )
   )
@@ -70,29 +73,26 @@ make_stan_poisson_reg <- function() {
       post = function(results, object) {
         res <-
           tibble::tibble(
-            .pred_lower =
-              parsnip::convert_stan_interval(
-                results,
-                level = object$spec$method$pred$pred_int$extras$level
-              ),
-            .pred_upper =
-              parsnip::convert_stan_interval(
-                results,
-                level = object$spec$method$pred$pred_int$extras$level,
-                lower = FALSE
-              ),
+            .pred_lower = parsnip::convert_stan_interval(
+              results,
+              level = object$spec$method$pred$pred_int$extras$level
+            ),
+            .pred_upper = parsnip::convert_stan_interval(
+              results,
+              level = object$spec$method$pred$pred_int$extras$level,
+              lower = FALSE
+            ),
           )
         if (object$spec$method$pred$pred_int$extras$std_error)
           res$.std_error <- apply(results, 2, sd, na.rm = TRUE)
         res
       },
       func = c(pkg = "rstanarm", fun = "posterior_predict"),
-      args =
-        list(
-          object = rlang::expr(object$fit),
-          newdata = rlang::expr(new_data),
-          seed = rlang::expr(sample.int(10^5, 1))
-        )
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data),
+        seed = rlang::expr(sample.int(10^5, 1))
+      )
     )
   )
 
@@ -105,25 +105,30 @@ make_stan_poisson_reg <- function() {
       pre = NULL,
       post = NULL,
       func = c(fun = "posterior_predict"),
-      args = list(object = rlang::expr(object$fit), newdata = rlang::expr(new_data))
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data)
+      )
     )
   )
-
 }
 
 # ------------------------------------------------------------------------------
 
 make_lme4_poisson_reg <- function() {
-
   parsnip::set_model_engine("poisson_reg", "regression", "glmer")
-  parsnip::set_dependency("poisson_reg",
-                          eng = "glmer",
-                          pkg = "lme4",
-                          mode = "regression")
-  parsnip::set_dependency("poisson_reg",
-                          eng = "glmer",
-                          pkg = "multilevelmod",
-                          mode = "regression")
+  parsnip::set_dependency(
+    "poisson_reg",
+    eng = "glmer",
+    pkg = "lme4",
+    mode = "regression"
+  )
+  parsnip::set_dependency(
+    "poisson_reg",
+    eng = "glmer",
+    pkg = "multilevelmod",
+    mode = "regression"
+  )
 
   parsnip::set_encoding(
     model = "poisson_reg",
@@ -156,7 +161,7 @@ make_lme4_poisson_reg <- function() {
     type = "numeric",
     value = list(
       pre = reformat_lme_pred_data,
-      post =  NULL,
+      post = NULL,
       func = c(fun = "predict"),
       args = list(
         object = rlang::expr(object$fit),
@@ -184,22 +189,24 @@ make_lme4_poisson_reg <- function() {
       )
     )
   )
-
 }
 
 # ------------------------------------------------------------------------------
 
 make_gee_poisson_reg <- function() {
-
   parsnip::set_model_engine("poisson_reg", "regression", "gee")
-  parsnip::set_dependency("poisson_reg",
-                          eng = "gee",
-                          pkg = "gee",
-                          mode = "regression")
-  parsnip::set_dependency("poisson_reg",
-                          eng = "gee",
-                          pkg = "multilevelmod",
-                          mode = "regression")
+  parsnip::set_dependency(
+    "poisson_reg",
+    eng = "gee",
+    pkg = "gee",
+    mode = "regression"
+  )
+  parsnip::set_dependency(
+    "poisson_reg",
+    eng = "gee",
+    pkg = "multilevelmod",
+    mode = "regression"
+  )
 
   parsnip::set_encoding(
     model = "poisson_reg",
@@ -232,7 +239,7 @@ make_gee_poisson_reg <- function() {
     type = "numeric",
     value = list(
       pre = NULL,
-      post =  NULL,
+      post = NULL,
       func = c(fun = "predict"),
       args = list(
         object = rlang::expr(object$fit),
@@ -257,7 +264,6 @@ make_gee_poisson_reg <- function() {
       )
     )
   )
-
 }
 
 # nocov end
