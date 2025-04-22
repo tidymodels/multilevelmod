@@ -10,3 +10,6 @@
 ^docs$
 ^pkgdown$
 ^CRAN-SUBMISSION$
+^multilevelmod\.Rcheck$
+^multilevelmod.*\.tar\.gz$
+^multilevelmod.*\.tgz$

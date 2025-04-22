@@ -17,6 +17,7 @@
   make_stan_poisson_reg()
   make_lme_linear_reg()
   make_gls_linear_reg()
+  make_lmerTest_linear_reg()
 }
 
 
