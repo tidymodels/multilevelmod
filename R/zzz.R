@@ -1,4 +1,3 @@
-
 # The functions below define the model information. These access the model
 # environment inside of parsnip so they have to be executed once parsnip has
 # been loaded.
@@ -18,5 +17,3 @@
   make_lme_linear_reg()
   make_gls_linear_reg()
 }
-
-

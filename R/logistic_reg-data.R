@@ -8,16 +8,19 @@
 # ------------------------------------------------------------------------------
 
 make_stan_logistic_reg <- function() {
-
   parsnip::set_model_engine("logistic_reg", "classification", "stan_glmer")
-  parsnip::set_dependency("logistic_reg",
-                          eng = "stan_glmer",
-                          pkg = "rstanarm",
-                          mode = "classification")
-  parsnip::set_dependency("logistic_reg",
-                          eng = "stan_glmer",
-                          pkg = "multilevelmod",
-                          mode = "classification")
+  parsnip::set_dependency(
+    "logistic_reg",
+    eng = "stan_glmer",
+    pkg = "rstanarm",
+    mode = "classification"
+  )
+  parsnip::set_dependency(
+    "logistic_reg",
+    eng = "stan_glmer",
+    pkg = "multilevelmod",
+    mode = "classification"
+  )
 
   parsnip::set_encoding(
     model = "logistic_reg",
@@ -59,7 +62,7 @@ make_stan_logistic_reg <- function() {
       args = list(
         object = rlang::expr(object$fit),
         newdata = rlang::expr(new_data),
-        seed = rlang::expr(sample.int(10 ^ 5, 1))
+        seed = rlang::expr(sample.int(10^5, 1))
       )
     )
   )
@@ -81,7 +84,7 @@ make_stan_logistic_reg <- function() {
       args = list(
         object = rlang::expr(object$fit),
         newdata = rlang::expr(new_data),
-        seed = rlang::expr(sample.int(10 ^ 5, 1))
+        seed = rlang::expr(sample.int(10^5, 1))
       )
     )
   )
@@ -96,17 +99,15 @@ make_stan_logistic_reg <- function() {
       post = function(results, object) {
         res_2 <-
           tibble::tibble(
-            lo =
-              parsnip::convert_stan_interval(
-                results,
-                level = object$spec$method$pred$conf_int$extras$level
-              ),
-            hi =
-              parsnip::convert_stan_interval(
-                results,
-                level = object$spec$method$pred$conf_int$extras$level,
-                lower = FALSE
-              ),
+            lo = parsnip::convert_stan_interval(
+              results,
+              level = object$spec$method$pred$conf_int$extras$level
+            ),
+            hi = parsnip::convert_stan_interval(
+              results,
+              level = object$spec$method$pred$conf_int$extras$level,
+              lower = FALSE
+            ),
           )
         res_1 <- res_2
         res_1$lo <- 1 - res_2$hi
@@ -123,11 +124,10 @@ make_stan_logistic_reg <- function() {
         res
       },
       func = c(pkg = "parsnip", fun = "stan_conf_int"),
-      args =
-        list(
-          object = expr(object$fit),
-          newdata = expr(new_data)
-        )
+      args = list(
+        object = expr(object$fit),
+        newdata = expr(new_data)
+      )
     )
   )
 
@@ -141,17 +141,15 @@ make_stan_logistic_reg <- function() {
       post = function(results, object) {
         res_2 <-
           tibble::tibble(
-            lo =
-              parsnip::convert_stan_interval(
-                results,
-                level = object$spec$method$pred$pred_int$extras$level
-              ),
-            hi =
-              parsnip::convert_stan_interval(
-                results,
-                level = object$spec$method$pred$pred_int$extras$level,
-                lower = FALSE
-              ),
+            lo = parsnip::convert_stan_interval(
+              results,
+              level = object$spec$method$pred$pred_int$extras$level
+            ),
+            hi = parsnip::convert_stan_interval(
+              results,
+              level = object$spec$method$pred$pred_int$extras$level,
+              lower = FALSE
+            ),
           )
         res_1 <- res_2
         res_1$lo <- 1 - res_2$hi
@@ -167,12 +165,11 @@ make_stan_logistic_reg <- function() {
         res
       },
       func = c(pkg = "rstanarm", fun = "posterior_predict"),
-      args =
-        list(
-          object = rlang::expr(object$fit),
-          newdata = rlang::expr(new_data),
-          seed = rlang::expr(sample.int(10^5, 1))
-        )
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data),
+        seed = rlang::expr(sample.int(10^5, 1))
+      )
     )
   )
 
@@ -185,25 +182,30 @@ make_stan_logistic_reg <- function() {
       pre = NULL,
       post = NULL,
       func = c(fun = "posterior_predict"),
-      args = list(object = rlang::expr(object$fit), newdata = rlang::expr(new_data))
+      args = list(
+        object = rlang::expr(object$fit),
+        newdata = rlang::expr(new_data)
+      )
     )
   )
-
 }
 
 # ------------------------------------------------------------------------------
 
 make_lme4_logistic_reg <- function() {
-
   parsnip::set_model_engine("logistic_reg", "classification", "glmer")
-  parsnip::set_dependency("logistic_reg",
-                          eng = "glmer",
-                          pkg = "lme4",
-                          mode = "classification")
-  parsnip::set_dependency("logistic_reg",
-                          eng = "glmer",
-                          pkg = "multilevelmod",
-                          mode = "classification")
+  parsnip::set_dependency(
+    "logistic_reg",
+    eng = "glmer",
+    pkg = "lme4",
+    mode = "classification"
+  )
+  parsnip::set_dependency(
+    "logistic_reg",
+    eng = "glmer",
+    pkg = "multilevelmod",
+    mode = "classification"
+  )
 
   parsnip::set_encoding(
     model = "logistic_reg",
@@ -236,7 +238,7 @@ make_lme4_logistic_reg <- function() {
     type = "class",
     value = list(
       pre = reformat_lme_pred_data,
-      post = function (x, object) {
+      post = function(x, object) {
         x <- ifelse(x >= 0.5, object$lvl[2], object$lvl[1])
         unname(x)
       },
@@ -275,22 +277,24 @@ make_lme4_logistic_reg <- function() {
       )
     )
   )
-
 }
 
 # ------------------------------------------------------------------------------
 
 make_gee_logistic_reg <- function() {
-
   parsnip::set_model_engine("logistic_reg", "classification", "gee")
-  parsnip::set_dependency("logistic_reg",
-                          eng = "gee",
-                          pkg = "gee",
-                          mode = "classification")
-  parsnip::set_dependency("logistic_reg",
-                          eng = "gee",
-                          pkg = "multilevelmod",
-                          mode = "classification")
+  parsnip::set_dependency(
+    "logistic_reg",
+    eng = "gee",
+    pkg = "gee",
+    mode = "classification"
+  )
+  parsnip::set_dependency(
+    "logistic_reg",
+    eng = "gee",
+    pkg = "multilevelmod",
+    mode = "classification"
+  )
 
   parsnip::set_encoding(
     model = "logistic_reg",
@@ -328,12 +332,11 @@ make_gee_logistic_reg <- function() {
         unname(x)
       },
       func = c(fun = "predict"),
-      args =
-        list(
-          object = quote(object$fit),
-          newdata = quote(new_data),
-          type = "response"
-        )
+      args = list(
+        object = quote(object$fit),
+        newdata = quote(new_data),
+        type = "response"
+      )
     )
   )
 
@@ -350,12 +353,11 @@ make_gee_logistic_reg <- function() {
         x
       },
       func = c(fun = "predict"),
-      args =
-        list(
-          object = quote(object$fit),
-          newdata = quote(new_data),
-          type = "response"
-        )
+      args = list(
+        object = quote(object$fit),
+        newdata = quote(new_data),
+        type = "response"
+      )
     )
   )
 
@@ -374,7 +376,6 @@ make_gee_logistic_reg <- function() {
       )
     )
   )
-
 }
 
 # nocov end

@@ -31,6 +31,7 @@ NULL
 
 utils::globalVariables(
   c(
-    "new_data", "object"
+    "new_data",
+    "object"
   )
 )
