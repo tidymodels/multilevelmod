@@ -50,7 +50,7 @@ count_mod <-
 #>  Family: poisson  ( log )
 #> Formula: y ~ time + x + (1 | subject)
 #>    Data: data
-#>       AIC       BIC    logLik  deviance  df.resid 
+#>       AIC       BIC    logLik -2*log(L)  df.resid 
 #>  4474.553  4494.104 -2233.277  4466.553       976 
 #> Random effects:
 #>  Groups  Name        Std.Dev.
