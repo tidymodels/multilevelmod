@@ -8,7 +8,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Codecov test
-coverage](https://codecov.io/gh/tidymodels/multilevelmod/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/multilevelmod?branch=main)
+coverage](https://codecov.io/gh/tidymodels/multilevelmod/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/multilevelmod)
 [![R-CMD-check](https://github.com/tidymodels/multilevelmod/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/multilevelmod/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
