@@ -26,15 +26,14 @@ test_that('logistic gee execution', {
   # ----------------------------------------------------------------------------
 
   # Check for error
-  expect_error(
+  expect_no_error(
     ps_mod <-
       logistic_reg() %>%
       set_engine("gee") %>%
       fit(
         depressed ~ week + imipramine + id_var(subject),
         data = riesby_bin_tr
-      ),
-    regex = NA
+      )
   )
 
   # ----------------------------------------------------------------------------

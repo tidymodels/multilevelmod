@@ -11,12 +11,11 @@ test_that('gls execution', {
     )
 
   set.seed(2452)
-  expect_error(
+  expect_no_error(
     ps_mod <-
       linear_reg() %>%
       set_engine("gls", correlation = nlme::corSymm(form = ~ 1 | subject)) %>%
-      fit(depr_score ~ week + imipramine, data = riesby_tr),
-    regex = NA
+      fit(depr_score ~ week + imipramine, data = riesby_tr)
   )
 
   expect_equal(

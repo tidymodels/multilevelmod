@@ -11,12 +11,11 @@ test_that('logistic glmer execution', {
   # ----------------------------------------------------------------------------
 
   # Check for error
-  expect_error(
+  expect_no_error(
     ps_mod <-
       logistic_reg() %>%
       set_engine("glmer") %>%
-      fit(f_bin, data = riesby_bin_tr),
-    regex = NA
+      fit(f_bin, data = riesby_bin_tr)
   )
 
   # ----------------------------------------------------------------------------

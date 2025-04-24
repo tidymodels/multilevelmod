@@ -8,12 +8,11 @@ test_that('lme4 execution', {
   lme4_mod <- eval_tidy(lme4_cl)
 
   set.seed(2452)
-  expect_error(
+  expect_no_error(
     ps_mod <-
       linear_reg() %>%
       set_engine("lmer") %>%
-      fit(f_counts, data = counts_tr),
-    regex = NA
+      fit(f_counts, data = counts_tr)
   )
 
   expect_equal(
