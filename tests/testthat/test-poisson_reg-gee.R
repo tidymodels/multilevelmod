@@ -22,12 +22,11 @@ test_that('poisson gee execution', {
   # ----------------------------------------------------------------------------
 
   # Check for error
-  expect_error(
+  expect_no_error(
     ps_mod <-
       poisson_reg(engine = "gee") %>%
       set_engine("gee") %>%
-      fit(y ~ time + x + id_var(subject), data = counts_tr),
-    regex = NA
+      fit(y ~ time + x + id_var(subject), data = counts_tr)
   )
 
   # See if coefficients for both model runs are the same

@@ -8,12 +8,11 @@ test_that('lme4 execution', {
   lme4_mod <- eval_tidy(lme4_cl)
 
   set.seed(2452)
-  expect_error(
+  expect_no_error(
     ps_mod <-
       linear_reg() %>%
       set_engine("lmer") %>%
-      fit(f, data = riesby_tr),
-    regex = NA
+      fit(f, data = riesby_tr)
   )
 
   expect_equal(
@@ -58,10 +57,10 @@ test_that('random interactions and/or nesting', {
     set_engine("lmer") %>%
     fit(cty ~ year + (1 | manufacturer / model), data = mpg)
 
-  expect_error(predict(fit, new_data = mpg), regexp = NA)
+  expect_no_error(predict(fit, new_data = mpg))
   # Now predict with new levels for the random effect columns, esp
   # when there is nesting/interactions
-  expect_error(
+  expect_no_error(
     predict(
       fit,
       new_data = tibble::tibble(
@@ -69,7 +68,6 @@ test_that('random interactions and/or nesting', {
         model = "dan",
         manufacturer = "max"
       )
-    ),
-    regexp = NA
+    )
   )
 })

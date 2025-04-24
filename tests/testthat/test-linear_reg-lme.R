@@ -11,12 +11,11 @@ test_that('lme execution', {
     )
 
   set.seed(2452)
-  expect_error(
+  expect_no_error(
     ps_mod <-
       linear_reg() %>%
       set_engine("lme", random = ~ 1 | subject) %>%
-      fit(depr_score ~ week + imipramine, data = riesby_tr),
-    regex = NA
+      fit(depr_score ~ week + imipramine, data = riesby_tr)
   )
 
   expect_equal(

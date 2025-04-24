@@ -14,12 +14,11 @@ test_that('glmer execution', {
   glmer_mod <- eval_tidy(glmer_cl)
 
   set.seed(2452)
-  expect_error(
+  expect_no_error(
     ps_mod <-
       linear_reg() %>%
       set_engine("glmer", family = gaussian(make.link("identity"))) %>%
-      fit(f, data = riesby_tr),
-    regex = NA
+      fit(f, data = riesby_tr)
   )
 
   expect_equal(

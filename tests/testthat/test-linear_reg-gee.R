@@ -22,12 +22,11 @@ test_that('linear gee execution', {
   # ----------------------------------------------------------------------------
 
   # Check for error
-  expect_error(
+  expect_no_error(
     ps_mod <-
       linear_reg() %>%
       set_engine("gee", family = quasi) %>%
-      fit(depr_score ~ week + id_var(subject), data = riesby_tr),
-    regex = NA
+      fit(depr_score ~ week + id_var(subject), data = riesby_tr)
   )
 
   # See if coefficients for both model runs are the same
