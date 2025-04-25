@@ -24,8 +24,8 @@ test_that('poisson gee execution', {
   # Check for error
   expect_no_error(
     ps_mod <-
-      poisson_reg(engine = "gee") %>%
-      set_engine("gee") %>%
+      poisson_reg(engine = "gee") |>
+      set_engine("gee") |>
       fit(y ~ time + x + id_var(subject), data = counts_tr)
   )
 
@@ -45,15 +45,15 @@ test_that('poisson gee execution', {
 
 test_that('mode specific package dependencies', {
   expect_identical(
-    get_from_env(paste0("poisson_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "gee", mode == "classification") %>%
+    get_from_env(paste0("poisson_reg", "_pkgs")) |>
+      dplyr::filter(engine == "gee", mode == "classification") |>
       dplyr::pull(pkg),
     list()
   )
 
   expect_identical(
-    get_from_env(paste0("poisson_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "gee", mode == "regression") %>%
+    get_from_env(paste0("poisson_reg", "_pkgs")) |>
+      dplyr::filter(engine == "gee", mode == "regression") |>
       dplyr::pull(pkg),
     list(c("gee", "multilevelmod"))
   )

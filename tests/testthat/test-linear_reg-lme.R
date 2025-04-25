@@ -13,8 +13,8 @@ test_that('lme execution', {
   set.seed(2452)
   expect_no_error(
     ps_mod <-
-      linear_reg() %>%
-      set_engine("lme", random = ~ 1 | subject) %>%
+      linear_reg() |>
+      set_engine("lme", random = ~ 1 | subject) |>
       fit(depr_score ~ week + imipramine, data = riesby_tr)
   )
 
@@ -36,15 +36,15 @@ test_that('lme execution', {
 
 test_that('mode specific package dependencies', {
   expect_identical(
-    get_from_env(paste0("linear_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "lme", mode == "classification") %>%
+    get_from_env(paste0("linear_reg", "_pkgs")) |>
+      dplyr::filter(engine == "lme", mode == "classification") |>
       dplyr::pull(pkg),
     list()
   )
 
   expect_identical(
-    get_from_env(paste0("linear_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "lme", mode == "regression") %>%
+    get_from_env(paste0("linear_reg", "_pkgs")) |>
+      dplyr::filter(engine == "lme", mode == "regression") |>
       dplyr::pull(pkg),
     list(c("nlme", "multilevelmod"))
   )

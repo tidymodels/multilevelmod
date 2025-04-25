@@ -37,7 +37,7 @@ We'll use some single factor repeated measures experiment data from the lme4 pac
 
 data(sleepstudy, package = "lme4")
 
-sleepstudy %>% 
+sleepstudy |> 
   ggplot(aes(x = Days, y = Reaction)) + 
   geom_point() + 
   geom_line() +
@@ -66,11 +66,11 @@ The correlation structure can be passed as an engine argument:
 ```{r}
 #| label: gee
 gee_spec <- 
-  linear_reg() %>% 
+  linear_reg() |> 
   set_engine("gee", corstr = "exchangeable")
 
 gee_fit <- 
-  gee_spec %>% 
+  gee_spec |> 
   fit(Reaction ~ Days + id_var(Subject), data = sleepstudy)
 
 gee_fit
@@ -81,7 +81,7 @@ Only a single column name can be given to `id_var()`.
 When predicting, the `id_var` column is not required: 
 
 ```{r}
-predict(gee_fit, new_subject %>% select(Days)) %>% 
+predict(gee_fit, new_subject |> select(Days)) |> 
   bind_cols(new_subject)
 ```
 
@@ -98,11 +98,11 @@ For example:
 library(nlme) # <- Only need to load this to get cor*() functions
 
 gls_spec <- 
-  linear_reg() %>% 
+  linear_reg() |> 
   set_engine("gls", correlation = corCompSymm(form = ~ 1 | Subject))
 
 gls_fit <- 
-  gls_spec %>% 
+  gls_spec |> 
   fit(Reaction ~ Days, data = sleepstudy)
 
 gls_fit
@@ -112,7 +112,7 @@ As with the GEE model, only the regression terms are required for prediction:
 
 ```{r}
 #| label: gls-pred
-predict(gls_fit, new_subject %>% select(Days)) %>% 
+predict(gls_fit, new_subject |> select(Days)) |> 
   bind_cols(new_subject)
 ```
 
@@ -127,11 +127,11 @@ To fit the basic random intercept model:
 ```{r}
 #| label: lme
 lme_spec <- 
-  linear_reg() %>% 
+  linear_reg() |> 
   set_engine("lme", random = ~ 1 | Subject)
 
 lme_fit <- 
-  lme_spec %>% 
+  lme_spec |> 
   fit(Reaction ~ Days, data = sleepstudy)
 
 lme_fit
@@ -143,11 +143,11 @@ For lme fit objects, the subject column, if given, is ignored. When the [underly
 
 ```{r}
 #| label: lme-pred
-predict(lme_fit, new_subject) %>% 
+predict(lme_fit, new_subject) |> 
   bind_cols(new_subject)
 
 # For this design, this is the same prediction as a training set point:
-predict(lme_fit, sleepstudy %>% filter(Subject == "308"))
+predict(lme_fit, sleepstudy |> filter(Subject == "308"))
 ```
 
 ## Models using lmer, glmer, and stan_glmer
@@ -159,11 +159,11 @@ All of the model specification occurs in the formula; no models terms are specif
 ```{r}
 #| label: lmer
 lmer_spec <- 
-  linear_reg() %>% 
+  linear_reg() |> 
   set_engine("lmer")
 
 lmer_fit <- 
-  lmer_spec %>% 
+  lmer_spec |> 
   fit(Reaction ~ Days + (1|Subject), data = sleepstudy)
 
 lmer_fit
@@ -173,7 +173,7 @@ We predict in the same way.
 
 ```{r}
 #| label: lmer-pred
-predict(lmer_fit, new_subject) %>% 
+predict(lmer_fit, new_subject) |> 
   bind_cols(new_subject)
 ```
 
@@ -204,11 +204,11 @@ First, instead of using `add_formula()`, we suggest using `add_variables()`. Thi
 ```{r}
 #| label: wflow
 lmer_wflow <- 
-  workflow() %>% 
-  add_variables(outcomes = Reaction, predictors = c(Days, Subject)) %>% 
+  workflow() |> 
+  add_variables(outcomes = Reaction, predictors = c(Days, Subject)) |> 
   add_model(lmer_spec, formula = Reaction ~ Days + (1|Subject))
 
-lmer_wflow %>% fit(data = sleepstudy)
+lmer_wflow |> fit(data = sleepstudy)
 ```
 
 If using a recipe, make sure that functions like `step_dummy()` do **not** convert the column for the independent experimental unit (i.e. subject) to dummy variables. The underlying model fit functions require a single column for these data. 
@@ -218,13 +218,13 @@ Using a recipe also offers the opportunity to [set a different role](https://rec
 ```{r}
 #| label: rec
 rec <- 
-  recipe(Reaction ~ Days + Subject, data = sleepstudy) %>%
-  add_role(Subject, new_role = "exp_unit") %>%
+  recipe(Reaction ~ Days + Subject, data = sleepstudy) |>
+  add_role(Subject, new_role = "exp_unit") |>
   step_zv(all_predictors(), -has_role("exp_unit"))
 
-lmer_wflow %>%
-  remove_variables() %>%
-  add_recipe(rec) %>%
+lmer_wflow |>
+  remove_variables() |>
+  add_recipe(rec) |>
   fit(data = sleepstudy)
 ```
 
@@ -234,7 +234,7 @@ lmer_wflow %>%
 Finally, there are excellent helper functions in the broom.mixed and tidybayes packages. If these need the underlying model fit object: the `extract_fit_engine()` function can be used on either parsnip or workflow objects: 
 
 ```{r}
-lmer_wflow %>% 
-  fit(data = sleepstudy) %>% # <- returns a workflow
+lmer_wflow |> 
+  fit(data = sleepstudy) |> # <- returns a workflow
   extract_fit_engine()       # <- returns the lmer object
 ```

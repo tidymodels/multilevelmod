@@ -80,10 +80,10 @@ library(multilevelmod)
 set.seed(1234)
 data(sleepstudy, package = "lme4")
 
-mixed_model_spec <- linear_reg() %>% set_engine("lmer")
+mixed_model_spec <- linear_reg() |> set_engine("lmer")
 
 mixed_model_fit <- 
-  mixed_model_spec %>% 
+  mixed_model_spec |> 
   fit(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 
 mixed_model_fit
@@ -107,10 +107,10 @@ mixed_model_fit
 For a Bayesian model:
 
 ``` r
-hier_model_spec <- linear_reg() %>% set_engine("stan_glmer")
+hier_model_spec <- linear_reg() |> set_engine("stan_glmer")
 
 hier_model_fit <- 
-  hier_model_spec %>% 
+  hier_model_spec |> 
   fit(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 
 hier_model_fit

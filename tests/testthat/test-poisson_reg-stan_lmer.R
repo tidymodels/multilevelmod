@@ -21,8 +21,8 @@ test_that('stan_glm execution', {
   set.seed(2452)
   suppressWarnings(
     ps_mod <-
-      poisson_reg(engine = "stan_glmer") %>%
-      set_engine("stan_glmer", seed = 9284, refresh = 0, iter = 500) %>%
+      poisson_reg(engine = "stan_glmer") |>
+      set_engine("stan_glmer", seed = 9284, refresh = 0, iter = 500) |>
       fit(f_counts, data = counts_tr)
   )
 
@@ -53,15 +53,15 @@ test_that('stan_glm execution', {
 
 test_that('mode specific package dependencies', {
   expect_identical(
-    get_from_env(paste0("poisson_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "stan_glmer", mode == "classification") %>%
+    get_from_env(paste0("poisson_reg", "_pkgs")) |>
+      dplyr::filter(engine == "stan_glmer", mode == "classification") |>
       dplyr::pull(pkg),
     list()
   )
 
   expect_identical(
-    get_from_env(paste0("poisson_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "stan_glmer", mode == "regression") %>%
+    get_from_env(paste0("poisson_reg", "_pkgs")) |>
+      dplyr::filter(engine == "stan_glmer", mode == "regression") |>
       dplyr::pull(pkg),
     list(c("rstanarm", "multilevelmod"))
   )

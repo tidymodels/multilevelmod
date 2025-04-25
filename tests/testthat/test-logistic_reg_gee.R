@@ -28,8 +28,8 @@ test_that('logistic gee execution', {
   # Check for error
   expect_no_error(
     ps_mod <-
-      logistic_reg() %>%
-      set_engine("gee") %>%
+      logistic_reg() |>
+      set_engine("gee") |>
       fit(
         depressed ~ week + imipramine + id_var(subject),
         data = riesby_bin_tr
@@ -64,15 +64,15 @@ test_that('logistic gee execution', {
 
 test_that('mode specific package dependencies', {
   expect_identical(
-    get_from_env(paste0("logistic_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "gee", mode == "classification") %>%
+    get_from_env(paste0("logistic_reg", "_pkgs")) |>
+      dplyr::filter(engine == "gee", mode == "classification") |>
       dplyr::pull(pkg),
     list(c("gee", "multilevelmod"))
   )
 
   expect_identical(
-    get_from_env(paste0("logistic_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "gee", mode == "regression") %>%
+    get_from_env(paste0("logistic_reg", "_pkgs")) |>
+      dplyr::filter(engine == "gee", mode == "regression") |>
       dplyr::pull(pkg),
     list()
   )
