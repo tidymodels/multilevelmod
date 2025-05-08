@@ -13,8 +13,8 @@ test_that('gls execution', {
   set.seed(2452)
   expect_no_error(
     ps_mod <-
-      linear_reg() %>%
-      set_engine("gls", correlation = nlme::corSymm(form = ~ 1 | subject)) %>%
+      linear_reg() |>
+      set_engine("gls", correlation = nlme::corSymm(form = ~ 1 | subject)) |>
       fit(depr_score ~ week + imipramine, data = riesby_tr)
   )
 
@@ -37,15 +37,15 @@ test_that('gls execution', {
 
 test_that('mode specific package dependencies', {
   expect_identical(
-    get_from_env(paste0("linear_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "gls", mode == "classification") %>%
+    get_from_env(paste0("linear_reg", "_pkgs")) |>
+      dplyr::filter(engine == "gls", mode == "classification") |>
       dplyr::pull(pkg),
     list()
   )
 
   expect_identical(
-    get_from_env(paste0("linear_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "gls", mode == "regression") %>%
+    get_from_env(paste0("linear_reg", "_pkgs")) |>
+      dplyr::filter(engine == "gls", mode == "regression") |>
       dplyr::pull(pkg),
     list(c("nlme", "multilevelmod"))
   )

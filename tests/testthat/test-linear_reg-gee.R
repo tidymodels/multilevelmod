@@ -24,8 +24,8 @@ test_that('linear gee execution', {
   # Check for error
   expect_no_error(
     ps_mod <-
-      linear_reg() %>%
-      set_engine("gee", family = quasi) %>%
+      linear_reg() |>
+      set_engine("gee", family = quasi) |>
       fit(depr_score ~ week + id_var(subject), data = riesby_tr)
   )
 
@@ -44,15 +44,15 @@ test_that('linear gee execution', {
 
 test_that('mode specific package dependencies', {
   expect_identical(
-    get_from_env(paste0("linear_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "gee", mode == "classification") %>%
+    get_from_env(paste0("linear_reg", "_pkgs")) |>
+      dplyr::filter(engine == "gee", mode == "classification") |>
       dplyr::pull(pkg),
     list()
   )
 
   expect_identical(
-    get_from_env(paste0("linear_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "gee", mode == "regression") %>%
+    get_from_env(paste0("linear_reg", "_pkgs")) |>
+      dplyr::filter(engine == "gee", mode == "regression") |>
       dplyr::pull(pkg),
     list(c("gee", "multilevelmod"))
   )

@@ -28,17 +28,17 @@ tidymodels_prefer()
 
 # Split out two subjects to show how prediction works
 data_train <- 
-  longitudinal_counts \%>\% 
+  longitudinal_counts |> 
   filter(!(subject \%in\% c("1", "2")))
 
 data_new <- 
-  longitudinal_counts \%>\% 
+  longitudinal_counts |> 
   filter(subject \%in\% c("1", "2"))
 
 # Fit the model
 count_mod <- 
-  poisson_reg() \%>\% 
-  set_engine("glmer") \%>\% 
+  poisson_reg() |> 
+  set_engine("glmer") |> 
   fit(y ~ time + x + (1 | subject), data = data_train)
 }\if{html}{\out{</div>}}
 
@@ -63,7 +63,7 @@ count_mod <-
 
 When making predictions, the basic \code{predict()} method does the trick:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{count_mod \%>\% predict(data_new)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{count_mod |> predict(data_new)
 #> # A tibble: 20 x 1
 #>    .pred
 #>    <dbl>

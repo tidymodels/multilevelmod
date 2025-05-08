@@ -10,8 +10,8 @@ test_that('lme4 execution', {
   set.seed(2452)
   expect_no_error(
     ps_mod <-
-      linear_reg() %>%
-      set_engine("lmer") %>%
+      linear_reg() |>
+      set_engine("lmer") |>
       fit(f, data = riesby_tr)
   )
 
@@ -30,15 +30,15 @@ test_that('lme4 execution', {
 
 test_that('mode specific package dependencies', {
   expect_identical(
-    get_from_env(paste0("linear_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "lmer", mode == "classification") %>%
+    get_from_env(paste0("linear_reg", "_pkgs")) |>
+      dplyr::filter(engine == "lmer", mode == "classification") |>
       dplyr::pull(pkg),
     list()
   )
 
   expect_identical(
-    get_from_env(paste0("linear_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "lmer", mode == "regression") %>%
+    get_from_env(paste0("linear_reg", "_pkgs")) |>
+      dplyr::filter(engine == "lmer", mode == "regression") |>
       dplyr::pull(pkg),
     list(c("lme4", "multilevelmod"))
   )
@@ -53,8 +53,8 @@ test_that('random interactions and/or nesting', {
   data(mpg, package = "ggplot2")
 
   fit <-
-    linear_reg() %>%
-    set_engine("lmer") %>%
+    linear_reg() |>
+    set_engine("lmer") |>
     fit(cty ~ year + (1 | manufacturer / model), data = mpg)
 
   expect_no_error(predict(fit, new_data = mpg))

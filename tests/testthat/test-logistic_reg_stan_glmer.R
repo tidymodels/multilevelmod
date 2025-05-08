@@ -20,8 +20,8 @@ test_that('logistic stan_glmer execution', {
   set.seed(1)
   suppressWarnings(
     ps_mod <-
-      logistic_reg() %>%
-      set_engine("stan_glmer", seed = 9284, iter = 500, refresh = 0) %>%
+      logistic_reg() |>
+      set_engine("stan_glmer", seed = 9284, iter = 500, refresh = 0) |>
       fit(f_bin, data = riesby_bin_tr)
   )
 
@@ -60,15 +60,15 @@ test_that('logistic stan_glmer execution', {
 
 test_that('mode specific package dependencies', {
   expect_identical(
-    get_from_env(paste0("logistic_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "stan_glmer", mode == "classification") %>%
+    get_from_env(paste0("logistic_reg", "_pkgs")) |>
+      dplyr::filter(engine == "stan_glmer", mode == "classification") |>
       dplyr::pull(pkg),
     list(c("rstanarm", "multilevelmod"))
   )
 
   expect_identical(
-    get_from_env(paste0("logistic_reg", "_pkgs")) %>%
-      dplyr::filter(engine == "stan_glmer", mode == "regression") %>%
+    get_from_env(paste0("logistic_reg", "_pkgs")) |>
+      dplyr::filter(engine == "stan_glmer", mode == "regression") |>
       dplyr::pull(pkg),
     list()
   )
