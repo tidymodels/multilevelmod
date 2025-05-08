@@ -61,17 +61,17 @@ numeric covariate.</p>
 <span></span>
 <span><span class="co"># Split out two subjects to show how prediction works</span></span>
 <span><span class="va">data_train</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">longitudinal_counts</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">longitudinal_counts</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">subject</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">data_new</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">longitudinal_counts</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">longitudinal_counts</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">subject</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"2"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Fit the model</span></span>
 <span><span class="va">count_mod</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/poisson_reg.html" class="external-link">poisson_reg</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span><span class="st">"glmer"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/poisson_reg.html" class="external-link">poisson_reg</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span><span class="st">"glmer"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">x</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data_train</span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">count_mod</span></span>
 <span><span class="co">#&gt; parsnip model object</span></span>
@@ -91,7 +91,7 @@ numeric covariate.</p>
 <span><span class="co">#&gt; (Intercept)         time            x</span></span>
 <span><span class="co">#&gt;     -0.5946       1.5145       0.2395</span></span></code></pre><p></p></div>
 <p>When making predictions, the basic <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> method does the trick:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">count_mod</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">data_new</span><span class="op">)</span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">count_mod</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">data_new</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 20 x 1</span></span>
 <span><span class="co">#&gt;    .pred</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;</span></span>
@@ -140,7 +140,7 @@ numeric covariate.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
   </div></footer></body></html>
