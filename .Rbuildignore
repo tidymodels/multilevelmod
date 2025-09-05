@@ -12,3 +12,4 @@
 ^CRAN-SUBMISSION$
 ^[\.]?air\.toml$
 ^\.vscode$
+^[.]?air[.]toml$
