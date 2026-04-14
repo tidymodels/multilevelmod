@@ -17,14 +17,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/tidymodels/multilevelmod/blob/main/DESCRIPTION)
 
-Kuhn M, Frick H (2025). *multilevelmod: Model Wrappers for Multi-Level
+Kuhn M, Frick H (2026). *multilevelmod: Model Wrappers for Multi-Level
 Models*. R package version 1.0.0.9000,
 <https://github.com/tidymodels/multilevelmod>.
 
     @Manual{,
       title = {multilevelmod: Model Wrappers for Multi-Level Models},
       author = {Max Kuhn and Hannah Frick},
-      year = {2025},
+      year = {2026},
       note = {R package version 1.0.0.9000},
       url = {https://github.com/tidymodels/multilevelmod},
     }
