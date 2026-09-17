@@ -13,6 +13,7 @@ only discuss linear models but the syntax also works for binomial and
 Poisson outcomes.
 
 ``` r
+
 library(tidymodels)
 library(multilevelmod)
 
@@ -24,6 +25,7 @@ We’ll use some single factor repeated measures experiment data from the
 lme4 package, on the effect of sleep deprivation on reaction time.
 
 ``` r
+
 data(sleepstudy, package = "lme4")
 
 sleepstudy |> 
@@ -41,6 +43,7 @@ To show how prediction works, let’s create a new data frame for a
 hypothetical subject “one”:
 
 ``` r
+
 new_subject <- tibble(
   Days = 0:9, 
   Subject = "one"
@@ -64,6 +67,7 @@ independent experimental unit.
 The correlation structure can be passed as an engine argument:
 
 ``` r
+
 gee_spec <- 
   linear_reg() |> 
   set_engine("gee", corstr = "exchangeable")
@@ -78,6 +82,7 @@ gee_fit <-
     ## running glm to get initial regression estimate
 
 ``` r
+
 gee_fit
 ```
 
@@ -124,6 +129,7 @@ Only a single column name can be given to `id_var()`.
 When predicting, the `id_var` column is not required:
 
 ``` r
+
 predict(gee_fit, new_subject |> select(Days)) |> 
   bind_cols(new_subject)
 ```
@@ -155,6 +161,7 @@ as an engine argument. Possible values can be found using
 For example:
 
 ``` r
+
 library(nlme) # <- Only need to load this to get cor*() functions
 
 gls_spec <- 
@@ -191,6 +198,7 @@ As with the GEE model, only the regression terms are required for
 prediction:
 
 ``` r
+
 predict(gls_fit, new_subject |> select(Days)) |> 
   bind_cols(new_subject)
 ```
@@ -225,6 +233,7 @@ include the fixed effects for the model.
 To fit the basic random intercept model:
 
 ``` r
+
 lme_spec <- 
   linear_reg() |> 
   set_engine("lme", random = ~ 1 | Subject)
@@ -264,6 +273,7 @@ function](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/predict.lme.ht
 is used, the `level = 0` argument is automatically invoked:
 
 ``` r
+
 predict(lme_fit, new_subject) |> 
   bind_cols(new_subject)
 ```
@@ -283,6 +293,7 @@ predict(lme_fit, new_subject) |>
     ## 10  346.     9 one
 
 ``` r
+
 # For this design, this is the same prediction as a training set point:
 predict(lme_fit, sleepstudy |> filter(Subject == "308"))
 ```
@@ -316,6 +327,7 @@ are specified via
 same random intercept model, the syntax is:
 
 ``` r
+
 lmer_spec <- 
   linear_reg() |> 
   set_engine("lmer")
@@ -345,6 +357,7 @@ lmer_fit
 We predict in the same way.
 
 ``` r
+
 predict(lmer_fit, new_subject) |> 
   bind_cols(new_subject)
 ```
@@ -366,6 +379,7 @@ predict(lmer_fit, new_subject) |>
 To determine what packages are required for a model, use this function:
 
 ``` r
+
 required_pkgs(lmer_spec)
 ```
 
@@ -400,6 +414,7 @@ function. To add the random effects formula, use the `formula` argument
 of `add_model()`. For example:
 
 ``` r
+
 lmer_wflow <- 
   workflow() |> 
   add_variables(outcomes = Reaction, predictors = c(Days, Subject)) |> 
@@ -441,6 +456,7 @@ independent experiment unit, which can come in handy when more complex
 preprocessing is needed.
 
 ``` r
+
 rec <- 
   recipe(Reaction ~ Days + Subject, data = sleepstudy) |>
   add_role(Subject, new_role = "exp_unit") |>
@@ -483,6 +499,7 @@ tidybayes packages. If these need the underlying model fit object: the
 function can be used on either parsnip or workflow objects:
 
 ``` r
+
 lmer_wflow |> 
   fit(data = sleepstudy) |> # <- returns a workflow
   extract_fit_engine()       # <- returns the lmer object

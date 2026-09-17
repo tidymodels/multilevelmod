@@ -20,12 +20,14 @@ You can install the released version of multilevelmod from
 [CRAN](https://cran.r-project.org) with:
 
 ``` r
+
 install.packages("multilevelmod")
 ```
 
 For the development version:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("tidymodels/multilevelmod")
 ```
@@ -69,6 +71,7 @@ so that the model terms can be specified using the `lme`/`lme4` syntax.
 The `sleepstudy` data is used as an example:
 
 ``` r
+
 library(multilevelmod)
 set.seed(1234)
 data(sleepstudy, package = "lme4")
@@ -100,6 +103,7 @@ mixed_model_fit
 For a Bayesian model:
 
 ``` r
+
 hier_model_spec <- linear_reg() |> set_engine("stan_glmer")
 
 hier_model_fit <- 

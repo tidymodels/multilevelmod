@@ -1,9 +1,9 @@
-pandoc: 3.1.11
-pkgdown: 2.2.0
+pandoc: 3.8.3
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   multilevelmod: multilevelmod.html
-last_built: 2026-04-14T13:44Z
+last_built: 2026-09-17T16:22Z
 urls:
   reference: https://multilevelmod.tidymodels.org/reference
   article: https://multilevelmod.tidymodels.org/articles
