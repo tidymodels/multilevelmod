@@ -51,9 +51,22 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      # macos-latest: the RSPM arm64 binary of `gower` (a transitive Suggests
+      # dependency via recipes) links the OpenMP symbol `___kmpc_barrier`, and
+      # the runner ships no libomp, so dlopen of gower.so fails and takes down
+      # the vignette build. `?source` builds just this package from source.
+      #
+      # windows-latest oldrel-4: PPM's `lme4` binary for that R version is
+      # built against a newer Matrix ABI than the Matrix binary PPM installs
+      # alongside it, so `lmer()` fails with "function 'cholmod_factor_ldetA'
+      # not provided by package 'Matrix'". `Matrix=?reinstall` rebuilds Matrix
+      # to match what's actually installed (r-lib/actions#832).
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: |
+            any::rcmdcheck
+            ${{ matrix.config.os == 'macos-latest' && 'gower?source' || '' }}
+            ${{ matrix.config.os == 'windows-latest' && matrix.config.r == 'oldrel-4' && 'Matrix=?reinstall' || '' }}
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
