@@ -229,6 +229,106 @@ lmer_wflow |>
 ```
 
 
+### Recipes that rename or replace columns
+
+`step_zv()` leaves the predictor columns as-is; it only ever removes columns that have zero variance. Other steps, such as `step_dummy()` or `step_pca()`, create new columns with different names (or a different number of columns) from the ones in the original data. This matters because the `formula` argument of `add_model()` is evaluated on the data *after* the recipe has been baked, not on the original columns supplied to `recipe()`. If the formula still refers to the original column names, fitting will fail. 
+
+To illustrate, we'll add an artificial factor predictor to `sleepstudy`: 
+
+```{r}
+#| label: period
+sleepstudy_period <-
+  sleepstudy |>
+  mutate(period = factor(if_else(Days < 5, "early", "late")))
+```
+
+```{r}
+#| label: rec-dummy
+rec_dummy <-
+  recipe(Reaction ~ Days + period + Subject, data = sleepstudy_period) |>
+  add_role(Subject, new_role = "exp_unit") |>
+  step_dummy(period)
+```
+
+`step_dummy()` replaces the `period` column with a new, differently named indicator column. We can see this by prepping and baking the recipe: 
+
+```{r}
+#| label: rec-dummy-names
+rec_dummy |>
+  prep() |>
+  bake(new_data = NULL) |>
+  names()
+```
+
+If the model formula still refers to `period`, the fit will fail because that column no longer exists once the recipe has run: 
+
+```{r}
+#| label: rec-dummy-wrong
+#| error: true
+workflow() |>
+  add_recipe(rec_dummy) |>
+  add_model(lmer_spec, formula = Reaction ~ Days + period + (1 | Subject)) |>
+  fit(data = sleepstudy_period)
+```
+
+One fix is to use the column name that the recipe actually produces, `period_late`: 
+
+```{r}
+#| label: rec-dummy-right
+workflow() |>
+  add_recipe(rec_dummy) |>
+  add_model(
+    lmer_spec,
+    formula = Reaction ~ Days + period_late + (1 | Subject)
+  ) |>
+  fit(data = sleepstudy_period)
+```
+
+Naming columns explicitly works, but it is fragile: the formula has to be updated every time the recipe changes, and it breaks down entirely when the *number* of columns a step produces depends on a tuning parameter, such as `step_pca(num_comp = tune())`. There, the number of principal component columns (`PC1`, `PC1 + PC2`, ...) is different for each candidate value in the tuning grid, so no single hand-written list of column names can cover all of them. 
+
+A more robust option is to use `.` in the model formula. Since the formula is evaluated on the baked data, `.` expands to "every remaining column in the baked data except the outcome", whatever those columns happen to be named. Because `.` also picks up the experimental unit column, it needs to be removed again from the fixed effects (it is still used in the random-effects term): 
+
+```{r}
+#| label: rec-dummy-dot
+workflow() |>
+  add_recipe(rec_dummy) |>
+  add_model(lmer_spec, formula = Reaction ~ . + (1 | Subject) - Subject) |>
+  fit(data = sleepstudy_period)
+```
+
+This gives the same fit as the explicit formula above, but it also keeps working when the recipe's output changes, including when tuning `num_comp`: 
+
+```{r}
+#| label: rec-pca-tune
+data(riesby, package = "multilevelmod")
+
+rec_pca <-
+  recipe(depr_score ~ ., data = riesby) |>
+  add_role(subject, new_role = "exp_unit") |>
+  update_role(week, new_role = "id variable") |>
+  step_normalize(all_numeric_predictors(), -has_role("exp_unit")) |>
+  step_pca(all_numeric_predictors(), -has_role("exp_unit"), num_comp = tune())
+
+lmer_wflow_pca <-
+  workflow() |>
+  add_recipe(rec_pca) |>
+  add_model(lmer_spec, formula = depr_score ~ . + (1 | subject) - subject)
+
+riesby_split <- group_initial_split(riesby, group = subject)
+folds <- group_vfold_cv(training(riesby_split), v = 5, group = subject)
+
+grid_results <- tune_grid(
+  lmer_wflow_pca,
+  resamples = folds,
+  grid = tibble(num_comp = 1:4),
+  metrics = metric_set(rmse)
+)
+
+collect_metrics(grid_results)
+```
+
+No matter how many principal components a given value of `num_comp` produces, `.` picks up all of them, so this one formula is valid across the entire tuning grid.
+
 ## Other tips
 
 Finally, there are excellent helper functions in the broom.mixed and tidybayes packages. If these need the underlying model fit object: the `extract_fit_engine()` function can be used on either parsnip or workflow objects: 
