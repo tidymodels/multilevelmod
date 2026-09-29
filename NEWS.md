@@ -2,6 +2,8 @@
 
 * Switched to cli for errors (#70).
 
+* Corrected the GEE id column error message to name `id_var()` instead of `id_vars()` (#91).
+
 
 # multilevelmod 1.0.0
 

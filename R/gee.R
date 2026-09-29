@@ -25,8 +25,8 @@ gee_formula <- function(f) {
     cli::cli_abort(
       c(
         "There should be a single {.field id} column specified using the
-     {.fn id_vars} function.",
-        "i" = "For example: {.code y ~ x + id_vars(id_col)}"
+     {.fn id_var} function.",
+        "i" = "For example: {.code y ~ x + id_var(id_col)}"
       )
     )
   }
