@@ -2,6 +2,8 @@
 
 * Switched to cli for errors (#70).
 
+* Fixed a bug where `.` in the formula could not be used with the `"gee"` engine (#64).
+
 
 # multilevelmod 1.0.0
 

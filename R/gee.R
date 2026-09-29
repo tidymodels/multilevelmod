@@ -15,9 +15,8 @@
 
 #' @description Function to add single clustering variable for GEE
 #' @noRd
-gee_formula <- function(f) {
-  cl <- match.call()
-  trms <- terms(f, specials = "id_var")
+gee_formula <- function(f, data) {
+  trms <- terms(f, specials = "id_var", data = data)
   form_terms <- attr(trms, "variables")
   id_ind <- attr(trms, "specials")$id_var + 1
   # check length
@@ -33,6 +32,17 @@ gee_formula <- function(f) {
   # find column with id variable
   id_expr <- form_terms[[id_ind]]
   id_var <- all.vars(id_expr)
+
+  # a `.` in the formula expands to every column in `data`, including the
+  # id column, so re-derive the terms with that column dropped to keep it
+  # out of the expansion
+  trms <- terms(
+    f,
+    specials = "id_var",
+    data = data[setdiff(names(data), id_var)]
+  )
+  form_terms <- attr(trms, "variables")
+  id_ind <- attr(trms, "specials")$id_var + 1
 
   # repair formula: get predictors and remake
   rhs <- form_terms[-c(1:2, id_ind)]
@@ -73,7 +83,7 @@ gee_formula <- function(f) {
 #' @keywords internal
 #' @export
 gee_fit <- function(formula, data, family = gaussian, ...) {
-  f <- gee_formula(formula)
+  f <- gee_formula(formula, data)
   id_sym <- f$id
   id_sym <- rlang::expr(data[[!!id_sym]])
   cl <- rlang::call2(

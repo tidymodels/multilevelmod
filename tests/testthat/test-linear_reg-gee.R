@@ -42,6 +42,36 @@ test_that('linear gee execution', {
   )
 })
 
+test_that('formula with dot works and excludes id_var column', {
+  skip_if_not_installed("gee")
+  skip_on_cran()
+
+  expect_no_error(
+    dot_mod <-
+      linear_reg() |>
+      set_engine("gee", family = quasi) |>
+      fit(depr_score ~ . + id_var(subject), data = riesby_tr)
+  )
+
+  explicit_mod <-
+    linear_reg() |>
+    set_engine("gee", family = quasi) |>
+    fit(
+      depr_score ~ week +
+        male +
+        endogenous +
+        imipramine +
+        desipramine +
+        id_var(subject),
+      data = riesby_tr
+    )
+
+  expect_equal(
+    coef(dot_mod$fit),
+    coef(explicit_mod$fit)
+  )
+})
+
 test_that('mode specific package dependencies', {
   expect_identical(
     get_from_env(paste0("linear_reg", "_pkgs")) |>
