@@ -42,6 +42,20 @@ test_that('linear gee execution', {
   )
 })
 
+test_that('gee_formula() errors informatively on wrong number of id vars', {
+  expect_snapshot(
+    error = TRUE,
+    multilevelmod:::gee_formula(depr_score ~ week)
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    multilevelmod:::gee_formula(
+      depr_score ~ week + id_var(subject) + id_var(week)
+    )
+  )
+})
+
 test_that('mode specific package dependencies', {
   expect_identical(
     get_from_env(paste0("linear_reg", "_pkgs")) |>
